@@ -55,7 +55,7 @@ Details:
 #include "robust.h"
 
 
-disconts(u, v, prev_u, prev_v, du, dv, 
+void disconts(u, v, prev_u, prev_v, du, dv, 
 	 s1, s2, s3, nx, ny,
 	 Ix, Iy, It, err, discont)
 
@@ -75,8 +75,8 @@ disconts(u, v, prev_u, prev_v, du, dv,
   for(i=1;i<ny-1;i++){
     for(j=1;j<nx-1;j++){
       index = i*nx + j;
-      t1 = s1[index] * ROOT2;
-      t2 = s2[index] * ROOT2;
+      t1 = s1[index] * ROOT2; 
+      t2 = s2[index] * ROOT2; 
       t3 = s3[index] * ROOT2;
       /* data and temporal disconts */
       if ((abs(err[index]) >= t1) ||
@@ -100,7 +100,7 @@ disconts(u, v, prev_u, prev_v, du, dv,
 
 }
 
-temporal_outliers(u, v, prev_u, prev_v, du, dv, 
+void temporal_outliers(u, v, prev_u, prev_v, du, dv, 
 	 s1, s2, s3, nx, ny,
 	 Ix, Iy, It, err, discont)
 
@@ -140,7 +140,7 @@ temporal_outliers(u, v, prev_u, prev_v, du, dv,
 
 }
 
-data_disconts(image1, image2, u, v, s1, nx, ny, warp, It, discont)
+void data_disconts(image1, image2, u, v, s1, nx, ny, warp, It, discont)
 
      float *image1, *image2, *It, *u, *v, *warp, *discont;
      int nx, ny;
@@ -149,7 +149,6 @@ data_disconts(image1, image2, u, v, s1, nx, ny, warp, It, discont)
 {
   int index, nx_max, ny_max, i, j;
   float t1;
-  char *fnout;
 
   /* compute disconts */
   warp_image(image1, warp, u, v, nx, ny);
@@ -180,7 +179,7 @@ data_disconts(image1, image2, u, v, s1, nx, ny, warp, It, discont)
 
 
 
-spatial_disconts(u, v, s2, nx, ny, discont)
+void spatial_disconts(u, v, s2, nx, ny, discont)
 
      float *u, *v, *discont;
      int nx, ny;

@@ -11,4 +11,10 @@
 #define ROOT2 1.4142136
 #define MAXLEN 256
 
+/* function interface spec */
 
+// warp.c
+void warp_image(float *, float *, float *, float *, int , int);
+
+// derivatives.c 
+void horn_dt(float *, float *, float *, int, int);

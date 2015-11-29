@@ -62,7 +62,7 @@ Details:
 
 #include "robust.h"
 
-pyramid_sor(image1, image2, max_level, min_level, iters, omega, u, v, 
+void pyramid_sor(image1, image2, max_level, min_level, iters, omega, u, v, 
 	     prev_u, prev_v, du, dv, 
 	     l1, l2, l3, s1, s2, s3, nx, ny,
 	     Ix, Iy, It, err, u_scale, v_scale, filter)
@@ -78,7 +78,7 @@ pyramid_sor(image1, image2, max_level, min_level, iters, omega, u, v,
   float *p_im1, *p_im2, *p_u, *p_v, *p2_u, *p2_v, *p_du, *p_dv;
   float *lap1, *lap2, *p_prev_u, *p_prev_v, *warp;
   float *p_s1, *p_s2, *p_s3;
-  int index, iy, ix, i, j, sizeImage, smallsize, snx, sny;
+  int index, i, j, sizeImage, smallsize, snx, sny;
   float image_abs_max();
 
   float *sanity;

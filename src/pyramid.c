@@ -56,7 +56,7 @@ Details: The two main functions are project_image and
 
 #include "robust.h"
 
-sub_sample_image(image, result, nx, ny)
+void sub_sample_image(image, result, nx, ny)
      float *image, *result;
      int nx, ny;
 {
@@ -69,7 +69,7 @@ sub_sample_image(image, result, nx, ny)
   }
 }
 
-convolve3(input,nx,ny,filter,filter_size,output,sample)
+void convolve3(input,nx,ny,filter,filter_size,output,sample)
 
   float *input, filter[3][3];
   float *output;
@@ -112,7 +112,7 @@ convolve3(input,nx,ny,filter,filter_size,output,sample)
     }
   }
 
-reduce_image(image, reduced, nx, ny)
+void reduce_image(image, reduced, nx, ny)
 
      float *image, *reduced;
      int nx, ny;
@@ -126,7 +126,7 @@ reduce_image(image, reduced, nx, ny)
 }
 
 
-reduce_flow(input, output, nx, ny)
+void reduce_flow(input, output, nx, ny)
 
      float *input, *output;
      int nx, ny;
@@ -181,7 +181,7 @@ This is a direct translation of my Connection Machine version and
 as such is not as efficient as it could be.  The second loop should
 be broken up into three loops corresponding to the three tests.
 */
-project_with_interp(image, proj, nx, ny, scale)
+void project_with_interp(image, proj, nx, ny, scale)
 
      float *image, *proj;
      float scale;
@@ -244,7 +244,7 @@ project_with_interp(image, proj, nx, ny, scale)
 
 }	  
 
-project_image(image, proj, nx, ny)
+void project_image(image, proj, nx, ny)
 
      float *image, *proj;
      int nx, ny;
@@ -255,7 +255,7 @@ project_image(image, proj, nx, ny)
 }
 
 
-project_flow(image, proj, nx, ny)
+void project_flow(image, proj, nx, ny)
 
      float *image, *proj;
      int nx, ny;

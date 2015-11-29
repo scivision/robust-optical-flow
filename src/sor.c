@@ -58,7 +58,7 @@ Details: Uses the Lorentzian robust estimator.
 
 #include "robust.h"
 
-sor(image1, image2, iters, w, u, v, prev_u, prev_v, du, dv, 
+void sor(image1, image2, iters, w, u, v, prev_u, prev_v, du, dv, 
     l1, l2, l3, s1, s2, s3, nx, ny,
     Ix, Iy, It, err, u_scale, v_scale)
 
@@ -97,7 +97,7 @@ sor(image1, image2, iters, w, u, v, prev_u, prev_v, du, dv,
 
 }
 
-sor_1_iter(grad, err, dflow, flow, prev_flow, nx, ny, 
+void sor_1_iter(grad, err, dflow, flow, prev_flow, nx, ny, 
 	   om, scale, l1, l2, l3, s1, s2, s3)
 
      float *dflow, *flow, *prev_flow, 
@@ -151,7 +151,7 @@ sor_1_iter(grad, err, dflow, flow, prev_flow, nx, ny,
 }
   
 
-sor_scale(scale, grad, nx, ny, s1, s2, s3, l1, l2, l3)
+void sor_scale(scale, grad, nx, ny, s1, s2, s3, l1, l2, l3)
      
      float *scale, *grad;
      float *s1, *s2, *s3;
@@ -206,7 +206,7 @@ float psi2(x, sigma2)
   
 
 
-inten_const(err, Ix, Iy, It, u, v, nx, ny)
+void inten_const(err, Ix, Iy, It, u, v, nx, ny)
 
      float *err, *Ix, *Iy, *It, *u, *v;
      int nx, ny;
@@ -221,7 +221,7 @@ inten_const(err, Ix, Iy, It, u, v, nx, ny)
   }
 }
 
-fix_flow(flow, nx, ny)
+void fix_flow(flow, nx, ny)
 
      float *flow;
      int nx, ny;
@@ -238,7 +238,7 @@ fix_flow(flow, nx, ny)
   }
 }
 
-fix_flow2(flow, nx, ny, max_flow)
+void fix_flow2(flow, nx, ny, max_flow)
 
      float *flow, max_flow;
      int nx, ny;
