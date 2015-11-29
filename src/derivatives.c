@@ -59,7 +59,7 @@ Details: None of these are very good.  The simple ones
 /* 
 laplacian from page 167 of Horn 
 */
-laplacian(image,lap,nx,ny)
+void laplacian(image,lap,nx,ny)
 
   float *lap, *image;
   int nx,ny;
@@ -92,7 +92,7 @@ laplacian(image,lap,nx,ny)
 /* 
 
 */
-laplacian2(image,lap,nx,ny)
+void laplacian2(image,lap,nx,ny)
 
   float *lap, *image;
   int nx,ny;
@@ -121,7 +121,7 @@ laplacian2(image,lap,nx,ny)
 
 
 
-horn_derives(image1,image2,dx,dy,dt,nx,ny)
+void horn_derives(image1,image2,dx,dy,dt,nx,ny)
 
   float *image1, *image2, *dy, *dx, *dt;
   int nx,ny;
@@ -160,7 +160,7 @@ horn_derives(image1,image2,dx,dy,dt,nx,ny)
     }
   }
   
-horn_dy(image1,image2,dy,nx,ny)
+void horn_dy(image1,image2,dy,nx,ny)
 
   float *image1, *image2, *dy;
   int nx,ny;
@@ -185,7 +185,7 @@ horn_dy(image1,image2,dy,nx,ny)
     }
   }
   
-horn_dx(image1,image2,dx,nx,ny)
+void horn_dx(image1,image2,dx,nx,ny)
 
   float *dx, *image1, *image2;
   int nx,ny;
@@ -210,7 +210,7 @@ horn_dx(image1,image2,dx,nx,ny)
   }
   
 
-horn_dt(image1,image2,dt,nx,ny)
+void horn_dt(image1,image2,dt,nx,ny)
 
   float *dt, *image1, *image2;
   int nx,ny;
