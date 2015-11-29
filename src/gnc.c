@@ -133,7 +133,7 @@ Example:
 
 # include "robust.h"
 
-main(argc, argv)
+void main(argc, argv)
  
      int argc;
      char *argv[];
@@ -143,7 +143,7 @@ main(argc, argv)
   float s1=1.0, s2=1.0, s3=1.0;
   float s1_end=1.0, s2_end=1.0, s3_end=1.0;
   float factor=0.75;
-  float s1_rate, s2_rate, s3_rate;
+//  float s1_rate, s2_rate, s3_rate;
   float omega=1.95;
   char *inpath, *outpath, *flag, *end;
   int index, from, to, im, by=1, max_level, min_level;
@@ -151,11 +151,11 @@ main(argc, argv)
   int stages = 1, st;
   float s1_factor, s2_factor;
 
-  unsigned char *uOut, *vOut;
+//  unsigned char *uOut, *vOut;
   float *dx, *dy, *dt, *u, *v;
   float *u_scale, *v_scale, *du, *dv;
   float *prev_u, *prev_v, *prev_du, *prev_dv;
-  float *prev, *curr, *lap1, *lap2, *err;
+  float *prev, *curr, *err;//*lap1, *lap2, 
   float *discont, *outliers, *sigma1, *sigma2, 
   *sigma3, *temp;
   float maxAmp;
@@ -268,7 +268,7 @@ main(argc, argv)
   }
 
 
-  fprintf(stderr, "allocating memory\n");
+  printf("allocating memory\n");
 
   sizeDeriv = nx * ny * sizeof( float );
   sizeOutput = nx * ny * sizeof( char );

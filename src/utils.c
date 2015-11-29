@@ -117,7 +117,7 @@ char *itoa(n)
 }
 
 
-error(s1, s2)
+void error(s1, s2)
  char *s1, *s2;
  {
   fprintf(stderr, "%s %s", s1, s2);
@@ -127,7 +127,7 @@ error(s1, s2)
 /* 
 read an image and return a floating point image.
 */
-read_image(image, fdIn, fnIn, nx,ny)
+void read_image(image, fdIn, fnIn, nx,ny)
      
      float *image;
      char fnIn[MAXLEN];
@@ -153,7 +153,7 @@ read_image(image, fdIn, fnIn, nx,ny)
   free(temp);
 }
 
-read_image_float(image, fnIn, nx,ny)
+void read_image_float(image, fnIn, nx,ny)
 
      float *image;
      char fnIn[MAXLEN];
@@ -174,7 +174,7 @@ read_image_float(image, fnIn, nx,ny)
 }
 
 
-read_image_float_strip(image, fdIn, fnIn, nx,ny, bytes)
+void read_image_float_strip(image, fdIn, fnIn, nx,ny, bytes)
      
      float *image;
      char fnIn[MAXLEN];
@@ -198,7 +198,7 @@ read_image_float_strip(image, fdIn, fnIn, nx,ny, bytes)
   }
 }
 
-read_image_strip_bytes(image, fnIn, nx,ny, bytes)
+void read_image_strip_bytes(image, fnIn, nx,ny, bytes)
      
      float *image;
      char *fnIn;
@@ -234,7 +234,7 @@ read_image_strip_bytes(image, fnIn, nx,ny, bytes)
   fclose(infile);
 }
 
-read_binary_image_strip_bytes(image, fdIn, fnIn, nx,ny, bytes)
+void read_binary_image_strip_bytes(image, fdIn, fnIn, nx,ny, bytes)
      
      float *image;
      char fnIn[MAXLEN];
@@ -269,7 +269,7 @@ read_binary_image_strip_bytes(image, fdIn, fnIn, nx,ny, bytes)
 }
 
 
-read_float_image(image, fdIn, fnIn, nx,ny)
+void read_float_image(image, fdIn, fnIn, nx,ny)
      
      float *image;
      char fnIn[MAXLEN];
@@ -284,7 +284,7 @@ read_float_image(image, fdIn, fnIn, nx,ny)
   }
 }
 
-read_float_image_skip_floats(image, fdIn, fnIn, nx,ny, floats)
+void read_float_image_skip_floats(image, fdIn, fnIn, nx,ny, floats)
      
      float *image;
      char fnIn[MAXLEN];
@@ -313,7 +313,7 @@ read_float_image_skip_floats(image, fdIn, fnIn, nx,ny, floats)
 copy image from to image to.
 */
 
-copy_image(to, from, nx, ny)
+void copy_image(to, from, nx, ny)
 
      float *to, *from;
      int nx, ny;
@@ -327,7 +327,7 @@ copy_image(to, from, nx, ny)
   }
 }
 
-sub_image(to, from, x, y, dx, dy, nx, ny)
+void sub_image(to, from, x, y, dx, dy, nx, ny)
 
      float *to, *from;
      int x, y, dx, dy, nx, ny;
@@ -344,7 +344,7 @@ sub_image(to, from, x, y, dx, dy, nx, ny)
 /*
 intialize image to 0.0
 */
-zero_image(image, nx, ny)
+void zero_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -358,7 +358,7 @@ zero_image(image, nx, ny)
   }
 }
 
-random_image(image, nx, ny)
+void random_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -376,7 +376,7 @@ random_image(image, nx, ny)
    take an image of size nx x ny and return one of size
    ny x nx 
 */
-rotate_image_90(image, nx, ny)
+void rotate_image_90(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -405,7 +405,7 @@ rotate_image_90(image, nx, ny)
 /* 
 add "add" to "image" 
 */
-add_image(image, add, nx, ny)
+void add_image(image, add, nx, ny)
 
      float *image, *add;
      int nx, ny;
@@ -420,7 +420,7 @@ add_image(image, add, nx, ny)
   }
 }
 
-add_scalar(image, add, nx, ny)
+void add_scalar(image, add, nx, ny)
 
      float *image, add;
      int nx, ny;
@@ -435,7 +435,7 @@ add_scalar(image, add, nx, ny)
   }
 }
 
-sub_scalar(image, add, nx, ny)
+void sub_scalar(image, add, nx, ny)
 
      float *image, add;
      int nx, ny;
@@ -450,7 +450,7 @@ sub_scalar(image, add, nx, ny)
   }
 }
 
-average_images(image1, image2, mean, nx, ny)
+void average_images(image1, image2, mean, nx, ny)
 
      float *image1, *image2, *mean;
      int nx, ny;
@@ -466,7 +466,7 @@ average_images(image1, image2, mean, nx, ny)
 }
 
 /* subtract "sub" from "image" */
-subtract_image(image, sub, nx, ny)
+void subtract_image(image, sub, nx, ny)
 
      float *image, *sub;
      int nx, ny;
@@ -481,7 +481,7 @@ subtract_image(image, sub, nx, ny)
   }
 }
 
-abs_image(image, nx, ny)
+void abs_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -496,7 +496,7 @@ abs_image(image, nx, ny)
   }
 }
 
-square_image(image, nx, ny)
+void square_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -511,7 +511,7 @@ square_image(image, nx, ny)
   }
 }
 
-sqrt_image(image, nx, ny)
+void sqrt_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -527,7 +527,7 @@ sqrt_image(image, nx, ny)
 }
 
 
-one_over_image(image, nx, ny)
+void one_over_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -548,7 +548,7 @@ one_over_image(image, nx, ny)
 }
 
 
-invert_image(image, nx, ny)
+void invert_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -565,7 +565,7 @@ invert_image(image, nx, ny)
 }
 
 
-invert_image2(image, nx, ny, maxval)
+void invert_image2(image, nx, ny, maxval)
 
      float *image, maxval;
      int nx, ny;
@@ -584,7 +584,7 @@ invert_image2(image, nx, ny, maxval)
 /* 
 divide image by a float
 */
-divide_image(image, divisor, nx, ny)
+void divide_image(image, divisor, nx, ny)
 
      float *image, divisor;
      int nx, ny;
@@ -600,7 +600,7 @@ divide_image(image, divisor, nx, ny)
 }
 
 
-mul_image_val(image1, val, nx, ny)
+void mul_image_val(image1, val, nx, ny)
 
      float *image1, val;
      int nx, ny;
@@ -615,7 +615,7 @@ mul_image_val(image1, val, nx, ny)
   }
 }
 
-mul_images(image1, image2, nx, ny)
+void mul_images(image1, image2, nx, ny)
 
      float *image1, *image2;
      int nx, ny;
@@ -630,7 +630,7 @@ mul_images(image1, image2, nx, ny)
   }
 }
 
-mask_image(image, mask, mval, dval, nx, ny)
+void mask_image(image, mask, mval, dval, nx, ny)
 
      float *image, *mask, mval, dval;
      int nx, ny;
@@ -648,7 +648,7 @@ mask_image(image, mask, mval, dval, nx, ny)
 
 
   
-quantize(image, nx, ny, quant, maxAmp)
+void quantize(image, nx, ny, quant, maxAmp)
  float *image, *maxAmp;
  unsigned char *quant;
  int nx,ny;
@@ -674,7 +674,7 @@ quantize(image, nx, ny, quant, maxAmp)
  }
 
   
-scale_image(image, nx, ny, quant)
+void scale_image(image, nx, ny, quant)
  float *image;
  unsigned char *quant;
  int nx,ny;

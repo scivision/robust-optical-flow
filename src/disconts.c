@@ -68,7 +68,9 @@ void disconts(u, v, prev_u, prev_v, du, dv,
 {
   float image_abs_max(), variance(), mean();
   int index, nx_max, ny_max, i, j;
-  float t1, t2, t3;
+  float t1; 
+//  float t2;
+  float t3;
 
   /* compute disconts */
   inten_const(err, Ix, Iy, It, du, dv, nx, ny);
@@ -76,7 +78,7 @@ void disconts(u, v, prev_u, prev_v, du, dv,
     for(j=1;j<nx-1;j++){
       index = i*nx + j;
       t1 = s1[index] * ROOT2; 
-      t2 = s2[index] * ROOT2; 
+//      t2 = s2[index] * ROOT2; 
       t3 = s3[index] * ROOT2;
       /* data and temporal disconts */
       if ((abs(err[index]) >= t1) ||
@@ -113,7 +115,8 @@ void temporal_outliers(u, v, prev_u, prev_v, du, dv,
 {
   float image_abs_max(), variance(), mean();
   int index, nx_max, ny_max, i, j;
-  float t1, t2, t3;
+//  float t1, t2, 
+  float t3;
 
   for(i=1;i<ny-1;i++){
     for(j=1;j<nx-1;j++){
