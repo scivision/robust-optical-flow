@@ -66,7 +66,7 @@ Backwards warp of "image" by (u,v).  The result is stored in "warped".
 Pixel values are determined by linearly interpolating the warped image.
 While this is fairly fast, a better interpolation may be desirable.
 */
-warp_image(image, warped, u, v, nx, ny)
+void warp_image(image, warped, u, v, nx, ny)
 
      float *image, *warped, *u, *v;
      int nx, ny;

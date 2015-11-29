@@ -70,7 +70,7 @@ float image_mean(image, nx, ny)
   return(sum);
 }
 
-subtract_image_value(image, sub, nx, ny)
+void subtract_image_value(image, sub, nx, ny)
 
      float *image, sub;
      int nx, ny;
@@ -86,7 +86,7 @@ subtract_image_value(image, sub, nx, ny)
 }
 
 
-add_image_value(image, add, nx, ny)
+void add_image_value(image, add, nx, ny)
 
      float *image, add;
      int nx, ny;
@@ -102,7 +102,7 @@ add_image_value(image, add, nx, ny)
 }
 
 
-band_pass_image(image, nx, ny)
+void band_pass_image(image, nx, ny)
 
      float *image;
      int nx, ny;
@@ -111,14 +111,14 @@ band_pass_image(image, nx, ny)
 }
 
 
-average_neighborhood(input,output,nx,ny,size)
+void average_neighborhood(input,output,nx,ny,size)
 
   float *input, *output;
   int nx,ny, size;
   {
     float val;
-    int i,ii, ir, j, jj, jr, i0, j0, ik;
-    int f_off, si, sj;
+    int i,ii, ir, j, jj, jr;
+    int f_off;
 
     f_off = (int)floor((size - 1)/2.0);
 
@@ -138,7 +138,7 @@ average_neighborhood(input,output,nx,ny,size)
   }
 
 
-div_images(image1, image2, nx, ny)
+void div_images(image1, image2, nx, ny)
 
      float *image1, *image2;
      int nx, ny;
