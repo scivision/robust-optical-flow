@@ -105,11 +105,11 @@ float *load_image(path, image)
   }
 
   strcat(strcat(dataIn, path), datatail);
-  fprintf(stderr, "dataIn: %s,  path: %s  \n\n", dataIn, path); 
+  printf("dataIn: %s,  path: %s  \n\n", dataIn, path); 
   if ( (fdIn = open(dataIn,0)) == -1 ) {
     strcpy(dataIn, path);
     if ( (fdIn = open(path,0)) == -1 ) {
-      error("Can't open input files, load_image %s %s", dataIn, path);
+      error("Can't open input files, load_image", dataIn);
     }
   }
 
@@ -135,7 +135,7 @@ float *load_image(path, image)
   return(image);
 }
 
-load_image2(path, image)
+void load_image2(path, image)
      
      char *path;
      float *image;
@@ -165,11 +165,11 @@ load_image2(path, image)
   }
 
   strcat(strcat(dataIn, path), datatail);
-  fprintf(stderr, "dataIn: %s,  path: %s  \n\n", dataIn, path); 
+  printf("dataIn: %s,  path: %s  \n\n", dataIn, path); 
   if ( (fdIn = open(dataIn,0)) == -1 ) {
     strcpy(dataIn, path);
     if ( (fdIn = open(path,0)) == -1 ) {
-      error("Can't open input files, load_image %s %s", dataIn, path);
+      error("Can't open input files, load_image ", dataIn);
     }
   }
 
@@ -196,7 +196,7 @@ load_image2(path, image)
 Save an image as raw 8-bit byte data with a header to allow it
 to be reconstructed by load_image.
 */
-save_image(path, image, nx, ny)
+void save_image(path, image, nx, ny)
      
      char *path;
      float *image;
@@ -265,7 +265,7 @@ save_image(path, image, nx, ny)
   close(fdOut);
 }
 
-save_pgm(path, image, nx, ny)
+void save_pgm(path, image, nx, ny)
      
      char *path;
      float *image;
@@ -327,7 +327,7 @@ save_pgm(path, image, nx, ny)
 }
 
 
-save_image_no_scale(path, image, nx, ny)
+void save_image_no_scale(path, image, nx, ny)
      
      char *path;
      float *image;
@@ -373,7 +373,7 @@ save_image_no_scale(path, image, nx, ny)
   fclose(outfile);
 }
 
-save_pgm_no_scale(path, image, nx, ny)
+void save_pgm_no_scale(path, image, nx, ny)
      
      char *path;
      float *image;
@@ -419,7 +419,7 @@ save_pgm_no_scale(path, image, nx, ny)
   fclose(outfile);
 }
 
-save_pgm_scale(path, image, nx, ny, min_val, max_val)
+void save_pgm_scale(path, image, nx, ny, min_val, max_val)
      
      char *path;
      float *image, min_val, max_val;
@@ -481,7 +481,7 @@ save_pgm_scale(path, image, nx, ny, min_val, max_val)
 }
 
 
-save_image_scale(path, image, nx, ny, imin, imax)
+void save_image_scale(path, image, nx, ny, imin, imax)
      
      char *path;
      float *image, imin, imax;
@@ -562,7 +562,7 @@ save_image_scale(path, image, nx, ny, imin, imax)
   close(fdOut);
 }
  
-save_image_float(path, image, nx, ny)
+void save_image_float(path, image, nx, ny)
      
      char *path;
      float *image;

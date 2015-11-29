@@ -17,4 +17,26 @@
 void warp_image(float *, float *, float *, float *, int , int);
 
 // derivatives.c 
+void horn_derives(float *, float *, float *,float *, float *, int, int);
 void horn_dt(float *, float *, float *, int, int);
+void laplacian2(float *, float *,int,int);
+
+// filter.c
+void add_image_value(float *, float, int, int);
+
+// pyramid.c
+void project_flow(float *, float *, int, int);
+void reduce_flow(float *, float *, int, int);
+void reduce_image(float *, float *,int, int);
+
+// sor.c
+void fix_flow(float *, int, int);
+void inten_const(float *, float *, float *,float *, float *, float *, int, int);
+void sor(float *, float *, int, float, float *, float *, float *, float *, float *, float *, float, float, float,float *, float *, float *, int, int, float *, float *, float *, float *, float *, float *);
+void sor_1_iter(float *, float *, float *, float *, float *, int, int, float, float *,float, float, float,float *, float *, float *);
+void sor_scale(float *, float *, int, int, float *, float *, float *,float, float, float);
+
+// utils.c
+void add_image(float *, float *, int, int);
+void copy_image(float *, float *, int, int);
+void error(char *, char *);

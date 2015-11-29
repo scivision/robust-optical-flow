@@ -81,11 +81,6 @@ void pyramid_sor(image1, image2, max_level, min_level, iters, omega, u, v,
   int index, i, j, sizeImage, smallsize, snx, sny;
   float image_abs_max();
 
-  float *sanity;
-  unsigned char *uOut;
-  char *fnOutu;
-  int fdOutu, sizeOutput;
-
   fprintf(stderr," nx %d\n", nx); 
 
   sizeImage = nx * ny * sizeof ( float );

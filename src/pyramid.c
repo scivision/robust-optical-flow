@@ -76,7 +76,7 @@ void convolve3(input,nx,ny,filter,filter_size,output,sample)
   int nx,ny, filter_size, sample;
   {
     float val;
-    int i,ii, ir, j, jj, jr, i0, j0, ik;
+    int i,ii, ir, j, jj, jr;// i0, j0, ik;
     int snx, sny, f_off, si, sj;
 
     f_off = (int)floor((filter_size - 1)/2.0);
@@ -135,7 +135,7 @@ void reduce_flow(input, output, nx, ny)
 			  {0.125, 0.25, 0.125},
 			  {0.0625, 0.125, 0.0625}};
   float val;
-  int i,ii, ir, j, jj, jr, i0, j0, ik;
+  int i,ii, ir, j, jj, jr; // i0, j0, ik;
   int snx, sny, f_off, si, sj;
   int sample = 2, filter_size=3;
 
