@@ -187,41 +187,41 @@ main(argc, argv)
     flag = ++argv[0];
     if (strcmp(flag, "l1") == 0) {
       lambda1 = (float) atof(*++argv);
-      fprintf(stderr, "l1: %f\n", lambda1);
+      printf("l1: %f\n", lambda1);
     }
     else if (strcmp(flag, "l2") == 0) {
       lambda2 =  (float) atof(*++argv);
-      fprintf(stderr, "l2: %f\n", lambda2);
+      printf("l2: %f\n", lambda2);
     }
     else if (strcmp(flag, "l3") == 0) {
       lambda3 =  (float) atof(*++argv);
-      fprintf(stderr, "l3: %f\n", lambda3);
+      printf("l3: %f\n", lambda3);
     }
       /* sigma start */
     else if (strcmp(flag, "S1") == 0) {
       s1 =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "S1: %f\n", s1);
+      printf("S1: %f\n", s1);
     }
     else if (strcmp(flag, "S2") == 0) {
       s2 =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "S2: %f\n", s2);
+      printf("S2: %f\n", s2);
     }
     else if (strcmp(flag, "S3") == 0) {
       s3 =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "S3: %f\n", s3);
+      printf("S3: %f\n", s3);
     }
       /*  sigma end */
     else if (strcmp(flag, "s1") == 0) {
       s1_end =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "s1: %f\n", s1_end);
+      printf("s1: %f\n", s1_end);
     }
     else if (strcmp(flag, "s2") == 0) {
       s2_end =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "s2: %f\n", s2_end);
+      printf("s2: %f\n", s2_end);
     }
     else if (strcmp(flag, "s3") == 0) {
       s3_end =  (float) atof(*++argv) / ROOT2;
-      fprintf(stderr, "s3: %f\n", s3_end);
+      printf("s3: %f\n", s3_end);
     }
       /* other */
     else if (strcmp(flag, "by") == 0) {
@@ -234,35 +234,35 @@ main(argc, argv)
     }
     else if (strcmp(flag, "nx") == 0) {
       nx = atoi(*++argv);
-      fprintf(stderr, "nx: %d\n", nx);
+      printf("nx: %d\n", nx);
     }
     else if (strcmp(flag, "ny") == 0) {
       ny = atoi(*++argv);
-      fprintf(stderr, "ny: %d\n", ny);
+      printf("ny: %d\n", ny);
     }
     else if (strcmp(flag, "iters") == 0) {
       iters = atoi(*++argv);
-      fprintf(stderr, "iters: %d\n", iters);
+      printf("iters: %d\n", iters);
     }
     else if (strcmp(flag, "stages") == 0) {
       stages = atoi(*++argv);
-      fprintf(stderr, "stages: %d\n", stages);
+      printf("stages: %d\n", stages);
     }
     else if (strcmp(flag, "end") == 0) {
       end = *++argv;
-      fprintf(stderr, "end: %s\n", end);
+      printf("end: %s\n", end);
     }
     else if (strcmp(flag, "f") == 0) {
       factor =  (float) atof(*++argv);
-      fprintf(stderr, "scale factor: %f\n", factor);
+      printf("scale factor: %f\n", factor);
     }
     else if (strcmp(flag, "F") == 0) {
       filter = atoi(*++argv);
-      fprintf(stderr, "filter: %d\n", filter);
+      printf("filter: %d\n", filter);
     }
     else if (strcmp(flag, "skip") == 0) {
       skip = atoi(*++argv);
-      fprintf(stderr, "skip: %d\n", skip);
+      printf("skip: %d\n", skip);
     }
     argc = argc -1;
   }
