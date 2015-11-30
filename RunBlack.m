@@ -57,7 +57,7 @@ v = int16(imread(vfn)) - bzero;
 
 
 %% plot
-downsamp = 4; %arbitrary
+downsamp = 6; %arbitrary
 
 [x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
 
@@ -68,6 +68,7 @@ colormap gray
 hold on
 quiver(x,y,...
        u(1:downsamp:end,1:downsamp:end),v(1:downsamp:end,1:downsamp:end))
-title('flow vectors')
+title('Robust Optical flow vectors, Black method')
+axis('off')
 
 end %function
