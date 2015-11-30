@@ -59,14 +59,12 @@ v = int16(imread(vfn)) - bzero;
 %% plot
 downsamp = 6; %arbitrary
 
-[x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
-
 figure(10),clf(10)
 
 imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
 colormap gray
 hold on
-quiver(x,y,...
+quiver(1:downsamp:rowcol(2), 1:downsamp:rowcol(1),...
        u(1:downsamp:end,1:downsamp:end),v(1:downsamp:end,1:downsamp:end))
 title('Robust Optical flow vectors, Black method')
 axis('off')
