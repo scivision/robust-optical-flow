@@ -1,4 +1,4 @@
-function RunBlack(pgmstem,varargin)
+function [u,v]=RunBlack(pgmstem,varargin)
 %%
 % Runs Michael Black GNC dense robust optical flow estimation
 % from a convenient Matlab interface.
@@ -34,7 +34,7 @@ for ii = U.frameind(1):U.frameind(end)-1
     if err==127
         disp(msg)
         error('you must one-time compile gnc by typing in Terminal:   cd src; make')
-    elseif err==5 %normal?
+    elseif err==0 %normal
     else
         disp(msg)
         break
@@ -51,21 +51,21 @@ ufn = [fnOut,'u-4.pgm'];
 vfn = [fnOut,'v-4.pgm'];
 display(['loading ',ufn,' for u flow'])
 u = int32(imread(ufn)) - bzero;
-v = int32(imread(vfm)) - bzero;
+v = int32(imread(vfn)) - bzero;
 
 
 %% plot
 downsamp = 4; %arbitrary
 
-[x,y] = meshgrid(1:downsamp:nx,1:downsamp:ny);
+[x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
 
 figure(10),clf(10)
 
-imagesc(imread([pgmstem,'1.pgm']))
+imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
 colormap gray
 hold on
 quiver(x,y,...
        u(1:downsamp:end,1:downsamp:end),v(1:downsamp:end,1:downsamp:end))
-
+title('flow vectors')
 
 end %function
