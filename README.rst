@@ -7,6 +7,13 @@ Helper code used with `Michael Black's Robust optical flow code <http://cs.brown
 If you have interest in using Black's code with Matlab or Python, please start an 
 issue and I can make this code more user friendly.
 
+Install
+=======
+::
+
+    cd src
+    make
+
 Functions
 =========
 GNC is the C program used for Robust Estimation of Dense Optical Flow by Michael Black.
