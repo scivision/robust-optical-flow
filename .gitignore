@@ -1,3 +1,7 @@
 *.flt
 *.pgm
 *.hdr
+*.jpg
+*.png
+src/gnc
+*.gz
