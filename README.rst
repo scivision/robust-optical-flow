@@ -14,6 +14,16 @@ Install
     cd src
     make
 
+Example
+=======
+In Matlab/Octave::
+
+    [u,v] = RunBlack('data/pepsi');
+
+You will see this plot:
+
+.. image:: results/quiver_pepsi.jpg
+
 Functions
 =========
 GNC is the C program used for Robust Estimation of Dense Optical Flow by Michael Black.
