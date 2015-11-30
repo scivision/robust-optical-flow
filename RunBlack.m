@@ -50,8 +50,10 @@ bzero = 128;  % NOTE: it appears that for the unsigned 8-bit output, 128 is zero
 ufn = [fnOut,'u-4.pgm'];
 vfn = [fnOut,'v-4.pgm'];
 display(['loading ',ufn,' for u flow'])
-u = int32(imread(ufn)) - bzero;
-v = int32(imread(vfn)) - bzero;
+%NOTE: have to upcast by one size (int16) to account for initial uint8
+%values that would overflow int8. RAM is cheap.
+u = int16(imread(ufn)) - bzero; 
+v = int16(imread(vfn)) - bzero;
 
 
 %% plot
