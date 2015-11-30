@@ -58,7 +58,7 @@ float image_mean(image, nx, ny)
      int nx, ny;
 {
   int index, i, j;
-  float sum;
+  float sum=0.0;
 
   for(i=0;i<ny;i++){
     for(j=0;j<nx;j++){
@@ -86,10 +86,8 @@ void subtract_image_value(image, sub, nx, ny)
 }
 
 
-void add_image_value(image, add, nx, ny)
+void add_image_value(float *image, float add, int nx, int ny)
 
-     float *image, add;
-     int nx, ny;
 {
   int index, i, j;
 

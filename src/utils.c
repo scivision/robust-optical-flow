@@ -51,7 +51,8 @@ Details:
 # include       <stdio.h>
 # include       <math.h>
 # include       <string.h>
-#include <stdlib.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 #include "robust.h"
   
@@ -134,7 +135,7 @@ void read_image(image, fdIn, fnIn, nx,ny)
      int fdIn, nx, ny;
 {
   unsigned char *temp;
-  int index, i, j, iy, i0, sizeInput;
+  int index, i, j, i0, sizeInput;
 
   sizeInput = nx * ny * sizeof( char );
   if ((temp = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
@@ -159,7 +160,7 @@ void read_image_float(image, fnIn, nx,ny)
      char fnIn[MAXLEN];
      int nx, ny;
 {
-  int index, i, j, iy, i0, sizeInput;
+  int sizeInput,err;
   FILE *infile;
 
   infile = fopen(fnIn, "rb");
@@ -168,7 +169,7 @@ void read_image_float(image, fnIn, nx,ny)
   }
 
   sizeInput = nx * ny * sizeof( float );
-  fread((float *) image, sizeInput, 1, infile);
+  err=fread((float *) image, sizeInput, 1, infile);
 
   fclose(infile);
 }
@@ -181,7 +182,7 @@ void read_image_float_strip(image, fdIn, fnIn, nx,ny, bytes)
      int fdIn, nx, ny, bytes;
 {
   unsigned char *c;
-  int index, i, j, iy, i0, sizeInput;
+  int i0, sizeInput;
 
   sizeInput = bytes * sizeof( char );
   if ((c = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
@@ -206,7 +207,7 @@ void read_image_strip_bytes(image, fnIn, nx,ny, bytes)
 {
   unsigned char *temp, *c;
   FILE *infile;
-  int index, i, j, iy, i0, sizeInput;
+  int index, i, j,  sizeInput,err;
 
   infile = fopen(fnIn, "rb");
   if (infile == NULL) {
@@ -216,12 +217,12 @@ void read_image_strip_bytes(image, fnIn, nx,ny, bytes)
   sizeInput = bytes * sizeof( char );
   if ((c = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  fread((char *) c, sizeInput, 1, infile);
+  err=fread((char *) c, sizeInput, 1, infile);
 
   sizeInput = nx * ny * sizeof( char );
   if ((temp = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  fread((char *) temp, sizeInput, 1, infile);
+  err=fread((char *) temp, sizeInput, 1, infile);
 
   for(i=0;i<ny;i++){
     for(j=0;j<nx;j++){
@@ -241,7 +242,7 @@ void read_binary_image_strip_bytes(image, fdIn, fnIn, nx,ny, bytes)
      int fdIn, nx, ny, bytes;
 {
   unsigned char *temp, *c;
-  int index, i, j, iy, i0, sizeInput;
+  int index, i, i0, j, sizeInput;
 
   sizeInput = bytes * sizeof( char );
   if ((c = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
@@ -275,7 +276,7 @@ void read_float_image(image, fdIn, fnIn, nx,ny)
      char fnIn[MAXLEN];
      int fdIn, nx, ny;
 {
-  int i, j, iy, i0, sizeInput;
+  int i0, sizeInput;
 
   sizeInput = nx * ny * sizeof( float );
   if ( sizeInput != (i0 = read(fdIn,(float *) image, sizeInput)) ) {
@@ -290,7 +291,7 @@ void read_float_image_skip_floats(image, fdIn, fnIn, nx,ny, floats)
      char fnIn[MAXLEN];
      int fdIn, nx, ny, floats;
 {
-  int i, j, iy, i0, sizeInput;
+  int i0, sizeInput;
   float *f;
 
   sizeInput = floats * sizeof( float );
@@ -554,7 +555,6 @@ void invert_image(image, nx, ny)
      int nx, ny;
 {
   int index, i, j;
-  register float tmp;
 
   for(i=0;i<ny;i++){
     for(j=0;j<nx;j++){
@@ -653,9 +653,8 @@ void quantize(image, nx, ny, quant, maxAmp)
  unsigned char *quant;
  int nx,ny;
  {
-  float val, dc, scl;
-  float im_min, im_max;
-  int i,ix,iy;
+  float val,  scl;
+  int ix,iy;
   unsigned char colour();
  
   *maxAmp = 0.0;
@@ -679,9 +678,8 @@ void scale_image(image, nx, ny, quant)
  unsigned char *quant;
  int nx,ny;
  {
-  float val, dc, scl, min_val, max_val;
-  float im_min, im_max;
-  int i,ix,iy;
+  float val, scl, min_val, max_val;
+  int ix,iy;
   unsigned char colour();
  
   min_val = image[0];

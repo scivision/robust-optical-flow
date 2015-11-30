@@ -58,16 +58,11 @@ Details: Uses the Lorentzian robust estimator.
 
 #include "robust.h"
 
-void sor(image1, image2, iters, w, u, v, prev_u, prev_v, du, dv, 
-    l1, l2, l3, s1, s2, s3, nx, ny,
-    Ix, Iy, It, err, u_scale, v_scale)
-
-     float *Ix, *Iy, *It, *u, *v, *u_scale, 
-       *v_scale, *du, *dv, *prev_u, *prev_v, 
-       *image1, *image2, *err;
-     int iters, nx, ny;
-     float w, l1, l2, l3;
-     float *s1, *s2, *s3;
+void sor(float *image1, float *image2, int iters, float w, 
+         float *u, float *v, float *prev_u, float *prev_v, float *du, float *dv, 
+         float l1, float l2, float l3, float *s1, float *s2, float *s3, 
+         int nx, int ny, float *Ix, float *Iy, float *It, float *err, 
+         float *u_scale, float *v_scale)
 
 {
   float image_abs_max(), variance(), mean(), rms();
@@ -97,14 +92,10 @@ void sor(image1, image2, iters, w, u, v, prev_u, prev_v, du, dv,
 
 }
 
-void sor_1_iter(grad, err, dflow, flow, prev_flow, nx, ny, 
-	   om, scale, l1, l2, l3, s1, s2, s3)
+void sor_1_iter(float *grad, float *err, float *dflow, float *flow, float *prev_flow, 
+                int nx, int ny, float om, float *scale, 
+                float l1, float l2, float l3, float *s1, float *s2, float *s3)
 
-     float *dflow, *flow, *prev_flow, 
-       *grad, *err, *scale;
-     float om, l1, l2, l3;
-     float *s1, *s2, *s3;
-     int nx, ny;
 {
   int index, i,j;
   float new_flow, ts2;
@@ -151,12 +142,10 @@ void sor_1_iter(grad, err, dflow, flow, prev_flow, nx, ny,
 }
   
 
-void sor_scale(scale, grad, nx, ny, s1, s2, s3, l1, l2, l3)
-     
-     float *scale, *grad;
-     float *s1, *s2, *s3;
-     float l1, l2, l3;
-     int nx, ny;
+void sor_scale(float *scale, float *grad, int nx, int ny, 
+               float *s1, float *s2, float *s3, 
+               float l1, float l2, float l3)
+
 {
   int index, i, j;
   float tgrad, ts1, ts2, ts3;

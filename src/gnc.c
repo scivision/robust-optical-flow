@@ -133,10 +133,7 @@ Example:
 
 # include "robust.h"
 
-void main(argc, argv)
- 
-     int argc;
-     char *argv[];
+int main(int argc, char **argv)
 
 {
   float lambda1=1.0, lambda2=1.0, lambda3=0.0, l3=0.05;
@@ -146,7 +143,7 @@ void main(argc, argv)
 //  float s1_rate, s2_rate, s3_rate;
   float omega=1.95;
   char *inpath, *outpath, *flag, *end;
-  int index, from, to, im, by=1, max_level, min_level;
+  int index, from, to, by=1, max_level, min_level;
   int iters = 5, nx=128, ny=128, filter=1, skip=0;
   int stages = 1, st;
   float s1_factor, s2_factor;
@@ -156,14 +153,11 @@ void main(argc, argv)
   float *u_scale, *v_scale, *du, *dv;
   float *prev_u, *prev_v, *prev_du, *prev_dv;
   float *prev, *curr, *err;//*lap1, *lap2, 
-  float *discont, *outliers, *sigma1, *sigma2, 
-  *sigma3, *temp;
-  float maxAmp;
-  int fdOutu, fdOutv, fdOutdiscont, fdOuttemp;
-  int sizeInput, imageSize, sizeDeriv, sizeOutput;
-  int start, n, i, j, i0, ix, iy, ixf, iyf, itmp, icount;
+  float *discont, *outliers, *sigma1, *sigma2, *sigma3;
+  int sizeDeriv, sizeOutput;
+  int i, j;
   char fnCurr[MAXLEN];
-  char fnOutu[MAXLEN], fnOutv[MAXLEN], fnOutdiscont[MAXLEN], fnOuttemp[MAXLEN];
+  char fnOutu[MAXLEN], fnOutv[MAXLEN], fnOutdiscont[MAXLEN];
   float image_abs_max(), *load_image(); 
   double atof(); 
   char *itoa();
