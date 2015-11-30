@@ -59,6 +59,8 @@ Details: My images have the following format.
 # include       <math.h>
 # include       <string.h>
 # include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
 
 
 #include "robust.h"
@@ -82,7 +84,7 @@ float *load_image(path, image)
 {
   unsigned char *temp;
   char dataIn[MAXLEN], headIn[MAXLEN], buff[MAXLEN];
-  int index, fdIn, i, j, iy, i0, sizeInput, sizeImage;
+  int index, fdIn, i, j,  i0, sizeInput, sizeImage,err;
   int nx, ny;
   float min, max, scale;
   char *datatail=".bin", *headtail=".hdr";
@@ -90,7 +92,7 @@ float *load_image(path, image)
   strcpy(headIn, "");
   strcpy(dataIn, "");
   strcat(strcat(headIn, path), headtail);
-  fprintf(stderr, "headIn: %s\n", headIn);
+  printf("headIn: %s\n", headIn);
   if ( (fdIn = open(headIn,0)) == -1 ) {
     nx = ROWS;
     ny = COLS;
@@ -98,10 +100,10 @@ float *load_image(path, image)
     min = 0.0;
   }
   else {
-    read(fdIn, buff, MAXLEN);
+    err=read(fdIn, buff, MAXLEN);
     sscanf(buff, "%d %d %f %f %f", &nx, &ny, &min, &max, &scale);
-    fprintf(stderr, "nx: %d\n", nx);
-    fprintf(stderr, "ny: %d\n", ny);
+    printf("nx: %d\n", nx);
+    printf("ny: %d\n", ny);
   }
 
   strcat(strcat(dataIn, path), datatail);
@@ -142,7 +144,7 @@ void load_image2(path, image)
 {
   unsigned char *temp;
   char dataIn[MAXLEN], headIn[MAXLEN], buff[MAXLEN];
-  int index, fdIn, i, j, iy, i0, sizeInput, sizeImage;
+  int index, fdIn, i, j, i0, sizeInput, sizeImage,err;
   int nx, ny;
   float min, max, scale;
   char *datatail=".bin", *headtail=".hdr";
@@ -150,7 +152,7 @@ void load_image2(path, image)
   strcpy(headIn, "");
   strcpy(dataIn, "");
   strcat(strcat(headIn, path), headtail);
-  fprintf(stderr, "headIn: %s\n", headIn);
+  printf("headIn: %s\n", headIn);
   if ( (fdIn = open(headIn,0)) == -1 ) {
     nx = ROWS;
     ny = COLS;
@@ -158,7 +160,7 @@ void load_image2(path, image)
     min = 0.0;
   }
   else {
-    read(fdIn, buff, MAXLEN);
+    err=read(fdIn, buff, MAXLEN);
     sscanf(buff, "%d %d %f %f %f", &nx, &ny, &min, &max, &scale);
     fprintf(stderr, "nx: %d\n", nx);
     fprintf(stderr, "ny: %d\n", ny);
@@ -202,8 +204,8 @@ void save_image(path, image, nx, ny)
      float *image;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, fdOut, i, j, iy, ix, i0, sizeOutput, sizeImage;
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, fdOut, iy, ix,sizeOutput, err;
   float min_val, max_val, scale, val;
   char *datatail=".bin", *headtail=".hdr";
   unsigned char *quant;
@@ -258,7 +260,7 @@ void save_image(path, image, nx, ny)
    }
 
 /*  fprintf(stderr, "writing\n");  */
-  write(fdOut, (char *) quant, sizeOutput);
+  err=write(fdOut, (char *) quant, sizeOutput);
 
 /*  fprintf(stderr, "done\n");  */
   free(quant);
@@ -271,10 +273,9 @@ void save_pgm(path, image, nx, ny)
      float *image;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, i, j, iy, ix, i0, sizeOutput, sizeImage;
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, iy, ix, sizeOutput;
   float min_val, max_val, scale, val;
-  char *datatail=".bin", *headtail=".hdr";
   char strcompress[2*MAXLEN];
   unsigned char *quant;
   FILE *outfile;
@@ -333,10 +334,9 @@ void save_image_no_scale(path, image, nx, ny)
      float *image;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, fdOut, i, j, iy, ix, i0, sizeOutput, sizeImage;
-  float min_val, max_val, scale, val;
-  char *datatail=".bin", *headtail=".hdr";
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, iy, ix, sizeOutput;
+  char *datatail=".bin";
   unsigned char *quant;
   FILE *outfile;
  
@@ -379,10 +379,8 @@ void save_pgm_no_scale(path, image, nx, ny)
      float *image;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, i, j, iy, ix, i0, sizeOutput, sizeImage;
-  float min_val, max_val, scale, val;
-  char *datatail=".bin", *headtail=".hdr";
+  char dataOut[MAXLEN];
+  int index, iy, ix, sizeOutput;
   char strcompress[2*MAXLEN];
   unsigned char *quant;
   FILE *outfile;
@@ -425,13 +423,11 @@ void save_pgm_scale(path, image, nx, ny, min_val, max_val)
      float *image, min_val, max_val;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, fdOut, i, j, iy, ix, i0, sizeOutput, sizeImage;
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, fdOut, iy, ix, sizeOutput, err;
   float scale, val;
-  char *datatail=".bin", *headtail=".hdr";
   char strcompress[2*MAXLEN];
   unsigned char *quant;
-  FILE *outfile;
   int HEADER;
  
   strcpy(headOut, "");
@@ -473,7 +469,7 @@ void save_pgm_scale(path, image, nx, ny, min_val, max_val)
    }
 
 /*  fprintf(stderr, "writing\n");  */
-  write(fdOut, (char *) quant, sizeOutput);
+ err= write(fdOut, (char *) quant, sizeOutput);
 
 /*  fprintf(stderr, "done\n");  */
   free(quant);
@@ -487,9 +483,9 @@ void save_image_scale(path, image, nx, ny, imin, imax)
      float *image, imin, imax;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, fdOut, i, j, iy, ix, i0, sizeOutput, sizeImage;
-  float min_val, max_val, scale, val;
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, fdOut, iy, ix, sizeOutput,err;
+  float scale, val;
   char *datatail=".bin", *headtail=".hdr";
   unsigned char *quant;
   FILE *outfile;
@@ -556,7 +552,7 @@ void save_image_scale(path, image, nx, ny, imin, imax)
      quant[index] = ROUND(val);
    }
 
-  write(fdOut, (char *) quant, sizeOutput);
+  err=write(fdOut, (char *) quant, sizeOutput);
 
   free(quant);
   close(fdOut);
@@ -568,9 +564,9 @@ void save_image_float(path, image, nx, ny)
      float *image;
      int nx, ny;
 {
-  char dataOut[MAXLEN], headOut[MAXLEN], buff[MAXLEN];
-  int index, fdOut, i, j, iy, ix, i0, sizeOutput, sizeImage;
-  float min_val, max_val, scale, val;
+  char dataOut[MAXLEN], headOut[MAXLEN];
+  int index, fdOut, iy, ix, sizeOutput, err;
+  float min_val, max_val;
   char *datatail=".flt", *headtail=".hdr";
   FILE *outfile;
  
@@ -603,7 +599,7 @@ void save_image_float(path, image, nx, ny)
       error("Can't open output file, (in save_image)", dataOut);
 
 /*  fprintf(stderr, "writing\n");  */
-  write(fdOut, (float *) image , sizeOutput);
+  err=write(fdOut, (float *) image , sizeOutput);
 
   close(fdOut);
 }

@@ -62,17 +62,10 @@ Details:
 
 #include "robust.h"
 
-void pyramid_sor(image1, image2, max_level, min_level, iters, omega, u, v, 
-	     prev_u, prev_v, du, dv, 
-	     l1, l2, l3, s1, s2, s3, nx, ny,
-	     Ix, Iy, It, err, u_scale, v_scale, filter)
-
-     float *Ix, *Iy, *It, *u, *v, *u_scale;
-     float *v_scale, *du, *dv, *prev_u, *prev_v;
-     float *image1, *image2, *err;
-     int min_level, max_level, iters, nx, ny, filter;
-     float omega, l1, l2, l3;
-     float *s1, *s2, *s3;
+void pyramid_sor(float *image1, float *image2, int max_level, int min_level, int iters, float omega, float *u, float *v, 
+	     float *prev_u, float *prev_v, float *du, float *dv, 
+	     float l1, float l2, float l3, float *s1, float *s2, float *s3, int nx, int ny,
+	     float *Ix, float *Iy, float *It, float *err, float *u_scale, float *v_scale, int filter)
 
 {
   float *p_im1, *p_im2, *p_u, *p_v, *p2_u, *p2_v, *p_du, *p_dv;

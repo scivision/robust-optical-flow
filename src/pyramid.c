@@ -54,6 +54,7 @@ Details: The two main functions are project_image and
 # include       <math.h>
 # include       <string.h>
 
+
 #include "robust.h"
 
 void sub_sample_image(image, result, nx, ny)
