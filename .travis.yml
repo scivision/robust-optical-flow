@@ -1,0 +1,26 @@
+language: c
+
+notifications:
+  email: false
+
+git:
+  depth: 3
+
+matrix:
+  include:
+    - os: linux
+      sudo: true
+      dist: trusty
+      addons:
+        apt:
+          sources: ['ubuntu-toolchain-r-test']
+          packages: ['gcc-6']
+      env: COMP=gcc-6
+
+    - os: osx
+      osx_image: xcode8 # or whatever the latest is
+      env: COMP=clang
+
+script: 
+    - cd src
+    - CC=$COMP make
