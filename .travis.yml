@@ -1,4 +1,13 @@
-language: c
+language: python
+
+python:
+  - 3.6
+
+os:
+  - linux
+  - osx
+
+dist: trusty
 
 notifications:
   email: false
@@ -6,21 +15,11 @@ notifications:
 git:
   depth: 3
 
-matrix:
-  include:
-    - os: linux
-      sudo: true
-      dist: trusty
-      addons:
-        apt:
-          sources: ['ubuntu-toolchain-r-test']
-          packages: ['gcc-6']
-      env: COMP=gcc-6
+install: 
+    - cd bin
+    - cmake ../src
+    - make
+    - cd ..
 
-    - os: osx
-      osx_image: xcode8 # or whatever the latest is
-      env: COMP=clang
-
-script: 
-    - cd src
-    - CC=$COMP make
+script:
+    - python BlackRobustFlow.py data/pepsi

@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/scienceopen/robust-flow.svg?branch=master
-    :target: https://travis-ci.org/scienceopen/robust-flow
+.. image:: https://travis-ci.org/scivision/robust-flow.svg?branch=master
+    :target: https://travis-ci.org/scivision/robust-flow
 
 ===========
 robust-flow
@@ -14,18 +14,29 @@ Install
 =======
 ::
 
-    cd src
+    cd bin
+    cmake ../src
     make
 
-Example
-=======
-In Matlab/Octave::
-
-    [u,v] = RunBlack('data/pepsi');
-
+Examples
+========
 You will see this plot:
 
 .. image:: results/quiver_pepsi.jpg
+
+
+Python
+------
+::
+
+    python BlackRobustFlow.py data/pepsi
+
+Matlab/Octave
+-------------
+::
+
+    [u,v] = RunBlack('data/pepsi');
+
 
 Functions
 =========

@@ -2,12 +2,14 @@
 from pathlib import Path
 from numpy import int16
 from scipy.ndimage import imread
-from subprocess import run
+import subprocess as S
 from matplotlib.pyplot import figure,draw,pause
 
 def runblack(stem,srcpath,frameind,outpath):
     stem = Path(stem).expanduser()
     stemname = stem.name
+    
+    srcpath = Path(srcpath).expanduser()
 
     fn = stem.parent / (stemname + str(frameind[0]) + '.pgm')
 
@@ -17,7 +19,7 @@ def runblack(stem,srcpath,frameind,outpath):
     for i in range(frameind[0],frameind[1]):
         outstem = Path(outpath) / (stemname + str(i+1)+'-')
 
-        cmd = [srcpath +'/gnc',
+        cmd = [str(srcpath / 'gnc'),
                    str(i), str(i+1),
                    str(4),str(1),
                    str(stem),str(outstem),
@@ -32,9 +34,7 @@ def runblack(stem,srcpath,frameind,outpath):
                    #15 is # of header bytes for PGM
                    ]
         print(' '.join(cmd))
-        ret = run(cmd)
-
-        ret.check_returncode()
+        S.check_call(cmd)
 
 
 def loadflow(stem,outpath, frameind):
@@ -60,8 +60,8 @@ if __name__ == '__main__':
     from argparse import ArgumentParser
     p = ArgumentParser()
     p.add_argument('pgmstem',help='stem of pgm files')
-    p.add_argument('-f','--frames',help='start stop frame indices',nargs=2,type=int,default=[1,2])
-    p.add_argument('--srcpath',help='path to C code and EXE',default='src')
+    p.add_argument('-f','--frames',help='start stop frame indices',nargs=2,type=int,default=[0,1])
+    p.add_argument('--srcpath',help='path to C code and EXE',default='bin')
     p.add_argument('-o','--outpath',default='results')
     p = p.parse_args()
 
