@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-req = ['nose','numpy','scipy']
+req = ['nose','numpy','pillow','scipy']
 
 import pip
 try:
