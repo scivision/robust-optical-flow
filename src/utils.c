@@ -160,7 +160,6 @@ void read_image_float(image, fnIn, nx,ny)
      char fnIn[MAXLEN];
      int nx, ny;
 {
-  int sizeInput,err;
   FILE *infile;
 
   infile = fopen(fnIn, "rb");
@@ -168,8 +167,8 @@ void read_image_float(image, fnIn, nx,ny)
     fprintf(stderr, "infile: NULL\n");
   }
 
-  sizeInput = nx * ny * sizeof( float );
-  err=fread((float *) image, sizeInput, 1, infile);
+  //int sizeInput = nx * ny * sizeof( float );
+  //int err=fread((float *) image, sizeInput, 1, infile);
 
   fclose(infile);
 }
@@ -207,22 +206,22 @@ void read_image_strip_bytes(image, fnIn, nx,ny, bytes)
 {
   unsigned char *temp, *c;
   FILE *infile;
-  int index, i, j,  sizeInput,err;
+  int index, i, j;
 
   infile = fopen(fnIn, "rb");
   if (infile == NULL) {
     fprintf(stderr, "infile: %s NULL\n", fnIn);
   }
 
-  sizeInput = bytes * sizeof( char );
+  int sizeInput = bytes * sizeof( char );
   if ((c = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  err=fread((char *) c, sizeInput, 1, infile);
+  //int err=fread((char *) c, sizeInput, 1, infile);
 
   sizeInput = nx * ny * sizeof( char );
   if ((temp = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  err=fread((char *) temp, sizeInput, 1, infile);
+  //int err=fread((char *) temp, sizeInput, 1, infile);
 
   for(i=0;i<ny;i++){
     for(j=0;j<nx;j++){

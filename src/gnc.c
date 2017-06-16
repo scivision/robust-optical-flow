@@ -126,15 +126,14 @@ Example:
 
 ************************************************/
 
-# include       <stdio.h>
-# include       <math.h>
-# include       <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 #include <stdlib.h>
 
-# include "robust.h"
+#include "robust.h"
 
 int main(int argc, char **argv)
-
 {
   float lambda1=1.0, lambda2=1.0, lambda3=0.0, l3=0.05;
   float s1=1.0, s2=1.0, s3=1.0;
@@ -162,6 +161,12 @@ int main(int argc, char **argv)
   double atof(); 
   char *itoa();
   void reverse();
+
+  if (argc==1){
+  fprintf(stderr,"you must specify command-line arguments, or use the Python wrapper\n");
+  return EXIT_FAILURE;
+  }
+
 
   end = "";
   from = atoi(*++argv);
