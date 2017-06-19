@@ -48,9 +48,9 @@ Details:
 
 ************************************************/
 
-# include       <stdio.h>
-# include       <math.h>
-# include       <string.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 
 #include "robust.h"
 
