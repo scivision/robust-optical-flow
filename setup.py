@@ -8,6 +8,7 @@ try:
 except Exception:
     pip.main(['install'] + req)
 #%%
+import subprocess
 from setuptools import setup
 
 setup(name='RobustFlow',
@@ -17,3 +18,5 @@ setup(name='RobustFlow',
       url='https://github.com/scivision/robust-flow',
 	  )
 
+subprocess.run(['cmake','../src'],cwd='bin')
+subprocess.run(['make'],cwd='bin')
