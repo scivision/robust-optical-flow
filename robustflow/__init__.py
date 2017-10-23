@@ -1,7 +1,7 @@
 from pathlib import Path
 from numpy import int16
 from scipy.ndimage import imread
-import subprocess as S
+import subprocess
 
 def runblack(stem,srcpath,frameind,outpath):
     stem = Path(stem).expanduser()
@@ -32,7 +32,7 @@ def runblack(stem,srcpath,frameind,outpath):
                    #15 is # of header bytes for PGM
                    ]
         print(' '.join(cmd))
-        S.check_call(cmd)
+        subprocess.run(cmd)
 
 
 def loadflow(stem,outpath, frameind):
