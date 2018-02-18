@@ -1,6 +1,5 @@
 from pathlib import Path
-from numpy import int16
-from scipy.ndimage import imread
+import imageio
 import subprocess
 
 def runblack(stem,srcpath,frameind,outpath):
@@ -11,7 +10,7 @@ def runblack(stem,srcpath,frameind,outpath):
 
     fn = stem.parent / (stemname + str(frameind[0]) + '.pgm')
 
-    I = imread(fn)
+    I = imageio.imread(str(fn))
     rc = I.shape
 
     for i in range(frameind[0], frameind[1]):
@@ -48,7 +47,7 @@ def loadflow(stem,outpath, frameind):
         vfn = Path(outpath) / (outstem + 'v-4.pgm')
 # NOTE: have to upcast by one size (int16) to account for initial uint8
 # values that would overflow int8. RAM is cheap.
-        u = imread(ufn).astype(int16) - bzero;
-        v = imread(vfn).astype(int16) - bzero;
+        u = imageio.imread(str(ufn)).astype('int16') - bzero;
+        v = imageio.imread(str(vfn)).astype('int16') - bzero;
 
     return u,v
