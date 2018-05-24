@@ -33,7 +33,7 @@ def runblack(stem:Path, binpath:Path, frameind:Tuple[int], outpath:Path='results
                    #15 is # of header bytes for PGM
                    ]
         print(' '.join(cmd))
-        subprocess.check_call(cmd)
+        subprocess.run(cmd) # NOTE: not check_call as GNC returns 5 on older C compilers.
 
 
 def loadflow(stem:Path, frameind:Tuple[int], outpath:Path='results'):

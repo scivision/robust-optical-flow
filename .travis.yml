@@ -35,4 +35,5 @@ after_success:
     fi
     
 after_failure: 
+  - cd $TRAVIS_BUILD_DIR/bin
   - ctest -V
