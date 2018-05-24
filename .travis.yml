@@ -13,8 +13,12 @@ group: travis_latest
 git:
   depth: 3
 
-install: python -m pip install -e .[tests]
+install: pip -q install -e .[tests]
 
-script: coverage run BlackRobustFlow.py data/pepsi
+script: pytest -v
 
-after_success: coveralls
+after_success: 
+  - if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then
+    coverage run ../tests/test_all.py;
+    coveralls;
+    fi

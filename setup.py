@@ -18,5 +18,6 @@ setup(name='RobustFlow',
       tests_require=tests_require,
 	  )
 
-subprocess.run(['cmake','../src'], cwd='bin')
-subprocess.run(['make'], cwd='bin')
+subprocess.check_call(['cmake','../src'], cwd='bin')
+subprocess.check_call(['make'], cwd='bin')
+subprocess.check_call(['make','test'], cwd='bin')

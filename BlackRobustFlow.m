@@ -1,7 +1,10 @@
-function [u,v]=RunBlack(pgmstem,varargin)
+function [u,v] = BlackRobustFlow(pgmstem,varargin)
 %%
 % Runs Michael Black GNC dense robust optical flow estimation
 % from a convenient Matlab interface.
+%
+% tested with Matlab R2018a. 
+% Note: Octave 4.2.2 has a quiver() plotting bug (in general).
 %
 % Inputs
 % ------
@@ -62,9 +65,9 @@ if all(v(:)==v(1,1)), warning(['all elements of V are identical: ',num2str(v(1,1
 downsamp = 10; %arbitrary
 
 figure(1)
-%imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
-%colormap gray
-%hold on
+imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
+colormap gray
+hold on
 [x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
 quiver(x, y, u(1:downsamp:end,1:downsamp:end), v(1:downsamp:end,1:downsamp:end))
 title('Robust Optical flow vectors, Black method')

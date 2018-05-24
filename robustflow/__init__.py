@@ -4,11 +4,11 @@ import subprocess
 import numpy as np
 from typing import Tuple
 
-def runblack(stem,srcpath,frameind,outpath):
+def runblack(stem:Path, binpath:Path, frameind:Tuple[int], outpath:Path='results'):
     stem = Path(stem).expanduser()
     stemname = stem.name
 
-    srcpath = Path(srcpath).expanduser()
+    binpath = Path(binpath).expanduser()
 
     fn = stem.parent / (stemname + str(frameind[0]) + '.pgm')
 
@@ -18,7 +18,7 @@ def runblack(stem,srcpath,frameind,outpath):
     for i in range(frameind[0], frameind[1]):
         outstem = Path(outpath) / (stemname + str(i+1)+'-')
 
-        cmd = [str(srcpath / 'gnc'),
+        cmd = [str(binpath / 'gnc'),
                    str(i), str(i+1),
                    str(4),str(1),
                    str(stem),str(outstem),
@@ -36,7 +36,7 @@ def runblack(stem,srcpath,frameind,outpath):
         subprocess.check_call(cmd)
 
 
-def loadflow(stem:Path, outpath:Path, frameind:Tuple[int]):
+def loadflow(stem:Path, frameind:Tuple[int], outpath:Path='results'):
     stem = Path(stem).expanduser()
     outname = stem.name
 

@@ -17,7 +17,7 @@ if __name__ == '__main__':
 
     runblack(p.pgmstem, p.srcpath, p.frames, p.outpath)
 
-    u,v = loadflow(p.pgmstem, p.outpath, p.frames)
+    u,v = loadflow(p.pgmstem, p.frames, p.outpath)
 # %%
     if (u[0,0] == u).all():
         logging.error(f'all elements of U identical {u[0,0]}')

@@ -7,8 +7,6 @@ robust-flow
 
 Helper code used with `Michael Black's Robust optical flow code <http://cs.brown.edu/people/black/code.html>`_
 
-If you have interest in using Black's code with Matlab/Octave or Python, please start an 
-issue and I can make this code more user friendly.
 
 Install
 =======
@@ -17,6 +15,8 @@ Install
     cd bin
     cmake ../src
     make
+    
+    make test
 
 Examples
 ========
@@ -33,18 +33,21 @@ Python
 
 Matlab/Octave
 -------------
-::
 
-    [u,v] = RunBlack('data/pepsi');
+.. code:: matlab
+
+    [u,v] = BlackRobustFlow('data/pepsi');
+    
+    
+Note, Octave 4.2.2 has a ``quiver()`` plotting bug (in general). 
+Matlab R2018a worked fine.
 
 
 Functions
 =========
-GNC is the C program used for `Robust Estimation of Dense Optical Flow by Michael Black <http://cs.brown.edu/people/black/Papers/cviu.63.1.1996.html>`_.
+GNC is the C program used for 
+`Robust Estimation of Dense Optical Flow by Michael Black <http://cs.brown.edu/people/black/Papers/cviu.63.1.1996.html>`_.
 
-===========     ==================
-Function        Description
-===========     ==================
-DemoGNC         terminal script running the dense robust optical flow code
-RunBlack        Nicer way to call GNC from Matlab with a variety of user-adjustable parameters
-===========     ==================
+* ``DemoGNC.sh``:   terminal script running the dense robust optical flow code
+* ``BlackRobustFlow.{m,py}``:     Nicer way to call GNC from Matlab with a variety of user-adjustable parameters
+
