@@ -13,7 +13,13 @@ group: travis_latest
 git:
   depth: 3
 
-install: pip -q install -e .[tests]
+install: 
+  - cd bin
+  - cmake ../src
+  - make
+  - make test
+  
+  - pip install -e .[tests]
 
 script: pytest -v
 
