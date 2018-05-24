@@ -17,12 +17,16 @@ install:
   - cd bin
   - cmake ../src
   - make
-  - make test
   
   - cd ..
   - pip install -e .[tests]
 
-script: pytest -v
+script: 
+   - cd bin
+   - make test
+   - cd ..
+   
+   - pytest -v
 
 after_success: 
   - if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then
