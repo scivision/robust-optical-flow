@@ -1,0 +1,22 @@
+....................Max u, 0.397361, level 39
+projecting (79 63) (39 31)
+projecting (79 63) (39 31)
+Max p_u (pre project), 0.397361, level 39
+Max p2_u (post project), 0.794723, level 79
+Max u, 0.816320, level 79
+....................Max u, 0.816320, level 79
+projecting (158 126) (79 63)
+projecting (158 126) (79 63)
+Max p_u (pre project), 0.816320, level 79
+Max p2_u (post project), 1.632641, level 158
+Max u, 1.676156, level 158
+....................Max u, 1.676156, level 158
+projecting (316 252) (158 126)
+projecting (316 252) (158 126)
+Max p_u (pre project), 1.676156, level 158
+Max p2_u (post project), 3.352312, level 316
+Max u, 3.453713, level 316
+....................Max u, 3.326303, level 316
+316 252 -3.326303 1.949128 1.000000
+316 252 -0.852436 3.135800 1.000000
+
