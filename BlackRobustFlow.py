@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 import logging
+import imageio
+from pathlib import Path
+import numpy as np
 from robustflow import runblack,loadflow
 from matplotlib.pyplot import figure,show
 
@@ -22,7 +25,21 @@ if __name__ == '__main__':
     if (v[0,0] == v).all():
         logging.error(f'all elements of V identical {v[0,0]}')
 
+    stem = Path(p.pgmstem).expanduser()
+    imgfn = stem.parent / (stem.name+f'{p.frames[1]}.pgm')
+    img = imageio.imread(imgfn)
+    y,x = img.shape
+
+    s = 10
+    X = np.arange(0,x,s)
+    Y = np.arange(0,y,s)
+    X,Y = np.meshgrid(X,Y)
+
     ax = figure().gca()
-    ax.quiver(u,v)
+    ax.imshow(img,cmap='gray',origin='upper')
+    ax.quiver(X, Y,
+             u[::s,::s],v[::s,::s])
+
+    ax.set_title(f'{imgfn} robust optical flow')
 
     show()

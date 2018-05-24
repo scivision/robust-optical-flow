@@ -48,11 +48,11 @@ Details:
 
 ************************************************/
 
-# include       <stdio.h>
-# include       <math.h>
-# include       <string.h>
-# include <stdlib.h>
-# include <unistd.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 #include "robust.h"
   
@@ -167,8 +167,8 @@ void read_image_float(image, fnIn, nx,ny)
     fprintf(stderr, "infile: NULL\n");
   }
 
-  //int sizeInput = nx * ny * sizeof( float );
-  //int err=fread((float *) image, sizeInput, 1, infile);
+  int sizeInput = nx * ny * sizeof( float );
+  int err=fread((float *) image, sizeInput, 1, infile);
 
   fclose(infile);
 }
@@ -216,12 +216,12 @@ void read_image_strip_bytes(image, fnIn, nx,ny, bytes)
   int sizeInput = bytes * sizeof( char );
   if ((c = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  //int err=fread((char *) c, sizeInput, 1, infile);
+  int err=fread((char *) c, sizeInput, 1, infile);
 
   sizeInput = nx * ny * sizeof( char );
   if ((temp = (unsigned char *) malloc((size_t) sizeInput)) == NULL)
     error(" Unable to allocate memory for ", "image");
-  //int err=fread((char *) temp, sizeInput, 1, infile);
+  err=fread((char *) temp, sizeInput, 1, infile);
 
   for(i=0;i<ny;i++){
     for(j=0;j<nx;j++){

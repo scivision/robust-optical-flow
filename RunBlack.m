@@ -49,7 +49,7 @@ end
 bzero = 128;  % NOTE: it appears that for the unsigned 8-bit output, 128 is zero, and values less than 128 are negative
 ufn = [fnOut,'u-4.pgm'];
 vfn = [fnOut,'v-4.pgm'];
-disp(['loading ',ufn,' for u flow'])
+disp(['loading ',ufn,' and ',vfn,' for flow'])
 %NOTE: have to upcast by one size (int16) to account for initial uint8
 %values that would overflow int8. RAM is cheap.
 u = int16(imread(ufn)) - bzero; 
@@ -59,15 +59,14 @@ if all(u(:)==u(1,1)), warning(['all elements of U are identical: ',num2str(u(1,1
 if all(v(:)==v(1,1)), warning(['all elements of V are identical: ',num2str(v(1,1)),' likely bad result']), end
 
 %% plot
-downsamp = 6; %arbitrary
+downsamp = 10; %arbitrary
 
-figure(10),clf(10)
-
-imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
-colormap gray
-hold on
-quiver(1:downsamp:rowcol(2), 1:downsamp:rowcol(1),...
-       u(1:downsamp:end,1:downsamp:end),v(1:downsamp:end,1:downsamp:end))
+figure(1)
+%imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
+%colormap gray
+%hold on
+[x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
+quiver(x, y, u(1:downsamp:end,1:downsamp:end), v(1:downsamp:end,1:downsamp:end))
 title('Robust Optical flow vectors, Black method')
 axis('off')
 

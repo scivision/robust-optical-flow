@@ -1,6 +1,7 @@
 from pathlib import Path
 import imageio
 import subprocess
+import numpy as np
 from typing import Tuple
 
 def runblack(stem,srcpath,frameind,outpath):
@@ -32,7 +33,7 @@ def runblack(stem,srcpath,frameind,outpath):
                    #15 is # of header bytes for PGM
                    ]
         print(' '.join(cmd))
-        subprocess.run(cmd)
+        subprocess.check_call(cmd)
 
 
 def loadflow(stem:Path, outpath:Path, frameind:Tuple[int]):
@@ -41,14 +42,14 @@ def loadflow(stem:Path, outpath:Path, frameind:Tuple[int]):
 
     bzero = 128
 
-#    ax = figure().gca()
+    u=[]; v=[]
     for i in range(frameind[0],frameind[1]):
         outstem = outname + str(i+1)+'-'
         ufn = Path(outpath) / (outstem + 'u-4.pgm')
         vfn = Path(outpath) / (outstem + 'v-4.pgm')
 # NOTE: have to upcast by one size (int16) to account for initial uint8
 # values that would overflow int8. RAM is cheap.
-        u = imageio.imread(ufn).astype('int16') - bzero;
-        v = imageio.imread(vfn).astype('int16') - bzero;
+        u.append(imageio.imread(ufn).astype('int16') - bzero)
+        v.append(imageio.imread(vfn).astype('int16') - bzero)
 
-    return u,v
+    return np.array(u).squeeze(), np.array(v).squeeze()
