@@ -21,11 +21,7 @@ install:
   - cd ..
   - pip install -e .[tests]
 
-script: 
-   - cd bin
-   - make test
-   - cd ..
-   
+script:
    - pytest -v
 
 after_success: 
