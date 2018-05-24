@@ -16,13 +16,12 @@ endif()
 
 add_executable(gnc utils.c image-io.c filter.c gnc.c pyramid.c pyramid-sor.c sor.c image_stats.c warp.c derivatives.c disconts.c warp-back.c)
 target_link_libraries(gnc m)
-add_test(NAME basic COMMAND ./DemoGNC.sh WORKING_DIRECTORY ..)
+add_test(NAME basic COMMAND ./DemoGNC.sh WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/..)
 set_tests_properties(basic PROPERTIES TIMEOUT 15)
 
 
 find_package(Octave)
 if (OCTAVE_MAJOR_VERSION GREATER_EQUAL 4)
-    
   add_test(NAME Matlab 
           COMMAND octave-cli -q --eval "BlackRobustFlow('data/pepsi')"
           WORKING_DIRECTORY ..)
