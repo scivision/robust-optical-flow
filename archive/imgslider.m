@@ -4,7 +4,7 @@
 clear
 
 %% user parameters
-dpath = '~/U/mhirsch/phantoms/';
+dpath = '~/phantoms/';
 imgname = 'soft8gray.png';
 saveplot = true;
 

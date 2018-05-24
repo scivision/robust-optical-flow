@@ -4,7 +4,7 @@ function [nx,ny,FrameInd] = makeIMG(MAT,pgmstem)
 clim = [1000 1500]; %arbitrary guess
 FrameInd = 1:nframes;
 
-display(['converting ',int2str(length(FrameInd)),' frames to PGM'])
+disp(['converting ',int2str(length(FrameInd)),' frames to PGM'])
 
 for i = FrameInd
     frame = normFrame(MAT(:,:,i),16,clim); 

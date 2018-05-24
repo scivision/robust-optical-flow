@@ -1,6 +1,7 @@
 from pathlib import Path
 import imageio
 import subprocess
+from typing import Tuple
 
 def runblack(stem,srcpath,frameind,outpath):
     stem = Path(stem).expanduser()
@@ -10,7 +11,7 @@ def runblack(stem,srcpath,frameind,outpath):
 
     fn = stem.parent / (stemname + str(frameind[0]) + '.pgm')
 
-    I = imageio.imread(str(fn))
+    I = imageio.imread(fn)
     rc = I.shape
 
     for i in range(frameind[0], frameind[1]):
@@ -34,7 +35,7 @@ def runblack(stem,srcpath,frameind,outpath):
         subprocess.run(cmd)
 
 
-def loadflow(stem,outpath, frameind):
+def loadflow(stem:Path, outpath:Path, frameind:Tuple[int]):
     stem = Path(stem).expanduser()
     outname = stem.name
 
@@ -47,7 +48,7 @@ def loadflow(stem,outpath, frameind):
         vfn = Path(outpath) / (outstem + 'v-4.pgm')
 # NOTE: have to upcast by one size (int16) to account for initial uint8
 # values that would overflow int8. RAM is cheap.
-        u = imageio.imread(str(ufn)).astype('int16') - bzero;
-        v = imageio.imread(str(vfn)).astype('int16') - bzero;
+        u = imageio.imread(ufn).astype('int16') - bzero;
+        v = imageio.imread(vfn).astype('int16') - bzero;
 
     return u,v

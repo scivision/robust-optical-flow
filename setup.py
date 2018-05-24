@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 install_requires = ['numpy','imageio']
-tests_require=['nose','coveralls']
+tests_require=['pytest','nose','coveralls']
 #%%
 import subprocess
 from setuptools import setup,find_packages

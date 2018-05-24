@@ -10,8 +10,8 @@ function [u,v]=RunBlack(pgmstem,varargin)
 % gncpath: path to gnc executable
 
 p = inputParser;
-addParamValue(p,'frameind',1:2) % arbitrary
-addParamValue(p,'gncpath','src/') %#ok<*NVREPL>
+addParamValue(p,'frameind',0:1) % arbitrary
+addParamValue(p,'gncpath','bin/') %#ok<*NVREPL>
 parse(p,varargin{:})
 U = p.Results;
 
@@ -33,7 +33,7 @@ for ii = U.frameind(1):U.frameind(end)-1
         ' -end .pgm -skip 15']);  %15 is # of header bytes for PGM
     if err==127
         disp(msg)
-        error('you must one-time compile gnc by typing in Terminal:   cd src; make')
+        error('you must compile "gnc" executable once before running the Matlab code.')
     elseif err==0 %normal
     else
         disp(msg)
@@ -55,6 +55,8 @@ disp(['loading ',ufn,' for u flow'])
 u = int16(imread(ufn)) - bzero; 
 v = int16(imread(vfn)) - bzero;
 
+if all(u(:)==u(1,1)), warning(['all elements of U are identical: ',num2str(u(1,1)),' likely bad result']), end
+if all(v(:)==v(1,1)), warning(['all elements of V are identical: ',num2str(v(1,1)),' likely bad result']), end
 
 %% plot
 downsamp = 6; %arbitrary
@@ -69,4 +71,6 @@ quiver(1:downsamp:rowcol(2), 1:downsamp:rowcol(1),...
 title('Robust Optical flow vectors, Black method')
 axis('off')
 
+
+if ~nargout, clear, end
 end %function
