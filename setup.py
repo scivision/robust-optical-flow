@@ -6,7 +6,7 @@ import subprocess
 from setuptools import setup,find_packages
 
 setup(name='RobustFlow',
-      version= '1.0.1',
+      version= '1.1.0',
       packages=find_packages(),
       author='Michael Hirsch, Ph.D.',
       url='https://github.com/scivision/robust-flow',
