@@ -7,7 +7,7 @@ else()
   add_compile_options(-O3)
 endif()
 
-if(${CMAKE_Fortran_COMPILER_ID} STREQUAL GNU)
+if(${CMAKE_C_COMPILER_ID} STREQUAL GNU)
   add_compile_options(-mtune=native -Warray-bounds)
 endif()
 
