@@ -159,7 +159,7 @@ int main(int argc, char **argv)
   char fnOutu[MAXLEN], fnOutv[MAXLEN], fnOutdiscont[MAXLEN];
   float image_abs_max(), *load_image(); 
   double atof(); 
-  char *itoa();
+  char *itoaa();
   void reverse();
 
   if (argc==1){
@@ -344,12 +344,12 @@ int main(int argc, char **argv)
 
   fprintf(stderr, "reading first image ");
   strcpy(fnCurr,inpath);
-  strcat(strcat(fnCurr, itoa(from)),end);
+  strcat(strcat(fnCurr, itoaa(from)),end);
 
   read_image_strip_bytes(prev, fnCurr, nx, ny,skip);
 
   strcpy(fnCurr,inpath);
-  strcat(strcat(fnCurr, itoa(to)),end);
+  strcat(strcat(fnCurr, itoaa(to)),end);
 
   read_image_strip_bytes(curr, fnCurr, nx, ny,skip);
 
@@ -369,32 +369,32 @@ int main(int argc, char **argv)
 
     /* save results */
     strcpy(fnOutu,outpath);
-    strcat(strcat(strcat(fnOutu, "u-"), itoa(st)),".pgm");
+    strcat(strcat(strcat(fnOutu, "u-"), itoaa(st)),".pgm");
     strcpy(fnOutv,outpath);
-    strcat(strcat(strcat(fnOutv, "v-"), itoa(st)),".pgm");
+    strcat(strcat(strcat(fnOutv, "v-"), itoaa(st)),".pgm");
     save_pgm(fnOutu, u, nx, ny);
     save_pgm(fnOutv, v, nx, ny);
 
     strcpy(fnOutu,outpath);
-    strcat(strcat(fnOutu, "u-"), itoa(st));
+    strcat(strcat(fnOutu, "u-"), itoaa(st));
     strcpy(fnOutv,outpath);
-    strcat(strcat(fnOutv, "v-"), itoa(st));
+    strcat(strcat(fnOutv, "v-"), itoaa(st));
     save_image_float(fnOutu, u, nx, ny);
     save_image_float(fnOutv, v, nx, ny);
 
     data_disconts(prev, curr, u, v, sigma1, nx, ny, err, dt, outliers);
     strcpy(fnOutdiscont,outpath);
-    strcat(strcat(strcat(fnOutdiscont, "data-"), itoa(st)),".pgm");
+    strcat(strcat(strcat(fnOutdiscont, "data-"), itoaa(st)),".pgm");
     save_pgm(fnOutdiscont, outliers, nx, ny);
 
     spatial_disconts(u, v, sigma2, nx, ny, discont); 
     strcpy(fnOutdiscont,outpath);
-    strcat(strcat(strcat(fnOutdiscont, "spatial-"), itoa(st)),".pgm");
+    strcat(strcat(strcat(fnOutdiscont, "spatial-"), itoaa(st)),".pgm");
     save_pgm(fnOutdiscont, discont, nx, ny);
 
     warp_image(prev, err, u, v, nx, ny);
     strcpy(fnOutdiscont,outpath);
-    strcat(strcat(strcat(fnOutdiscont, "stable-"), itoa(st)),".pgm");
+    strcat(strcat(strcat(fnOutdiscont, "stable-"), itoaa(st)),".pgm");
     save_pgm_no_scale(fnOutdiscont, err, nx, ny);
 
     s1 = max((s1 * s1_factor), s1_end);

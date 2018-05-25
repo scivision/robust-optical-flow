@@ -99,8 +99,7 @@ void reverse(s)
 
 static char s[MAXLEN];
 
-char *itoa(n)
-     int n;
+char *itoaa(int n)
 {
   int i, sign_val;
   
@@ -122,7 +121,7 @@ void error(s1, s2)
  char *s1, *s2;
  {
   fprintf(stderr, "%s %s", s1, s2);
-  exit(1);
+  exit(EXIT_FAILURE);
  }
 
 /* 
