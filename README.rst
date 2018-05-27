@@ -13,7 +13,7 @@ Install
 You will need:
 
 * C compiler (e.g. ``gcc`` or ``clang``)
-* `CMake <https://www.scivision.co/easy-setup-of-cmake/>`
+* `CMake <https://www.scivision.co/easy-setup-of-cmake/>`_
 
 
 .. code:: bash
