@@ -1,29 +1,31 @@
-function [u,v] = BlackRobustFlow(pgmstem,varargin)
+function [u,v] = BlackRobustFlow(pgmstem,frameind)
 %%
 % Runs Michael Black GNC dense robust optical flow estimation
 % from a convenient Matlab interface.
 %
-% tested with Matlab R2018a. 
-% Note: Octave 4.2.2 has a quiver() plotting bug (in general).
+% tested with Matlab R2018a.
+ %
+% Note: GNU Octave 4.2, 4.4 have a quiver() plotting bug (in general).
 %
 % Inputs
 % ------
 % pgmstem: stem (path/filename) to .pgm image date
 % frameind: which frame numbers to analyze (.pgm files to load, part of stem filename)
-% gncpath: path to gnc executable
+%
+% Outputs
+% -------
+% u, v: estimated optical flow U V
 
-p = inputParser;
-addParamValue(p,'frameind',0:1) % arbitrary
-addParamValue(p,'gncpath','bin') %#ok<*NVREPL>
-parse(p,varargin{:})
-U = p.Results;
+if nargin<2, frameind=0:1; end
 
-rowcol= size(imread([pgmstem,int2str(U.frameind(1)),'.pgm']));
+cmd = ['bin',filesep,'gnc'];
+if ~exist(cmd,'file'), error(['you must compile the GNC program once, I did not find it at ',cmd]), end
+
+rowcol= size(imread([pgmstem,int2str(frameind(1)),'.pgm']));
 [~,stem] = fileparts(pgmstem);
 
-cmd = [U.gncpath,filesep,'gnc'];
 
-for ii = U.frameind(1):U.frameind(end)-1
+for ii = frameind(1):frameind(end)-1
         fnOut = ['results',filesep,stem,int2str(ii+1),'-'];
         
         fullcmd = [cmd,' ',...
@@ -74,7 +76,7 @@ if all(v(:)==v(1,1)), warning(['all elements of V are identical: ',num2str(v(1,1
 downsamp = 10; %arbitrary
 
 figure(1)
-imagesc(imread([pgmstem,int2str(U.frameind(1)),'.pgm']))
+imagesc(imread([pgmstem,int2str(frameind(1)),'.pgm']))
 colormap gray
 hold on
 [x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
