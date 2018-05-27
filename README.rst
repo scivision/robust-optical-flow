@@ -10,13 +10,22 @@ Helper code used with `Michael Black's Robust optical flow code <http://cs.brown
 
 Install
 =======
-::
+You will need:
+
+* C compiler (e.g. ``gcc`` or ``clang``)
+* `CMake <https://www.scivision.co/easy-setup-of-cmake/>`
+
+
+.. code:: bash
 
     cd bin
     cmake ../src
     make
     
     make test
+
+
+Windows: ``cmake -G "MinGW Makefiles"../src``
 
 Examples
 ========
