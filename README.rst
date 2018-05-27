@@ -25,7 +25,7 @@ You will need:
     make test
 
 
-Windows: ``cmake -G "MinGW Makefiles"../src``
+Windows: ``cmake -G "MinGW Makefiles" ../src``
 
 Examples
 ========
