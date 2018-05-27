@@ -1,5 +1,5 @@
-.. image:: https://travis-ci.org/scivision/robust-flow.svg?branch=master
-    :target: https://travis-ci.org/scivision/robust-flow
+.. image:: https://travis-ci.org/scivision/robust-optical-flow.svg?branch=master
+    :target: https://travis-ci.org/scivision/robust-optical-flow
 
 ===========
 robust-flow
