@@ -14,37 +14,46 @@ function [u,v] = BlackRobustFlow(pgmstem,varargin)
 
 p = inputParser;
 addParamValue(p,'frameind',0:1) % arbitrary
-addParamValue(p,'gncpath','bin/') %#ok<*NVREPL>
+addParamValue(p,'gncpath','bin') %#ok<*NVREPL>
 parse(p,varargin{:})
 U = p.Results;
 
 rowcol= size(imread([pgmstem,int2str(U.frameind(1)),'.pgm']));
 [~,stem] = fileparts(pgmstem);
 
+cmd = [U.gncpath,filesep,'gnc'];
+
 for ii = U.frameind(1):U.frameind(end)-1
-        fnOut = ['results/',stem,int2str(ii+1),'-'];
+        fnOut = ['results',filesep,stem,int2str(ii+1),'-'];
         
-        [err,msg]=unix([U.gncpath,'gnc ',...
+        fullcmd = [cmd,' ',...
         int2str(ii),' ', int2str(ii+1),...
         ' 4 1 ',...
         pgmstem,' ',fnOut,...
-        ' -l1 10.0 -l2 1.0 -S1 10.0 -S2 1.0 -s1 10.0 -s2 0.05 ',...
+        ' -l1 10.0 -l2 1.0 -S1 10.0 -S2 1.0 -s1 10.0 -s2 0.05',...
         ' -stages 5',...
         ' -nx ',int2str(rowcol(2)),...
         ' -ny ',int2str(rowcol(1)),...
-        ' -f 0.5 -F 0 -w 1.995 -iters 20 ',...
-        ' -end .pgm -skip 15']);  %15 is # of header bytes for PGM
-    if err==127
+        ' -f 0.5 -F 0 -w 1.995 -iters 20',...
+        ' -end .pgm -skip 15'];
+        
+        [err,msg] = system(fullcmd);  %15 is # of header bytes for PGM
+    switch err
+      case {127,1}
+        disp(fullcmd)
         disp(msg)
+        disp(err)
         error('you must compile "gnc" executable once before running the Matlab code.')
-    elseif err==0 %normal
-    else
+       case 0 %normal
+         disp(['frame ',int2str(ii),' ok'])
+       otherwise
+        disp(fullcmd)
         disp(msg)
+        disp(err)
         break
     end
-    if ~isoctave
-        disp(msg)
-    end
+    
+    if ~isoctave, disp(msg), end
     
 end
 
@@ -76,3 +85,4 @@ axis('off')
 
 if ~nargout, clear, end
 end %function
+
