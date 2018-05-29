@@ -39,6 +39,8 @@ for ii = frameind(1):frameind(end)-1
         ' -f 0.5 -F 0 -w 1.995 -iters 20',...
         ' -end .pgm -skip 15'];
         
+        disp('executing:')
+        disp(fullcmd)
         [err,msg] = system(fullcmd);  %15 is # of header bytes for PGM
     switch err
       case {127,1}
