@@ -18,7 +18,10 @@ function [u,v] = BlackRobustFlow(pgmstem,frameind)
 
 if nargin<2, frameind=0:1; end
 
-cmd = ['bin',filesep,'gnc'];
+cmd = ['build',filesep,'gnc'];
+if ispc
+  cmd = [cmd,'.exe'];
+end
 if ~exist(cmd,'file'), error(['you must compile the GNC program once, I did not find it at ',cmd]), end
 
 rowcol= size(imread([pgmstem,int2str(frameind(1)),'.pgm']));
@@ -27,7 +30,7 @@ rowcol= size(imread([pgmstem,int2str(frameind(1)),'.pgm']));
 
 for ii = frameind(1):frameind(end)-1
         fnOut = ['results',filesep,stem,int2str(ii+1),'-'];
-        
+
         fullcmd = [cmd,' ',...
         int2str(ii),' ', int2str(ii+1),...
         ' 4 1 ',...
@@ -38,7 +41,7 @@ for ii = frameind(1):frameind(end)-1
         ' -ny ',int2str(rowcol(1)),...
         ' -f 0.5 -F 0 -w 1.995 -iters 20',...
         ' -end .pgm -skip 15'];
-        
+
         disp('executing:')
         disp(fullcmd)
         [err,msg] = system(fullcmd);  %15 is # of header bytes for PGM
@@ -56,9 +59,9 @@ for ii = frameind(1):frameind(end)-1
         disp(err)
         break
     end
-    
+
     if ~isoctave, disp(msg), end
-    
+
 end
 
 
@@ -68,7 +71,7 @@ vfn = [fnOut,'v-4.pgm'];
 disp(['loading ',ufn,' and ',vfn,' for flow'])
 %NOTE: have to upcast by one size (int16) to account for initial uint8
 %values that would overflow int8. RAM is cheap.
-u = int16(imread(ufn)) - bzero; 
+u = int16(imread(ufn)) - bzero;
 v = int16(imread(vfn)) - bzero;
 
 if all(u(:)==u(1,1)), warning(['all elements of U are identical: ',num2str(u(1,1)),' likely bad result']), end

@@ -13,19 +13,15 @@ Install
 You will need:
 
 * C compiler (e.g. ``gcc`` or ``clang``)
-* `CMake <https://www.scivision.co/easy-setup-of-cmake/>`_
+* Meson `python3 -m pip install meson`
 
 
 .. code:: bash
 
-    cd bin
-    cmake ../src
-    make
-    
-    make test
+    meson build
 
+    meson test -C build
 
-Windows: ``cmake -G "MinGW Makefiles" ../src``
 
 Examples
 ========
@@ -46,15 +42,15 @@ Matlab/Octave
 .. code:: matlab
 
     [u,v] = BlackRobustFlow('data/pepsi');
-    
-    
-Note, Octave 4.2.2 has a ``quiver()`` plotting bug (in general). 
+
+
+Note, Octave 4.2.2 has a ``quiver()`` plotting bug (in general).
 Matlab R2018a worked fine.
 
 
 Functions
 =========
-GNC is the C program used for 
+GNC is the C program used for
 `Robust Estimation of Dense Optical Flow by Michael Black <http://cs.brown.edu/people/black/Papers/cviu.63.1.1996.html>`_.
 
 * ``DemoGNC.sh``:   terminal script running the dense robust optical flow code
