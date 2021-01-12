@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+    paths:
+      - "**/CMakeLists.txt"
+      - "**.py"
+      - "**.m"
+      - "**.c"
+      - ".github/workflows/ci.yml"
+
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+
+    - run: pip install -e .
+
+    - run: cmake -B build
+
+    - run: cmake --build build
+
+    - run: ctest --output-on-failure
+      working-directory: build

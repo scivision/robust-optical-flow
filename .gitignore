@@ -1,12 +1,10 @@
 .pytest_cache/
 __pycache__/
 *egg-info/
-build/
-bin/
+build*/
 *.flt
 *.pgm
 *.hdr
 *.jpg
 *.png
-src/gnc
 *.gz

@@ -1,42 +1,34 @@
-[![image](https://travis-ci.org/scivision/robust-optical-flow.svg?branch=master)](https://travis-ci.org/scivision/robust-optical-flow)
-
 # Black Robust Optical Flow
-===========
 
-Helper code used with [Michael Black\'s Robust optical flow
-code](http://cs.brown.edu/people/black/code.html)
+
+Helper code used with
+[Michael Black's Robust optical flow code](http://cs.brown.edu/people/black/code.html)
 
 ## Build
 
-You will need:
+These are C programs
 
--   C compiler (e.g. `gcc` or `clang`)
--   Meson [python3 -m pip install meson]{.title-ref}
+```sh
+cmake -B build
 
-```
-meson build
-
-meson test -C build
+cmake --build build
 ```
 
 ## Examples
-
-You will see this plot:
 
 ![image](results/quiver_pepsi.jpg)
 
 ### Python
 
-    python BlackRobustFlow.py data/pepsi
+```sh
+python BlackRobustFlow.py data/pepsi
+```
 
-### Matlab/Octave
+### Matlab
 
 ```matlab
 [u,v] = BlackRobustFlow('data/pepsi');
 ```
-
-Note, Octave 4.2.2 has a `quiver()` plotting bug (in general). Matlab
-R2018a worked fine.
 
 ## Functions
 
