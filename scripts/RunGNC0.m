@@ -7,4 +7,4 @@ data=rawDMCreader(dmcFN,'framereq',1:2);
 [nx,ny,FrameInd] = makeIMG(data,pgmstem);
 %% run gnc black robust flow code
 runBlack(pgmstem,FrameInd,gncpath,nx,ny)
-end 
+end
