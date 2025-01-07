@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 import logging
-import imageio
 from pathlib import Path
+
+
+import imageio.v3 as iio
 import numpy as np
+
 from robustflow import runblack, loadflow
 
-try:
-    from matplotlib.pyplot import figure, show
-except ImportError:
-    figure = show = None
+from matplotlib.pyplot import figure, show
 
 
 def main(stem: Path, frames, outpath: Path):
@@ -19,13 +19,13 @@ def main(stem: Path, frames, outpath: Path):
     u, v = loadflow(stem, frames, outpath)
     # %%
     if (u[0, 0] == u).all():
-        logging.error(f"all elements of U identical {u[0,0]}")
+        logging.error(f"all elements of U identical {u[0, 0]}")
 
     if (v[0, 0] == v).all():
-        logging.error(f"all elements of V identical {v[0,0]}")
+        logging.error(f"all elements of V identical {v[0, 0]}")
 
     imgfn = stem.parent / (stem.name + f"{frames[1]}.pgm")
-    img = imageio.imread(imgfn)
+    img = iio.imread(imgfn)
     y, x = img.shape
 
     s = 10

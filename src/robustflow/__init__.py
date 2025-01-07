@@ -1,27 +1,31 @@
+from __future__ import annotations
 from pathlib import Path
-import imageio
 import shutil
 import subprocess
-import numpy as np
-import typing as T
 
-src = Path(__file__).parents[1]
+import imageio.v3 as iio
+import numpy as np
+
+
+__version__ = "1.2.0"
+
+src = Path(__file__).parents[2]
 bindir = src / "build"
 
 
-def build(src: Path, bindir: Path):
+def build(src: Path, bindir: Path) -> None:
     subprocess.check_call(["cmake", f"-S{src}", f"-B{bindir}"])
     subprocess.check_call(["cmake", "--build", str(bindir)])
 
 
-def runblack(stem: Path, frameind: T.Tuple[int, int], outpath: Path):
+def runblack(stem: Path, frameind: tuple[int, int], outpath: Path) -> None:
     stem = Path(stem).expanduser()
     outpath = Path(outpath).expanduser()
     stemname = stem.name
 
     fn = stem.parent / (stemname + str(frameind[0]) + ".pgm")
 
-    rc = imageio.imread(fn).shape
+    rc = iio.imread(fn).shape
 
     exe = bindir / "gnc"
     if not shutil.which(exe):
@@ -67,16 +71,14 @@ def runblack(stem: Path, frameind: T.Tuple[int, int], outpath: Path):
             "-end",
             ".pgm",
             "-skip",
-            str(15)
+            str(15),
             # 15 is # of header bytes for PGM
         ]
         print(" ".join(cmd))
-        subprocess.run(
-            cmd
-        )  # NOTE: not check_call as GNC returns 5 on older C compilers.
+        subprocess.run(cmd)  # NOTE: not check_call as GNC returns 5 on older C compilers.
 
 
-def loadflow(stem: Path, frameind: T.Tuple[int, int], outpath: Path):
+def loadflow(stem: Path, frameind: tuple[int, int], outpath: Path) -> tuple:
     stem = Path(stem).expanduser()
     outpath = Path(outpath).expanduser()
     outname = stem.name
@@ -91,7 +93,7 @@ def loadflow(stem: Path, frameind: T.Tuple[int, int], outpath: Path):
         vfn = outpath / (outstem + "v-4.pgm")
         # NOTE: have to upcast by one size (int16) to account for initial uint8
         # values that would overflow int8. RAM is cheap.
-        u.append(imageio.imread(ufn).astype("int16") - bzero)
-        v.append(imageio.imread(vfn).astype("int16") - bzero)
+        u.append(iio.imread(ufn).astype("int16") - bzero)
+        v.append(iio.imread(vfn).astype("int16") - bzero)
 
     return np.array(u).squeeze(), np.array(v).squeeze()

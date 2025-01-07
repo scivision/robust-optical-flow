@@ -1,19 +1,20 @@
 cmake_minimum_required (VERSION 3.15)
+
 project(gnc LANGUAGES C)
 
-include(CTest)
+enable_testing()
 
 if(CMAKE_C_COMPILER_ID STREQUAL GNU)
-  add_compile_options(-mtune=native -Warray-bounds)
+  add_compile_options(-Warray-bounds)
 endif()
 
-add_executable(gnc)
+add_executable(gnc src/utils.c src/image-io.c src/filter.c src/gnc.c
+src/pyramid.c src/pyramid-sor.c src/sor.c src/image_stats.c src/warp.c
+src/derivatives.c src/disconts.c src/warp-back.c
+)
+set_target_properties(gnc PROPERTIES C_STANDARD 99)
 target_link_libraries(gnc PRIVATE m)
-add_subdirectory(src)
 
-if(NOT BUILD_TESTING)
-  return()
-endif()
 
 add_test(NAME basic
   COMMAND $<TARGET_FILE:gnc> 11 12 4 1 data/yos results/flow- -l1 10.0 -l2 1.0 -S1 10.0 -S2 1.0 -s1 10.0 -s2 0.05 -stages 5 -nx 316 -ny 252 -f 0.5 -F 0 -w 1.995 -iters 20 -end ".pgm" -skip 15
@@ -23,7 +24,7 @@ set_tests_properties(basic PROPERTIES TIMEOUT 30)
 find_package(Python COMPONENTS Interpreter)
 if(Python_FOUND)
 add_test(NAME Python
-  COMMAND ${Python_EXECUTABLE} BlackRobustFlow.py data/pepsi
+  COMMAND Python::Interpreter BlackRobustFlow.py data/pepsi
   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
   set_tests_properties(Python PROPERTIES TIMEOUT 60)
 endif()
@@ -34,4 +35,5 @@ if(Matlab_FOUND)
   add_test(NAME Matlab
           COMMAND ${Matlab_MAIN_PROGRAM} -batch "BlackRobustFlow('data/pepsi')"
           WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+  set_tests_properties(Matlab PROPERTIES TIMEOUT 60)
 endif()
