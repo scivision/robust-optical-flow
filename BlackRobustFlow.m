@@ -1,11 +1,5 @@
-function [u,v] = BlackRobustFlow(pgmstem,frameind)
-%%
+%% BLACKROBUSTFLOW
 % Runs Michael Black GNC dense robust optical flow estimation
-% from a convenient Matlab interface.
-%
-% tested with Matlab R2018a.
- %
-% Note: GNU Octave 4.2, 4.4 have a quiver() plotting bug (in general).
 %
 % Inputs
 % ------
@@ -15,44 +9,43 @@ function [u,v] = BlackRobustFlow(pgmstem,frameind)
 % Outputs
 % -------
 % u, v: estimated optical flow U V
-
-if nargin<2, frameind=0:1; end
-
-cmd = ['build',filesep,'gnc'];
-if ispc
-  cmd = [cmd,'.exe'];
+function [u,v] = BlackRobustFlow(pgmstem,frameind)
+arguments
+  pgmstem (1,1) string
+  frameind (1,:) double = 0:1
 end
-if ~exist(cmd,'file'), error(['you must compile the GNC program once, I did not find it at ',cmd]), end
 
-rowcol= size(imread([pgmstem,int2str(frameind(1)),'.pgm']));
+cmd = "build/gnc";
+if ispc
+  cmd = cmd + ".exe";
+end
+assert(isfile(cmd), "compile the GNC program")
+
+rowcol= size(imread(pgmstem + string(frameind(1)) + ".pgm"));
 [~,stem] = fileparts(pgmstem);
 
 
 for ii = frameind(1):frameind(end)-1
-        fnOut = ['results',filesep,stem,int2str(ii+1),'-'];
+        fnOut = "results/" + stem + string(ii+1) + "-";
 
-        fullcmd = [cmd,' ',...
-        int2str(ii),' ', int2str(ii+1),...
-        ' 4 1 ',...
-        pgmstem,' ',fnOut,...
-        ' -l1 10.0 -l2 1.0 -S1 10.0 -S2 1.0 -s1 10.0 -s2 0.05',...
-        ' -stages 5',...
-        ' -nx ',int2str(rowcol(2)),...
-        ' -ny ',int2str(rowcol(1)),...
-        ' -f 0.5 -F 0 -w 1.995 -iters 20',...
-        ' -end .pgm -skip 15'];
+        fullcmd = join([cmd, string(ii), string(ii+1), "4 1", ...
+        pgmstem,fnOut, ...
+        "-l1 10.0 -l2 1.0 -S1 10.0 -S2 1.0 -s1 10.0 -s2 0.05", ...
+        "-stages 5",...
+        "-nx", string(rowcol(2)), "-ny", string(rowcol(1)), ...
+        "-f 0.5 -F 0 -w 1.995 -iters 20", ...
+        "-end .pgm -skip 15"]);
 
-        disp('executing:')
         disp(fullcmd)
-        [err,msg] = system(fullcmd);  %15 is # of header bytes for PGM
+        [err, msg] = system(fullcmd);  %15 is # of header bytes for PGM
     switch err
       case {127,1}
         disp(fullcmd)
         disp(msg)
         disp(err)
-        error('you must compile "gnc" executable once before running the Matlab code.')
+        error('compile "gnc" executable')
        case 0 %normal
-         disp(['frame ',int2str(ii),' ok'])
+         disp("frame " + string(ii))
        otherwise
         disp(fullcmd)
         disp(msg)
@@ -60,28 +53,26 @@ for ii = frameind(1):frameind(end)-1
         break
     end
 
-    if ~isoctave, disp(msg), end
-
 end
 
 
 bzero = 128;  % NOTE: it appears that for the unsigned 8-bit output, 128 is zero, and values less than 128 are negative
-ufn = [fnOut,'u-4.pgm'];
-vfn = [fnOut,'v-4.pgm'];
-disp(['loading ',ufn,' and ',vfn,' for flow'])
+ufn = fnOut + "u-4.pgm";
+vfn = fnOut + "v-4.pgm";
+disp("loading  " + ufn + " " + vfn)
 %NOTE: have to upcast by one size (int16) to account for initial uint8
 %values that would overflow int8. RAM is cheap.
 u = int16(imread(ufn)) - bzero;
 v = int16(imread(vfn)) - bzero;
 
-if all(u(:)==u(1,1)), warning(['all elements of U are identical: ',num2str(u(1,1)),' likely bad result']), end
-if all(v(:)==v(1,1)), warning(['all elements of V are identical: ',num2str(v(1,1)),' likely bad result']), end
+if all(u(:)==u(1,1)), warning("all elements of U are identical: " + num2str(u(1,1)) + " likely bad result"), end
+if all(v(:)==v(1,1)), warning("all elements of V are identical: " + num2str(v(1,1)) + " likely bad result"), end
 
 %% plot
 downsamp = 10; %arbitrary
 
 figure(1)
-imagesc(imread([pgmstem,int2str(frameind(1)),'.pgm']))
+imagesc(imread(pgmstem + string(frameind(1)) + ".pgm"))
 colormap gray
 hold on
 [x,y] = meshgrid(1:downsamp:rowcol(2),1:downsamp:rowcol(1));
@@ -90,6 +81,5 @@ title('Robust Optical flow vectors, Black method')
 axis('off')
 
 
-if ~nargout, clear, end
-end %function
-
+if ~nargout, clear u v, end
+end
