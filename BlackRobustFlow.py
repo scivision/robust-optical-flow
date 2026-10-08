@@ -3,7 +3,7 @@ import logging
 from pathlib import Path
 
 
-import imageio.v3 as iio
+import imageio
 import numpy as np
 
 from robustflow import runblack, loadflow
@@ -25,7 +25,7 @@ def main(stem: Path, frames, outpath: Path):
         logging.error(f"all elements of V identical {v[0, 0]}")
 
     imgfn = stem.parent / (stem.name + f"{frames[1]}.pgm")
-    img = iio.imread(imgfn)
+    img = imageio.imread(imgfn)
     y, x = img.shape
 
     s = 10
@@ -59,6 +59,6 @@ if __name__ == "__main__":
         default=[0, 1],
     )
     p.add_argument("-o", "--outpath", default="results")
-    p = p.parse_args()
+    args = p.parse_args()
 
-    main(p.pgmstem, p.frames, p.outpath)
+    main(args.pgmstem, args.frames, args.outpath)

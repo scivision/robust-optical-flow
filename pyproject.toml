@@ -25,13 +25,10 @@ readme = {file = ["README.md"], content-type = "text/markdown"}
 version = {attr = "robustflow.__version__"}
 
 [project.optional-dependencies]
-tests = ["pytest"]
-lint = ["flake8", "flake8-bugbear", "flake8-builtins", "flake8-blind-except", "mypy"]
+tests = ["pytest", "mypy"]
 
 [tool.black]
 line-length = 90
 
 [tool.mypy]
 files = ["src"]
-strict_optional = false
-allow_redefinition = true

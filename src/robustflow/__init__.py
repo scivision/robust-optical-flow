@@ -1,9 +1,8 @@
-from __future__ import annotations
 from pathlib import Path
 import shutil
 import subprocess
 
-import imageio.v3 as iio
+import imageio
 import numpy as np
 
 
@@ -25,7 +24,7 @@ def runblack(stem: Path, frameind: tuple[int, int], outpath: Path) -> None:
 
     fn = stem.parent / (stemname + str(frameind[0]) + ".pgm")
 
-    rc = iio.imread(fn).shape
+    rc = imageio.imread(fn).shape
 
     exe = bindir / "gnc"
     if not shutil.which(exe):
@@ -93,7 +92,7 @@ def loadflow(stem: Path, frameind: tuple[int, int], outpath: Path) -> tuple:
         vfn = outpath / (outstem + "v-4.pgm")
         # NOTE: have to upcast by one size (int16) to account for initial uint8
         # values that would overflow int8. RAM is cheap.
-        u.append(iio.imread(ufn).astype("int16") - bzero)
-        v.append(iio.imread(vfn).astype("int16") - bzero)
+        u.append(imageio.imread(ufn).astype("int16") - bzero)
+        v.append(imageio.imread(vfn).astype("int16") - bzero)
 
     return np.array(u).squeeze(), np.array(v).squeeze()
