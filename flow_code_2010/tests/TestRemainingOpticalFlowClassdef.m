@@ -44,6 +44,8 @@ classdef TestRemainingOpticalFlowClassdef < matlab.unittest.TestCase
         testCase.verifyNotEqual(copiedModel.lambda, imageModel.lambda)
         testCase.verifyNotEqual(copiedModel.rho_data.param, ...
           imageModel.rho_data.param)
+        testCase.verifyError( ...
+          @() factory(testCase.Images, testCase.Images), 'MATLAB:TooManyInputs')
       end
     end
 

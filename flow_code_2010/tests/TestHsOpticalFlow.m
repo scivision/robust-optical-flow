@@ -33,6 +33,9 @@ end
 methods (Test)
 function testDefaultImageAndCopyConstruction(testCase)
 defaults = hs_optical_flow;
+testCase.verifyError( ...
+    @() hs_optical_flow(testCase.Images, testCase.Images), ...
+    'MATLAB:TooManyInputs')
 testCase.verifyEmpty(defaults.images)
 testCase.verifyEqual(defaults.lambda, 80)
 testCase.verifyEqual(defaults.pyramid_levels, 4)

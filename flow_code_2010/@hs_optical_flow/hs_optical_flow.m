@@ -63,21 +63,22 @@ classdef hs_optical_flow
     end
 
     methods
-        function this = hs_optical_flow(varargin)
-            narginchk(0, 1)
-
-            if ~isempty(varargin) && isa(varargin{1}, 'hs_optical_flow')
-                this = varargin{1};
-            else
-                for i = 1:length(this.spatial_filters)
-                    this.rho_spatial_u{i} = robust_function('quadratic', 1);
-                    this.rho_spatial_v{i} = robust_function('quadratic', 1);
-                end
-                this.rho_data = robust_function('quadratic', 1);
-                if ~isempty(varargin)
-                    this.images = varargin{1};
-                end
+        function this = hs_optical_flow(imageOrCopy)
+            arguments
+                imageOrCopy = []
             end
+
+            if isa(imageOrCopy, 'hs_optical_flow')
+                this = imageOrCopy;
+                return
+            end
+
+            for i = 1:length(this.spatial_filters)
+                this.rho_spatial_u{i} = robust_function('quadratic', 1);
+                this.rho_spatial_v{i} = robust_function('quadratic', 1);
+            end
+            this.rho_data = robust_function('quadratic', 1);
+            this.images = imageOrCopy;
         end
 
         function disp(this)

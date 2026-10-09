@@ -71,16 +71,16 @@ properties
 end
 
 methods
-  function this = classic_nl_optical_flow(varargin)
-    narginchk(0, 1)
-
-    if nargin == 1
-      if isa(varargin{1}, 'classic_nl_optical_flow')
-        this = varargin{1};
-        return
-      end
-      this.images = varargin{1};
+  function this = classic_nl_optical_flow(imageOrCopy)
+    arguments
+      imageOrCopy = []
     end
+
+    if isa(imageOrCopy, 'classic_nl_optical_flow')
+      this = imageOrCopy;
+      return
+    end
+    this.images = imageOrCopy;
 
     for i = 1:numel(this.spatial_filters)
       this.rho_spatial_u{i} = robust_function('generalized_charbonnier', 1e-3, 0.45);

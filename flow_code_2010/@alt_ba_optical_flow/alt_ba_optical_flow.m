@@ -67,16 +67,16 @@ properties
 end
 
 methods
-  function this = alt_ba_optical_flow(varargin)
-    narginchk(0, 1)
-
-    if nargin == 1
-      if isa(varargin{1}, 'alt_ba_optical_flow')
-        this = varargin{1};
-        return
-      end
-      this.images = varargin{1};
+  function this = alt_ba_optical_flow(imageOrCopy)
+    arguments
+      imageOrCopy = []
     end
+
+    if isa(imageOrCopy, 'alt_ba_optical_flow')
+      this = imageOrCopy;
+      return
+    end
+    this.images = imageOrCopy;
 
     for i = 1:numel(this.spatial_filters)
       this.rho_spatial_u{i} = robust_function('lorentzian', 0.03);
