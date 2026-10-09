@@ -47,11 +47,11 @@ sz = sz(1:2);
 
 if nargin < 3
     occ = ones(sz);
-end;
+end
 
 if nargin < 4
     bfhsz = 10; % half window size
-end;
+end
 
 %mfsz = [7 7]; % for test
 
@@ -60,11 +60,11 @@ if nargin < 5
 else
 %     uvo(:,:,1) = medfilt2(uv(:,:,1), mfsz, 'symmetric');
 %     uvo(:,:,2) = medfilt2(uv(:,:,2), mfsz, 'symmetric');
-end;
+end
 
 if nargin < 6
     sigma_i = 5; %3.5; % intensity distance (10) 5 better than 10 and 20
-end;
+end
 
 % % % WMF first then MF
 % % uvo = uv;
@@ -107,7 +107,7 @@ nB       = ceil(N/n);
 
 E = 0;
 
-for ib = 1:nB;
+for ib = 1:nB
     istart = (ib-1)*n + 1;
     iend   = min(ib*n, N);
     indx_row = Indx_Row(istart:iend);
@@ -134,7 +134,7 @@ for ib = 1:nB;
         tmp_i = pad_im(r1:r2, c1:c2, :);
 
         % spatial weight
-        [C R] = meshgrid(c1:c2, r1:r2);
+        [C, R] = meshgrid(c1:c2, r1:r2);
         w = exp( -((C-cc).^2+(R-rc).^2)/2/sigma_x^2 );
         % Uncomment below: no spatial weight for test
         % w = ones(size(w));
@@ -155,10 +155,10 @@ for ib = 1:nB;
         E = E + sum( abs(tmp_u(:) - pad_u(rc, cc)).* w(:));
         E = E + sum( abs(tmp_v(:) - pad_v(rc, cc)).* w(:));
 
-    end;
+    end
 
 
-end;
+end
 
 % for 5x5 equal weight
 
@@ -181,7 +181,7 @@ N        = length(Indx_Row); % number of elements to process
 n        = 4e4;              % number of elements per batch
 nB       = ceil(N/n);
 
-for ib = 1:nB;
+for ib = 1:nB
     istart = (ib-1)*n + 1;
     iend   = min(ib*n, N);
     indx_row = Indx_Row(istart:iend);
@@ -208,7 +208,7 @@ for ib = 1:nB;
         tmp_i = pad_im(r1:r2, c1:c2, :);
 
         % spatial weight
-        [C R] = meshgrid(c1:c2, r1:r2);
+        [C, R] = meshgrid(c1:c2, r1:r2);
         w = exp( -((C-cc).^2+(R-rc).^2)/2/sigma_x^2 );
         % Uncomment below: no spatial weight for test
         w = ones(size(w));
@@ -229,7 +229,7 @@ for ib = 1:nB;
         E = E + sum( abs(tmp_u(:) - pad_u(rc, cc)).* w(:));
         E = E + sum( abs(tmp_v(:) - pad_v(rc, cc)).* w(:));
 
-    end;
+    end
 
 
-end;
+end

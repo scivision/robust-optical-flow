@@ -62,21 +62,21 @@ for i = 1:prod(imsz)*2
 
     Duv2(i) = (L1-L2) / (2*delta);
     if abs(Duv2(i)) > 1000
-        [L1 L2]
-    end;
-end;
+        [L1 L2];
+    end
+end
 
 Duv     = Duv(:);
 Duv2    = Duv2(:);
 err     = (Duv2-Duv);
 nerr    = err/max(max(abs(Duv)), max(abs(Duv2)) );
 disp('maximum absolute error and maximum absolute relative error -- Black & Anandan');
-[max(abs(err(:)))  max(abs(nerr(:)))]    % should be around or less to 1e-6
+[max(abs(err(:)))  max(abs(nerr(:)))];    % should be around or less to 1e-6
 
-if max(abs(err(:))) > 1e-3 | max(abs(nerr(:))) > 1e-3
+if max(abs(err(:))) > 1e-3 || max(abs(nerr(:))) > 1e-3
     figure;             % set a breakpoint here
     tmp1 = reshape(err(1:end/2), imsz);
     tmp2 = reshape(err(1:end/2), imsz);
     imshow([tmp1 tmp2], []);
     pause; close;
-end;
+end

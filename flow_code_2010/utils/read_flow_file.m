@@ -101,8 +101,8 @@ switch seqName
             tu = nan(size(im1));
             tv = tu;
 
-        end;
+        end
 
     otherwise
         error('unknown image sequence!');
-end;
+end

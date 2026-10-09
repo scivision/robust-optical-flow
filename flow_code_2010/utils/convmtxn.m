@@ -47,7 +47,7 @@ function M = convmtxn(F, sz, valid)
 
 
   ndims  = length(sz);
-  blksz  = prod(size(F));
+  blksz  = numel(F);
   nblks  = prod(sz);
   nelems = blksz * nblks;
 

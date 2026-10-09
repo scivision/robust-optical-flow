@@ -38,7 +38,7 @@ function this = parse_input_parameter(this, param)
 
 if mod(length(param), 2) ~=0
     error('Parse_input_parameter: Input parameters must be given in pairs (name and value)!');
-end;
+end
 
 i = 1;
 
@@ -46,7 +46,7 @@ while (i <= length(param))
 
     if ischar(param{i+1})
         param{i+1} = str2num(param{i+1});
-    end;
+    end
 
     switch lower(param{i})
 
@@ -75,8 +75,8 @@ while (i <= length(param))
                 this.image_filter =  fspecial('gaussian', [15 15], 0.4) - fspecial('gaussian', [15 15], 1);
             else
                 this.image_filter = [];
-            end;
-    end;
+            end
+    end
 
     i = i+2;
-end;
+end

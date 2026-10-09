@@ -53,11 +53,11 @@ function uv = compute_flow(this, init, gt)
   uvhat = uv;
 
   % Perform structure texture decomposition to get the texture component
-  if this.texture == true;
+  if this.texture == true
       images  = structure_texture_decomposition_rof( this.images);
   else
       images  = scale_image(this.images, 0, 255);
-  end;
+  end
 
   % Automatic determine pyramid level
   this.pyramid_levels  =  1 + floor( log(min(size(images, 1), size(images,2))/16) / log(this.pyramid_spacing) );
@@ -91,7 +91,7 @@ function uv = compute_flow(this, init, gt)
           this.replacment = false;
       else
           this.replacment = true;
-      end;
+      end
 
       if this.display
           disp(['GNC stage: ', num2str(ignc)])
@@ -103,7 +103,7 @@ function uv = compute_flow(this, init, gt)
       else
           pyramid_levels = this.gnc_pyramid_levels;
           pyramid_spacing = this.gnc_pyramid_spacing;
-      end;
+      end
 
       % Iterate through all pyramid levels starting at the top
       for l = pyramid_levels:-1:1
@@ -124,12 +124,12 @@ function uv = compute_flow(this, init, gt)
               small.images         = gnc_pyramid_images{l};
               nsz   = [size(gnc_pyramid_images{l}, 1) size(gnc_pyramid_images{l}, 2)];
               im1   = org_gnc_pyramid_images{l}(:,:,1);
-          end;
+          end
 
           % Turn off the quadratic constaint term in the very beginning
           if l == pyramid_levels && ignc == 1
               small.qterm = false;
-          end;
+          end
 
           % Rescale the flow field
           uv        = resample_flow(uv, nsz);
@@ -141,7 +141,7 @@ function uv = compute_flow(this, init, gt)
           small.seg = small.images(:,:,1);
 
           % Run flow method on subsampled images
-          [uv uvhat] = compute_flow_base(small, uv, uvhat);
+          [uv, uvhat] = compute_flow_base(small, uv, uvhat);
       end
 
 
@@ -150,9 +150,9 @@ function uv = compute_flow(this, init, gt)
           new_alpha  = 1 - ignc / (this.gnc_iters-1);
           this.alpha = min(this.alpha, new_alpha);
           this.alpha = max(0, this.alpha);
-      end;
+      end
 
-      if true; %this.display
+      if true %this.display
 
           %fprintf('log-posterior\t%3.3e\n', evaluate_log_posterior(this, uv));
           fprintf('\nlog-posterior uv uvhat \t%3.3e\n', evalaute_new_log_posterior(small, uv, uvhat));
@@ -160,19 +160,19 @@ function uv = compute_flow(this, init, gt)
           fprintf('log-posterior uvhat \t%3.3e\n', evalaute_new_log_posterior(small, uvhat));
 
           if nargin == 3
-              [aae stdae aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uv(:,:,1), uv(:,:,2), 0);        % ignore 0 boundary pixels
+              [aae, stdae, aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uv(:,:,1), uv(:,:,2), 0);        % ignore 0 boundary pixels
               fprintf('AAE %3.3f STD %3.3f average end point error %3.3f \n', aae, stdae, aepe);
 
-              [aae stdae aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uvhat(:,:,1), uvhat(:,:,2), 0);        % ignore 0 boundary pixels
+              [aae, stdae, aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uvhat(:,:,1), uvhat(:,:,2), 0);        % ignore 0 boundary pixels
               fprintf(' uvhat AAE %3.3f STD %3.3f average end point error %3.3f \n', aae, stdae, aepe);
-          end;
+          end
 
           %figure; imshow(flowToColor(uv), []);
           %figure; imshow(flowToColor(uvhat), []);   title('axu');
-      end;
+      end
 
-      toc/60
-  end;
+      toc/60;
+  end
 
 
   uv = uvhat;

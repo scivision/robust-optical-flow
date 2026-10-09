@@ -1,4 +1,4 @@
-function uv = compute_flow(this, init, gt)
+function uv = compute_flow(this, init, ~)
 %
 %COMPUTE_FLOW   Compute flow field
 %   UV = COMPUTE_FLOW(THIS[, INIT]) computes the flow field UV with
@@ -50,7 +50,7 @@ function uv = compute_flow(this, init, gt)
   end
 
   % Perform structure texture decomposition to get the texture component
-  if this.texture == true;
+  if this.texture == true
       % Texture constancy
 
       if size(this.images, 4) ==1
@@ -59,13 +59,13 @@ function uv = compute_flow(this, init, gt)
 
           for i = 1:size(this.images,4)
               images(:,:,i,:)  = structure_texture_decomposition_rof( squeeze(this.images(:,:,i,:)));
-          end;
+          end
 
-      end;
+      end
 
   else
       images  = scale_image(this.images, 0, 255);
-  end;
+  end
 
   % Automatic determine pyramid level
   this.pyramid_levels  =  1 + floor( log(min(size(images, 1), size(images,2))/16) / log(this.pyramid_spacing) );
@@ -100,9 +100,9 @@ function uv = compute_flow(this, init, gt)
 
   if this.display
       fprintf('energy of solution \t%3.3e\n', -evaluate_log_posterior(small, uv));
-  end;
+  end
 
   if ~isempty(this.median_filter_size)
       uv(:,:,1) = medfilt2(uv(:,:,1), this.median_filter_size, 'symmetric');
       uv(:,:,2) = medfilt2(uv(:,:,2), this.median_filter_size, 'symmetric');
-  end;
+  end

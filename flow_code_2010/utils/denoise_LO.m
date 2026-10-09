@@ -43,7 +43,7 @@ function uo = denoise_LO(un, median_filter_size, lambda, niters)
 
 if nargin < 4
     niters = 1;
-end;
+end
 
 mfsize = median_filter_size(1);
 hfsize = floor(mfsize/2);
@@ -63,4 +63,4 @@ for i = 1:niters
     u2 = [u2(1:floor(mfsize*mfsize/2),:); u2(ceil(mfsize*mfsize/2) + 1: end, :)];
 
     uo = reshape(median([u2; tmp]), [size(un,1) size(un,2)]);
-end;
+end

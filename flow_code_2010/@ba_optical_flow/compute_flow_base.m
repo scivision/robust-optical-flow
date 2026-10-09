@@ -53,17 +53,17 @@ function uv = compute_flow_base(this, uv)
       for i = 1:length(this.rho_spatial_u)
           qua_this.rho_spatial_u{i}   = robust_function('quadratic', 1);
           qua_this.rho_spatial_v{i}   = robust_function('quadratic', 1);
-      end;
+      end
   else
       error('evaluate_log_posterior: unknown rho function!');
-  end;
+  end
 
   % Data
   if isa(qua_this.rho_data, 'robust_function')
       qua_this.rho_data        = robust_function('quadratic', ta);
   else
       error('evaluate_log_posterior: unknown rho function!');
-  end;
+  end
 
 
   % Iterate flow computation
@@ -72,7 +72,7 @@ function uv = compute_flow_base(this, uv)
     duv = zeros(size(uv));
 
     % Compute spatial and temporal partial derivatives
-    [It Ix Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
+    [It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
 
     for j = 1:this.max_linear
 
@@ -81,24 +81,24 @@ function uv = compute_flow_base(this, uv)
 
         % Compute linear flow operator
         if this.alpha == 1
-            [A, b, parm, iterative] = ...
+            [A, b, ~, ~] = ...
                 flow_operator(qua_this, uv, duv, It, Ix, Iy);
 
         elseif this.alpha > 0
             [A, b] = ...
                 flow_operator(qua_this, uv, duv, It, Ix, Iy);
-            [A1, b1, parm, iterative] = ...
+            [A1, b1, ~, ~] = ...
                 flow_operator(this, uv, duv, It, Ix, Iy);
             A = this.alpha * A + (1-this.alpha) * A1;
             b = this.alpha * b + (1-this.alpha) * b1;
 
         elseif this.alpha == 0
-            [A, b, parm, iterative] = ...
+            [A, b, ~, ~] = ...
                 flow_operator(this, uv, duv, It, Ix, Iy);
 
         else
             error('flow_operator@ba_optical_flow: wrong gnc parameter alpha %3.2e', this.alpha);
-        end;
+        end
 
         % Invoke the selected linear equation solver
         switch (lower(this.solver))
@@ -109,9 +109,9 @@ function uv = compute_flow_base(this, uv)
                 x = reshape(x, size(uv));
                 fprintf('%d %d %d  ', flag, res, n);
             case 'bicgstab'
-                [x,flag] = reshape(bicgstab(A, b, 1E-3, 200, [], [], uv(:)), size(uv)); %, parm
+                [x,~] = reshape(bicgstab(A, b, 1E-3, 200, [], [], uv(:)), size(uv)); %, parm
             case 'pcg'
-                [x flag] = pcg(A,b, [], 10);
+                [x, ~] = pcg(A,b, [], 10);
                 x        = reshape(x, size(uv));
             otherwise
                 error('Invalid solver!')
@@ -127,7 +127,7 @@ function uv = compute_flow_base(this, uv)
         if this.display
             disp(['--Iteration: ', num2str(i), '   ', num2str(j), '   (', ...
                 num2str(norm(x(:)-duv(:))), ')'])
-        end;
+        end
 
         % Terminate iteration early if flow doesn't change substantially
 %         if norm(x(:)-duv(:)) < 1E-3
@@ -143,12 +143,12 @@ function uv = compute_flow_base(this, uv)
             % Perform median filter
             uv(:,:,1) = medfilt2(uv(:,:,1), this.median_filter_size, 'symmetric');
             uv(:,:,2) = medfilt2(uv(:,:,2), this.median_filter_size, 'symmetric');
-        end;
+        end
         duv = uv - uv0;
 
         uv  = uv0;
 
-    end;
+    end
 
     % Update flow fileds
     uv = uv + duv;

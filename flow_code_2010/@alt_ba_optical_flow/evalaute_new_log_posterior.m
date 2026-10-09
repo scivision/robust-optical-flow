@@ -49,7 +49,7 @@ function L = evalaute_new_log_posterior(this, uv, uvhat)
 
 if nargin < 3
     uvhat = uv;
-end;
+end
 
 L1 = evaluate_log_posterior(this, uv);
 
@@ -80,7 +80,7 @@ for iF = 1:length(filters)
     tmp = conv2(uvhat(:,:,2), filters{iF});
     %E4  = E4 + sum(evaluate(pen, tmp(:))); % charbonnier
     E4  = E4 + sum(abs(tmp(:)));            % L1
-end;
+end
 
 % [L1 this.lambda2*E3  this.lambda2*E4/this.weightRatio]/1e5
 L = L1 - this.lambda2*E3 -this.lambda3* E4;

@@ -41,7 +41,7 @@ mask = ones(imsz);
 
 h1   = floor(fsz(1)/2);
 if fsz(1) == 1
-    ;
+
 elseif fsz(1) == 2
     mask(end,:) = 0;
 elseif mod(fsz(1), 2) == 0
@@ -50,12 +50,12 @@ elseif mod(fsz(1), 2) == 0
 else
     mask(1:h1, :)    = 0;
     mask(end-h1+1:end, :)   = 0;
-end;
+end
 
 h2   = floor(fsz(2)/2);
 
 if fsz(2) == 1
-    ;
+
 elseif fsz(2) == 2
     mask(:, end) = 0;
 elseif mod(fsz(2), 2) == 0
@@ -64,4 +64,4 @@ elseif mod(fsz(2), 2) == 0
 else
     mask(:, 1:h2)    = 0;
     mask(:, end-h2+1:end)   = 0;
-end;
+end

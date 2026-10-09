@@ -38,6 +38,6 @@ function imo = scale_image(im, vlow, vhigh, ilow, ihigh)
 if nargin == 3
     ilow    = min(im(:));
     ihigh   = max(im(:));
-end;
+end
 
 imo = (im-ilow)/(ihigh-ilow) * (vhigh-vlow) + vlow;

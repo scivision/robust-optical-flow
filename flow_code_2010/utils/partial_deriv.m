@@ -38,17 +38,17 @@ function [It, Ix, Iy] = partial_deriv(images, uv_prev, interpolation_method, der
 
 if nargin == 2
     interpolation_method = 'cubic';
-end;
+end
 
 if nargin == 4
     h = deriv_filter;
 else
     h = [1 -8 0 8 -1]/12; % used in Wedel etal "improved TV L1"
-end;
+end
 
 if nargin < 5
     b = 0.5;    %blending ratio
-end;
+end
 
 H   = size(images, 1);
 W   = size(images, 2);
@@ -62,7 +62,7 @@ B = (x2>W) | (x2<1) | (y2>H) | (y2<1);
 
 if size(images, 4) ~= 1
     B = repmat(B, [1 1 size(images, 3)]);
-end;
+end
 
 if size(images, 4) == 1
     img1 = images(:,:,1);
@@ -70,7 +70,7 @@ if size(images, 4) == 1
 else
     img1 = images(:,:,:,1);
     img2 = images(:,:,:,2);
-end;
+end
 
 if strcmp(interpolation_method, 'bi-cubic')
 
@@ -87,34 +87,34 @@ if strcmp(interpolation_method, 'bi-cubic')
             warpIm  = zeros(size(images(:,:,:,1)));
             for j = 1:size(images,3)
                 warpIm(:,:,j) = interp2_bicubic(images(:,:,j, 2),x2,y2, h);
-            end;
-        end;
+            end
+        end
 
     elseif nargout == 3
 
         if size(images, 4) == 1
             % gray-level
-            [warpIm Ix Iy] = interp2_bicubic(images(:,:,2),x2,y2, h);
+            [warpIm, Ix, Iy] = interp2_bicubic(images(:,:,2),x2,y2, h);
         else
             % color
             warpIm  = zeros(size(images(:,:,:,1)));
             Ix      = warpIm;
             Iy      = warpIm;
             for j = 1:size(images,3)
-                [warpIm(:,:,j) Ix(:,:,j) Iy(:,:,j)] = interp2_bicubic(images(:,:,j,2),x2,y2, h);
-            end;
-        end;
+                [warpIm(:,:,j), Ix(:,:,j), Iy(:,:,j)] = interp2_bicubic(images(:,:,j,2),x2,y2, h);
+            end
+        end
 
     else
         error('partial_deriv: number of output wrong!');
-    end;
+    end
 
     indx        = isnan(warpIm);
     if size(images, 4) == 1
         It          = warpIm - images(:,:,1);
     else
         It          = warpIm - images(:,:,:,1);
-    end;
+    end
 
     % Disable those out-of-boundary pixels in warping
     It(indx)    = 0;
@@ -134,7 +134,7 @@ if strcmp(interpolation_method, 'bi-cubic')
 
         Ix(indx) = 0;
         Iy(indx) = 0;
-    end;
+    end
 
 elseif strcmp(interpolation_method, 'bi-linear') || strcmp(interpolation_method, 'cubic')
 
@@ -142,7 +142,7 @@ elseif strcmp(interpolation_method, 'bi-linear') || strcmp(interpolation_method,
         method = 'linear';
     else
         method = 'cubic';
-    end;
+    end
 
     % Matlab built-in
     if size(images, 4) == 1
@@ -155,10 +155,10 @@ elseif strcmp(interpolation_method, 'bi-linear') || strcmp(interpolation_method,
         warpIm  = zeros(size(images(:,:,:,1)));
         for j = 1:size(images,3)
             warpIm(:,:,j) = interp2(x,y,images(:,:,j,2),x2,y2,method, NaN);
-        end;
+        end
         It      = warpIm - images(:,:,:,1);
 
-    end;
+    end
 
         % spline-based bicubic interpolation code with incorrect derivatives (below)
 %         if size(images, 4) == 1
@@ -197,9 +197,9 @@ elseif strcmp(interpolation_method, 'bi-linear') || strcmp(interpolation_method,
             for j = 1:size(images,3)
                 Ix(:,:,j)  = interp2(x,y,I2x(:,:,j),x2,y2,method);
                 Iy(:,:,j)  = interp2(x,y,I2y(:,:,j),x2,y2,method);
-            end;
+            end
 
-        end;
+        end
 
         % warp then derivative
 %         if size(images, 4) == 1
@@ -223,15 +223,15 @@ elseif strcmp(interpolation_method, 'bi-linear') || strcmp(interpolation_method,
         Ix  = b*Ix+(1-b)*I1x;
         Iy  = b*Iy+(1-b)*I1y;
 
-    end;
+    end
 
     % Disable those out-of-boundary pixels in warping
     It(B)   = 0;
     if nargout == 3
         Ix(B) = 0;
         Iy(B) = 0;
-    end;
+    end
 
 else
     error('partial_deriv: unknown interpolation method!');
-end;
+end

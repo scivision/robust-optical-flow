@@ -46,7 +46,7 @@ function occ = detect_occlusion(uv, images, sigma_d, sigma_i)
 if nargin == 2
     sigma_d = 0.3; % divergence
     sigma_i = 20;  % intensity
-end;
+end
 
 div = divergence(uv(:,:,1), uv(:,:,2));
 

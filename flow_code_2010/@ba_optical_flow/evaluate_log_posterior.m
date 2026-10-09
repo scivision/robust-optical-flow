@@ -59,8 +59,8 @@ for i = 1:length(S)
 
     else
         error('evaluate_log_posterior: unknown rho function!');
-    end;
-end;
+    end
+end
 
 % Data
 It  = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
@@ -75,10 +75,10 @@ elseif isa(this.rho_data, 'gsm_density')
 
 else
     error('evaluate_log_posterior: unknown rho function!');
-end;
+end
 
 L = this.lambda*p + l;
 
 if this.display
     fprintf('spatial\t%3.2e\tdata\t%3.2e\n', this.lambda*p, l);
-end;
+end

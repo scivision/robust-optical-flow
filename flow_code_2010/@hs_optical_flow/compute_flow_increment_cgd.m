@@ -1,4 +1,4 @@
-function duv = compute_flow_increment_cgd(this,uv);
+function duv = compute_flow_increment_cgd(this,uv)
 
 %DUV = compute_flow_increment_cgd(THIS, UV) computes the flow increment
 %   to the current flow estimate uv by minimizing a quadratic function
@@ -45,19 +45,19 @@ function duv = compute_flow_increment_cgd(this,uv);
 % THIS SOFTWARE.
 
   % Compute spatial and temporal partial derivatives
-  [It Ix Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter);
+  [It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter);
 
   lambda = this.lambda*this.sigmaD2/this.sigmaS2;
 
   duv = zeros(size(uv));
   duv = duv(:);
-  [duv  E]= minimize(duv, @evaluate_flow_increment_energy, 1000, It, Ix, Iy, uv, lambda);
+  [duv,  ~]= minimize(duv, @evaluate_flow_increment_energy, 1000, It, Ix, Iy, uv, lambda);
 
 
   duv = reshape(duv, size(uv));
 
 
-  function [E dE] = evaluate_flow_increment_energy(duv, It, Ix, Iy, uv, lambda)
+  function [E, dE] = evaluate_flow_increment_energy(duv, It, Ix, Iy, uv, lambda)
   % evaluate the energy function and its derivative to the flow increment
 
   duv = reshape(duv, size(uv));
@@ -74,7 +74,7 @@ function duv = compute_flow_increment_cgd(this,uv);
       u_{i}  = conv2(uv(:,:,1)+duv(:,:,1), S{i}, 'valid');
       v_{i}  = conv2(uv(:,:,2)+duv(:,:,2), S{i}, 'valid');
       p   = p + sum(u_{i}(:).^2) + sum(v_{i}(:).^2);
-  end;
+  end
 
   E = lambda*p + d;
 
@@ -90,8 +90,8 @@ function duv = compute_flow_increment_cgd(this,uv);
           dv  = conv2(v_{i}, S{i}(end:-1:1), 'full');
           dEu = dEu + du;
           dEv = dEv + dv;
-      end;
+      end
 
       dE = dE1 + lambda*[dEu(:); dEv(:)];
       dE = 2*dE;    % analytical formula
-  end;
+  end

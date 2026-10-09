@@ -78,10 +78,10 @@ error(nargchk(0, 1, length(varargin)));
 
       method = 'quadratic';
       this.spatial_filters = {[1 -1], [1; -1]};
-      for i = 1:length(this.spatial_filters);
+      for i = 1:length(this.spatial_filters)
           this.rho_spatial_u{i}   = robust_function(method, 1); % 0.1
           this.rho_spatial_v{i}   = robust_function(method, 1);
-      end;
+      end
       this.rho_data        = robust_function(method, 1); % 6.3
 
       this.color_images     = [];

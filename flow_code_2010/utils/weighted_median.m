@@ -42,8 +42,8 @@ function uo = weighted_median(w, u)
 
 %
 
-[H W] = size(u);
-[sort_u ir] = sort(u);
+[H, W] = size(u);
+[sort_u, ir] = sort(u);
 ic       = repmat(1:W, [H, 1]);
 ind      = sub2ind([H W], ir, ic);
 
@@ -52,12 +52,12 @@ w        = w(ind);
 % number of negative infinites for each column
 k = ones(1, W);
 pp = -sum(w);
-for i = H:-1:1;
+for i = H:-1:1
     pc = pp + 2*w(i, :);
     indx = (pc > 0) & (pp < 0);
     k(indx) = H-i+1;
     pp = pc;
-end;
+end
 
 k   = H-k+1;
 ind = sub2ind([H W], k, 1:W);

@@ -96,7 +96,7 @@ if nargin < 1
 elseif nargin == 1
     iSeq   = 4;
     seqName = 'middle-other';
-end;
+end
 
 [im1, im2, tu, tv] = read_flow_file(seqName, iSeq);
 
@@ -108,10 +108,10 @@ subplot(1,2,2); plotflow(uv);   title('Vector plot');
 
 if sum(~isnan(tu(:))) > 1
 
-    [aae stdae aepe] = flowAngErr(tu, tv, uv(:,:,1), uv(:,:,2), 0); % ignore 0 boundary pixels
+    [aae, ~, aepe] = flowAngErr(tu, tv, uv(:,:,1), uv(:,:,2), 0); % ignore 0 boundary pixels
     fprintf('\nAAE %3.3f average EPE %3.3f \n', aae, aepe);
 
-end;
+end
 
 % Uncomment below and change FN to save the flow fields
 % if ~exist(['result/' seqName], 'file');
@@ -125,7 +125,7 @@ end;
 
 if nargout == 1
     uvo = uv;
-end;
+end
 
 % Uncomment below  to remove 'utils/' to your
 %   matlab search path

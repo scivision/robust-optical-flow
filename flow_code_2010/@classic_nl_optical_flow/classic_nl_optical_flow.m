@@ -98,10 +98,10 @@ error(nargchk(0, 1, length(varargin)));
       this.spatial_filters = {[1 -1], [1; -1]};
       a   = 0.45;
       sig = 1e-3;
-      for i = 1:length(this.spatial_filters);
+      for i = 1:length(this.spatial_filters)
           this.rho_spatial_u{i}   = robust_function(method, sig, a);
           this.rho_spatial_v{i}   = robust_function(method, sig, a);
-      end;
+      end
       this.rho_data        = robust_function(method, sig, a);
 
       this.seg             = [];    % store segementation result

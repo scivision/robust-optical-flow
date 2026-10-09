@@ -50,7 +50,7 @@ function O = imwarp(I, u, v, nopad)
   spy = sy + 2;
 
 
-  if (nargin > 3 & nopad)
+  if (nargin > 3 && nopad)
     % Warped image coordinates
     [X, Y] = meshgrid(1:sx, 1:sy);
     XI = reshape(X + u, 1, sx * sy);

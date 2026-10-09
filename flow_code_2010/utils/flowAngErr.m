@@ -65,13 +65,13 @@ mang=mang*180/pi;
 
 if nargout >= 2
     stdang = std(ang*180/pi);
-end;
+end
 
 if nargout == 3
     epe = sqrt((stu-su).^2 + (stv-sv).^2);
     epe = epe(ind2);
     mepe = mean(epe(:));
-end;
+end
 
 % show which pixels were ignored
 % tmp=zeros(size(su));

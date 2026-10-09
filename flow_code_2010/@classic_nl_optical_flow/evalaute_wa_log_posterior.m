@@ -1,4 +1,4 @@
-function L = evalaute_wa_log_posterior(this, uv, uvhat, occ, bfhsz, mfsz)
+function L = evalaute_wa_log_posterior(this, uv, uvhat, occ, bfhsz, ~)
 % compute joint energy of E(uv) + lambda2 |uv-uvhat|^2 +
 % E_{weight_area}(uvhat)
 %
@@ -39,7 +39,7 @@ function L = evalaute_wa_log_posterior(this, uv, uvhat, occ, bfhsz, mfsz)
 
 if nargin < 3
     uvhat = uv;
-end;
+end
 
 L1 = evaluate_log_posterior(this, uv);
 
@@ -54,11 +54,11 @@ dilate_sz = 5*[1 1];  % dilation window size for flow edge region [5 5]
 
 if nargin < 3
     occ = ones(size(im));
-end;
+end
 
 if nargin < 4
     bfhsz = 10; % half window size
-end;
+end
 
 uvo = uv;
 
@@ -85,7 +85,7 @@ N        = length(Indx_Row); % number of elements to process
 n        = 4e4;              % number of elements per batch
 nB       = ceil(N/n);
 
-for ib = 1:nB;
+for ib = 1:nB
     istart = (ib-1)*n + 1;
     iend   = min(ib*n, N);
     indx_row = Indx_Row(istart:iend);
@@ -112,7 +112,7 @@ for ib = 1:nB;
         tmp_i = pad_im(r1:r2, c1:c2);
 
         % spatial weight
-        [C R] = meshgrid(c1:c2, r1:r2);
+        [C, R] = meshgrid(c1:c2, r1:r2);
         w = exp( -((C-cc).^2+(R-rc).^2)/2/sigma_x^2 );
         % Uncomment below: no spatial weight for test
         % w = ones(size(w));
@@ -131,7 +131,7 @@ for ib = 1:nB;
         neighbors_v(:,i) = tmp_v(:);
         weights(:,i)     = w(:);
 
-    end;
+    end
 
     % solve weighted median filtering
     indx = sub2ind(size(im), indx_row, indx_col);
@@ -139,7 +139,7 @@ for ib = 1:nB;
     tmp  = uo(indx);
     tmp  = tmp(:)';
 
-    [H W] = size(neighbors_u);
+    [H, ~] = size(neighbors_u);
 
     E4 = E4 + sum(sum(abs(neighbors_u - repmat(tmp, [H, 1]) ) ) );
 
@@ -147,7 +147,7 @@ for ib = 1:nB;
     tmp  = vo(indx);
     tmp  = tmp(:)';
     E4 = E4 + sum(sum(abs(neighbors_v - repmat(tmp, [H, 1]) ) ) );
-end;
+end
 
 % energy of area term in nonboundary regions
 

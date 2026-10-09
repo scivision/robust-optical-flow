@@ -38,11 +38,11 @@ function img = flowToColor(flow, varargin)
 UNKNOWN_FLOW_THRESH = 1e9;
 UNKNOWN_FLOW = 1e10;            %
 
-[height widht nBands] = size(flow);
+[~, ~, nBands] = size(flow);
 
 if nBands ~= 2
     error('flowToColor: image must have two bands');
-end;
+end
 
 u = flow(:,:,1);
 v = flow(:,:,2);
@@ -74,8 +74,8 @@ if isempty(varargin) ==0
     maxFlow = varargin{1};
     if maxFlow > 0
         maxrad = maxFlow;
-    end;
-end;
+    end
+end
 
 u = u/(maxrad+eps);
 v = v/(maxrad+eps);

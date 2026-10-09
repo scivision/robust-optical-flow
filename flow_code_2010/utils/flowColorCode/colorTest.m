@@ -40,7 +40,7 @@ range = truerange * 1.04;
 
 s2 = round(height/2);
 
-[x y] = meshgrid(1:width, 1:height);
+[x, y] = meshgrid(1:width, 1:height);
 
 u = x*range/s2 - range;
 v = y*range/s2 - range;

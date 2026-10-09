@@ -88,10 +88,10 @@ error(nargchk(0, 1, length(varargin)));
 
       method = 'lorentzian'; %'geman_mcclure'; %charbonnier
       this.spatial_filters = {[1 -1], [1; -1]};
-      for i = 1:length(this.spatial_filters);
+      for i = 1:length(this.spatial_filters)
           this.rho_spatial_u{i}   = robust_function(method, 0.03);
           this.rho_spatial_v{i}   = robust_function(method, 0.03);
-      end;
+      end
       this.rho_data        = robust_function(method, 1.5); % 6.3
 
       this.alp             = 0.95;  % for ROF texture decomposition

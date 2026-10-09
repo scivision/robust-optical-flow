@@ -42,8 +42,8 @@ for i = 1:niters
     if mod(i, niters/10) == 0
         fprintf('log-posterior\t%3.3e\n', evaluate_log_posterior(this, uv));
         if nargin == 6
-            [aae stdae aepe] = flowAngErr(tu, tv, uv(:,:,1), uv(:,:,2), 0);
+            [aae, stdae, aepe] = flowAngErr(tu, tv, uv(:,:,1), uv(:,:,2), 0);
             fprintf('AAE %3.3f STD %3.3f average end point error %3.3f \n\n', aae, stdae, aepe);
-        end;
-    end;
-end;
+        end
+    end
+end

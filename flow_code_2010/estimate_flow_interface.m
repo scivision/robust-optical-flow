@@ -45,7 +45,7 @@ function uvo = estimate_flow_interface(im1, im2, method, params)
 % Read in arguments
 if nargin < 3
     method = 'classic+nl-fast';
-end;
+end
 
 if (~isdeployed)
     addpath(genpath('utils'));
@@ -56,7 +56,7 @@ ope = load_of_method(method);
 
 if nargin > 3
     ope = parse_input_parameter(ope, params);
-end;
+end
 
 % Uncomment this line if Error using ==> \  Out of memory. Type HELP MEMORY for your option.
 %ope.solver    = 'pcg';
@@ -67,28 +67,28 @@ if size(im1, 3) > 1
     ope.images  = cat(length(size(tmp1))+1, tmp1, tmp2);
 else
 
-    if isinteger(im1);
+    if isinteger(im1)
         im1 = double(im1);
         im2 = double(im2);
-    end;
+    end
     ope.images  = cat(length(size(im1))+1, im1, im2);
-end;
+end
 
 % Use color for weighted non-local term
 if ~isempty(ope.color_images)
     if size(im1, 3) > 1
         % Convert to Lab space
         im1 = RGB2Lab(im1);
-        for j = 1:size(im1, 3);
+        for j = 1:size(im1, 3)
             im1(:,:,j) = scale_image(im1(:,:,j), 0, 255);
-        end;
-    end;
+        end
+    end
     ope.color_images   = im1;
-end;
+end
 
 % Compute flow field
 uv  = compute_flow(ope, zeros([size(im1,1) size(im1,2) 2]));
 
 if nargout == 1
     uvo = uv;
-end;
+end

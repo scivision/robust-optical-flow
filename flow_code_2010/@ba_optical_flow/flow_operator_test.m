@@ -48,8 +48,8 @@ this.blend   = 1;
 
 %% -- Black & Anandan
 % Analytical results
-[It Ix Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
-[A, b] = flow_operator(this, uv, zeros(size(uv)), It, Ix, Iy);
+[It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
+[~, b] = flow_operator(this, uv, zeros(size(uv)), It, Ix, Iy);
 Duv    = b;
 
 % Numerical approximation
@@ -67,18 +67,18 @@ for i = 1:prod(imsz)*2
     L2 = evaluate_log_posterior(this, uvm);
 
     Duv2(i) = (L1-L2) / (2*delta);
-end;
+end
 
 err     = (Duv2-Duv);
 nerr    = err/max(max(abs(Duv)), max(abs(Duv2)) );
 disp('maximum absolute error and maximum absolute relative error -- Black & Anandan');
-[max(abs(err(:)))  max(abs(nerr(:)))]    % should be around or less to 1e-6
+[max(abs(err(:)))  max(abs(nerr(:)))];    % should be around or less to 1e-6
 
 
-if max(abs(err(:))) > 1e-3 | max(abs(nerr(:))) > 1e-3
+if max(abs(err(:))) > 1e-3 || max(abs(nerr(:))) > 1e-3
     figure;             % set a breakpoint here
     tmp1 = reshape(err(1:end/2), imsz);
     tmp2 = reshape(err(1:end/2), imsz);
     imshow([tmp1 tmp2], []);
     pause; close;
-end;
+end

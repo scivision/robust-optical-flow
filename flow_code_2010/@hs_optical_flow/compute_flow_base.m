@@ -43,7 +43,7 @@ function uv = compute_flow_base(this, uv)
   for i = 1:this.max_warping_iters
 
     % Compute linear flow operator
-    [A, b, parm, iterative] = ...
+    [A, b, parm, ~] = ...
         flow_operator(this, uv);
 
     % Invoke the selected linear equation solver
@@ -57,7 +57,7 @@ function uv = compute_flow_base(this, uv)
       case 'bicgstab'
         x = reshape(bicgstab(A, b, 1E-3, 200, [], [], uv(:), parm), size(uv));
       case 'pcg'
-          [x flag] = pcg(A,b, [], 100);  %100
+          [x, ~] = pcg(A,b, [], 100);  %100
       otherwise
         error('Invalid solver!')
     end
@@ -66,10 +66,10 @@ function uv = compute_flow_base(this, uv)
     if this.display
         disp(['--Iteration: ', num2str(i), '    (', ...
              num2str(norm(x(:))), ')'])
-    end;
+    end
 
     % Terminate iteration early if flow doesn't change substantially
-    if (length(this.lambda) == 1 && norm(x(:)) < 1E-3)
+    if (isscalar(this.lambda) && norm(x(:)) < 1E-3)
       break
     end
 
@@ -83,11 +83,11 @@ function uv = compute_flow_base(this, uv)
 
     % Perform median filtering to remove outliers
     if ~isempty(this.median_filter_size)
-        for m = 1:this.mf_iter; % extensive MF filtering
+        for m = 1:this.mf_iter % extensive MF filtering
             uv(:,:,1) = medfilt2(uv(:,:,1), this.median_filter_size, 'symmetric');
             uv(:,:,2) = medfilt2(uv(:,:,2), this.median_filter_size, 'symmetric');
-        end;
-    end;
+        end
+    end
 
 
     % Terminate early if the flow_operator doesn't require multiple

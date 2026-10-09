@@ -47,7 +47,7 @@ for i = 1:length(S)
     u_  = conv2(uv(:,:,1), S{i}, 'valid');
     v_  = conv2(uv(:,:,2), S{i}, 'valid');
     p   = p - sum(u_(:).^2) - sum(v_(:).^2);
-end;
+end
 
 % data term
 It  = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter);
@@ -57,4 +57,4 @@ L = this.lambda/this.sigmaS2*p + l/this.sigmaD2;
 
 if this.display
     fprintf('spatial\t%3.2e\tdata\t%3.2e\n', this.lambda*p/this.sigmaS2, l/this.sigmaD2);
-end;
+end

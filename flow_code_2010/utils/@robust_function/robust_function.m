@@ -100,7 +100,7 @@ function this = robust_function(varargin)
 
       if strcmp(varargin{1}, 'generalized_charbonnier')
           this.param = [1e-3, 1];
-      end;
+      end
 
 
       this = class(this, 'robust_function');
@@ -147,5 +147,5 @@ function this = robust_function(varargin)
 
               otherwise
                   error('Invalid robust function type.');
-          end;
+          end
   end

@@ -89,10 +89,10 @@ switch method
 
         method = 'lorentzian'; %'geman_mcclure';
         ope.spatial_filters = {[1 -1], [1; -1]};
-        for i = 1:length(ope.spatial_filters);
+        for i = 1:length(ope.spatial_filters)
             ope.rho_spatial_u{i}   = robust_function(method, 0.1);
             ope.rho_spatial_v{i}   = robust_function(method, 0.1);
-        end;
+        end
         ope.rho_data        = robust_function(method, 3.5);
 
         ope.lambda = 0.045;
@@ -106,10 +106,10 @@ switch method
 
         method = 'lorentzian'; %'geman_mcclure';
         ope.spatial_filters = {[1 -1], [1; -1]};
-        for i = 1:length(ope.spatial_filters);
+        for i = 1:length(ope.spatial_filters)
             ope.rho_spatial_u{i}   = robust_function(method, 0.03);
             ope.rho_spatial_v{i}   = robust_function(method, 0.03);
-        end;
+        end
         ope.rho_data        = robust_function(method, 1.5);
 
         ope.lambda = 0.06;
@@ -121,10 +121,10 @@ switch method
         ope.texture              = true;
         method = 'charbonnier';
         ope.spatial_filters = {[1 -1], [1; -1]};
-        for i = 1:length(ope.spatial_filters);
+        for i = 1:length(ope.spatial_filters)
             ope.rho_spatial_u{i}   = robust_function(method, 1e-3);
             ope.rho_spatial_v{i}   = robust_function(method, 1e-3);
-        end;
+        end
         ope.rho_data        = robust_function(method, 1e-3);
         ope.display         = false;
 
@@ -144,10 +144,10 @@ switch method
         ope.texture              = false;
         method = 'charbonnier';
         ope.spatial_filters = {[1 -1], [1; -1]};
-        for i = 1:length(ope.spatial_filters);
+        for i = 1:length(ope.spatial_filters)
             ope.rho_spatial_u{i}   = robust_function(method, 1e-3);
             ope.rho_spatial_v{i}   = robust_function(method, 1e-3);
-        end;
+        end
         ope.rho_data        = robust_function(method, 1e-3);
 
         ope.lambda   = 3;
@@ -169,10 +169,10 @@ switch method
         ope.spatial_filters = {[1 -1], [1; -1]};
         a   = 0.45;
         sig = 1e-3;
-        for i = 1:length(ope.spatial_filters);
+        for i = 1:length(ope.spatial_filters)
             ope.rho_spatial_u{i}   = robust_function(method, sig, a);
             ope.rho_spatial_v{i}   = robust_function(method, sig, a);
-        end;
+        end
         ope.rho_data        = robust_function(method, sig, a);
 
         ope.lambda = 3;
@@ -181,4 +181,4 @@ switch method
 
     otherwise
         error('unknown optical flow estimation method!');
-end;
+end

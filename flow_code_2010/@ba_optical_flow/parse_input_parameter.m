@@ -36,13 +36,13 @@ function this = parse_input_parameter(this, param)
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
 
-if length(param) ==1
+if isscalar(param)
     param = param{1};
-end;
+end
 
 if mod(length(param), 2) ~=0
     error('Parse_input_parameter: Input parameters must be given in pairs (name and value)!');
-end;
+end
 
 i = 1;
 
@@ -50,7 +50,7 @@ while (i <= length(param))
 
     if ischar(param{i+1})
         param{i+1} = str2num(param{i+1});
-    end;
+    end
 
     switch lower(param{i})
 
@@ -72,15 +72,15 @@ while (i <= length(param))
             this.gnc_pyramid_spacing    = param{i+1};
 
         case 'sigma_d'
-            for j = 1:length(this.spatial_filters);
+            for j = 1:length(this.spatial_filters)
                 this.rho_spatial_u{j}.param   = param{i+1};
                 this.rho_spatial_v{j}.param   = param{i+1};
-            end;
+            end
 
         case 'sigma_s'
             this.rho_data.param         = param{i+1};
 
-    end;
+    end
 
     i = i+2;
-end;
+end

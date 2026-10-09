@@ -58,17 +58,17 @@ for i = 1:length(S)
         v_ = reshape(evaluate_log_grad(this.rho_spatial_v{i}, v_(:)'), size(v_));
     else
         error('evaluate_log_posterior: unknown rho function!');
-    end;
+    end
 
     gu1 = gu1+conv2(u_, Si, 'full');
     gv1 = gv1+conv2(v_, Si, 'full');
-end;
+end
 
 gu2     = zeros(size(uv,1), size(uv,2));
 gv2     = gu2;
 
 % Data term
-[It Ix Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
+[It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
 
 if isa(this.rho_data, 'robust_function')
     temp   = -reshape(deriv(this.rho_data, It(:)), size(It));
@@ -77,7 +77,7 @@ elseif isa(this.rho_data, 'gsm_density')
     temp   = reshape(evaluate_log_grad(this.rho_data, It(:)'), size(It));
 else
     error('evaluate_log_posterior: unknown rho function!');
-end;
+end
 
 gu2     = temp.*Ix;
 gv2     = temp.*Iy;

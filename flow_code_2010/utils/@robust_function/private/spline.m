@@ -1,4 +1,4 @@
-function y = spline(x, pps, type)
+function y = spline(~, ~, ~)
 %SPLINE   Spline robust function.
 %   SPLINE(X, SIGMA, TYPE) evaluates the Spline robust function
 %   with sigma SIGMA at point(s) X.

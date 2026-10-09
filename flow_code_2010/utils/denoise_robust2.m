@@ -52,10 +52,10 @@ filters = {[1 -1], [1; -1], [1 0; 0 -1], [0 1; -1 0], ...
 if nargin < 3
 %     method = 'charbonnier';
     method = 'lorentzian';
-end;
+end
 if  nargin <4
     num_iter = 50;
-end;
+end
 
 
 switch method
@@ -65,7 +65,7 @@ switch method
         rho = robust_function('lorentzian', 0.1);
     case 'charbonnier'
         rho = robust_function('charbonnier', 1e-3);
-end;
+end
 
 % need minimize from
 % http://www.kyb.tuebingen.mpg.de/bs/people/carl/code/minimize/
@@ -74,7 +74,7 @@ diff_im = minimize(diff_im(:), @evaluate_denoise_energy, num_iter, im, filters, 
 I = reshape(diff_im, size(im));
 
 
-function [e g] = evaluate_denoise_energy(I, im, filters, lambda, rho)
+function [e, g] = evaluate_denoise_energy(I, im, filters, lambda, rho)
 % evaluate energy and gradient
 
 % energy - data
@@ -84,7 +84,7 @@ e = sum((I(:)-im(:)).^2);
 for iF = 1:length(filters)
     I_  = conv2(I, filters{iF}, 'valid');
     e   = e+ lambda* sum(evaluate(rho, I_(:)));
-end;
+end
 if nargout == 2
     g = zeros(size(im));
     for iF = 1:length(filters)
@@ -95,8 +95,8 @@ if nargout == 2
         invF = reshape(filters{iF}(end:-1:1), size(filters{iF}) );
 
         g  = g + conv2(rI_, invF, 'full');
-    end;
+    end
 
     g  = 2*(I -im) + lambda*g;
     g  = g(:);
-end;
+end

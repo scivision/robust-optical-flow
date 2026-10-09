@@ -1,4 +1,4 @@
-function M = imfiltermtx(F, sz, bndry);
+function M = imfiltermtx(F, sz, bndry)
 %IMFILTERMTX   N-D image filtering matrix
 %   M = IMFILTERMTX(F, SZ[, BNDRY]) returns the image filtering matrix
 %   for the matrix F.  SZ gives the size of the array that the filtering

@@ -48,18 +48,18 @@ lambda = 1e-3;
 
 %%
 
-[H W] = size(u);
+[H, ~] = size(u);
 
 u0 = u(round(H/2), :);
 w0 = w(round(H/2), :);
 
 u  = u([1:round(H/2)-1 round(H/2)+1:end], :);
 w  = w([1:round(H/2)-1 round(H/2)+1:end], :);
-[H W] = size(u);
+[H, W] = size(u);
 
 w  = w./repmat(w0, [H 1]);
 
-[sort_u ir] = sort(u);
+[~, ir] = sort(u);
 ic       = repmat(1:W, [H, 1]);
 ind      = sub2ind([H W], ir, ic);
 
@@ -67,9 +67,9 @@ ind      = sub2ind([H W], ir, ic);
 w        = w(ind);
 
 p  = repmat(sum(w), [H+1, 1]);
-for i = 2:H+1;
+for i = 2:H+1
     p(i,:) = p(i-1, :) - 2*w(i-1, :);
-end;
+end
 % k   = sum(p < 0);
 
 p  = repmat(u0, [H+1 1]) + p/2/lambda;

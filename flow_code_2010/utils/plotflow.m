@@ -75,7 +75,7 @@ function [] = plotflow(f, kind)
 
     r = zeros(size(b));
 
-    [ignore, rad] = cart2pol(f(:, :, 1), f(:, :, 2));
+    [~, rad] = cart2pol(f(:, :, 1), f(:, :, 2));
 
     nanidx  = isnan(f(:, :, 1)) & isnan(f(:, :, 2));
     zeroidx = (rad < 0.1);

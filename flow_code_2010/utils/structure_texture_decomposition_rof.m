@@ -1,4 +1,4 @@
-function [texture structure] = structure_texture_decomposition_rof(im, theta, nIters, alp)
+function [texture, structure] = structure_texture_decomposition_rof(im, theta, nIters, alp)
 %
 % Decompose the input IMAGE into structure and texture parts using the
 % Rudin-Osher-Fatemi method. The final output is a linear combination
@@ -56,7 +56,7 @@ if nargin == 1
     theta   = 1/8;
     nIters  = 100;
     alp     = 0.95;  % alp = 0.75 results in 4:1
-end;
+end
 
 % Rescale the input image to [-1 1]
 IM   = scale_image(im, -1,1);
@@ -103,11 +103,11 @@ for iIm = 1:size(im,3)
     % compute structure component
     IM(:,:,iIm) = I + theta*div_p;
 
-end;
+end
 
 
 texture   = squeeze(scale_image(im - alp*IM, 0, 255));
 
 if nargout == 2
     structure = squeeze(scale_image(IM, 0, 255)); %(u-min(u(:)))/(max(u(:))-min(u(:))) - 1;
-end;
+end

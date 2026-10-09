@@ -77,12 +77,12 @@ function uv = compute_flow(this, init, gt)
       images  = scale_image(images, 0, 255);
   else
       images  = scale_image(this.images, 0, 255);
-  end;
+  end
 
   if this.auto_level
       % Automatic determine pyramid level
       this.pyramid_levels  =  1 + floor( log(min(size(images, 1), size(images,2))/16) / log(this.pyramid_spacing) );
-  end;
+  end
 
   % Construct image pyramid, using filter setting in Bruhn et al in "Lucas/Kanade.." (IJCV2005') page 218
 
@@ -110,7 +110,7 @@ function uv = compute_flow(this, init, gt)
           pyramid_levels = this.pyramid_levels;
       else
           pyramid_levels = this.gnc_pyramid_levels;
-      end;
+      end
 
       % Iterate through all pyramid levels starting at the top
       for l = pyramid_levels:-1:1
@@ -132,7 +132,7 @@ function uv = compute_flow(this, init, gt)
               small.images         = gnc_pyramid_images{l};
               nsz   = [size(gnc_pyramid_images{l}, 1) size(gnc_pyramid_images{l}, 2)];
 
-          end;
+          end
 
           % Rescale the flow field
           uv        = resample_flow(uv, nsz);
@@ -146,20 +146,20 @@ function uv = compute_flow(this, init, gt)
           new_alpha  = 1 - ignc / (this.gnc_iters-1);
           this.alpha = min(this.alpha, new_alpha);
           this.alpha = max(0, this.alpha);
-      end;
+      end
 
       if true % this.display
 
           fprintf('energy of solution \t%3.3e\n', -evaluate_log_posterior(small, uv));
           if nargin == 3
-              [aae stdae aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uv(:,:,1), uv(:,:,2), 0);        % ignore 0 boundary pixels
+              [aae, stdae, aepe] = flowAngErr(gt(:,:,1), gt(:,:,2), uv(:,:,1), uv(:,:,2), 0);        % ignore 0 boundary pixels
               fprintf('AAE %3.3f STD %3.3f average end point error %3.3f \n', aae, stdae, aepe);
-          end;
+          end
 
-      end;
+      end
 
       fprintf('GNC stage %d finished, %3.2f minutes passed \n', ignc, toc/60);
-  end;
+  end
 
 
   % minaly improves H&S, slightly improves others

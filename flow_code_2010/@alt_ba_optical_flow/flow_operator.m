@@ -71,12 +71,12 @@ function [A, b, params, iterative] = flow_operator(this, uv, duv, It, Ix, Iy)
           pp_sv     = -evaluate_log_grad_over_x(this.rho_spatial_v{i}, v_')';
       else
           error('evaluate_log_posterior: unknown rho function!');
-      end;
+      end
 
       FU        = FU+ Fi*spdiags(pp_su, 0, npixels, npixels)*FMi;
       FV        = FV+ Fi*spdiags(pp_sv, 0, npixels, npixels)*FMi;
 
-  end;
+  end
 
   M = [-FU, sparse(npixels, npixels);
       sparse(npixels, npixels), -FV];
@@ -102,7 +102,7 @@ function [A, b, params, iterative] = flow_operator(this, uv, duv, It, Ix, Iy)
       pp_d = -evaluate_log_grad_over_x(this.rho_data, It(:)')';
   else
       error('flow_operator: unknown rho function!');
-  end;
+  end
 
   % Display estimated data outlier
   % figure;  imshow(reshape(pp_d, sz), []);

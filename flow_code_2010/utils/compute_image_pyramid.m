@@ -51,7 +51,7 @@ for m = 2:nL
         tmp = imresize(tmp, ratio, 'bilinear', 'Antialiasing', false);   % better than 'nearest'
     else
         tmp = imresize(tmp, sz, 'bilinear', 0); % Disable antialiasing, old version for cluster
-    end;
+    end
 
     P{m} = tmp;
-end;
+end

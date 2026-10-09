@@ -42,7 +42,7 @@ function [A, b, params, iterative] = flow_operator(this, uv)
 % THIS SOFTWARE.
 
   % Compute spatial and temporal partial derivatives
-  [It Ix Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter);
+  [It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter);
 
   sz        = [size(Ix, 1) size(Ix, 2)];
   npixels   = prod(sz);

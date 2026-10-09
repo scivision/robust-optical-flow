@@ -63,7 +63,7 @@ for i = 1:size(colorwheel,2)
     col(~idx) = col(~idx)*0.75;             % out of range
 
     img(:,:, i) = uint8(floor(255*col.*(1-nanIdx)));
-end;
+end
 
 %%
 function colorwheel = makeColorwheel()

@@ -38,7 +38,7 @@ function [ZI, ZXI, ZYI, C, alpha_x, alpha_y, fXI, fYI] = interp2_bicubic(Z, XI, 
   % modified by dqsun
   if nargin < 4
       Dxfilter = [-0.5 0 0.5];
-  end;
+  end
   Dyfilter = Dxfilter';
   Dxyfilter = conv2(Dxfilter, Dyfilter, 'full');
 
@@ -153,11 +153,11 @@ function [ZI, ZXI, ZYI, C, alpha_x, alpha_y, fXI, fYI] = interp2_bicubic(Z, XI, 
     for j = 0:3
       ZI = ZI + reshape(C(idx, :), input_size) .* alpha_x.^i .* ...
            alpha_y.^j;
-      if (i > 0) & (nargout>=2)
+      if (i > 0) && (nargout>=2)
         ZXI = ZXI + i * reshape(C(idx, :), input_size) .* alpha_x.^(i-1) .* ...
               alpha_y.^j;
       end
-      if (j > 0) & (nargout>=3)
+      if (j > 0) && (nargout>=3)
         ZYI = ZYI + j * reshape(C(idx, :), input_size) .* alpha_x.^i .* ...
               alpha_y.^(j - 1);
       end

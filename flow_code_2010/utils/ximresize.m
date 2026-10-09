@@ -46,7 +46,7 @@ function y = ximresize(x, nsz, method)
 % THIS SOFTWARE.
 
 
-  if (ndims(x) > 2)
+  if (~ismatrix(x))
     error('>= 3D not implemented');
   end
 
@@ -56,7 +56,7 @@ function y = ximresize(x, nsz, method)
 
   % Resize factor
   sz = size(x);
-  if (length(nsz) == 1)
+  if (isscalar(nsz))
     nsz = round(nsz * sz);
   end
 

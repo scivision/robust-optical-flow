@@ -46,26 +46,26 @@ sz = sz(1:2);
 
 if nargin < 3
     occ = ones(sz);
-end;
+end
 
 if nargin < 4
     bfhsz = 10; % half window size
-end;
+end
 
 if nargin < 5
     uvo = uv;
 else
     uvo(:,:,1) = medfilt2(uv(:,:,1), mfsz, 'symmetric');
     uvo(:,:,2) = medfilt2(uv(:,:,2), mfsz, 'symmetric');
-end;
+end
 
 if nargin < 6
     sigma_i = 5;
-end;
+end
 
 if nargin < 7
     fullVersion = false;
-end;
+end
 
 % % % WMF first then MF
 % % uvo = uv;
@@ -78,7 +78,7 @@ mask = imdilate(e, ones(dilate_sz) );
 % below to apply WMF to all regions
 if fullVersion
     mask = ones(size(mask));
-end;
+end
 
 [indx_row, indx_col] = find(mask ==1);
 
@@ -88,7 +88,7 @@ pad_im = padarray(im, bfhsz*[1 1], 'symmetric', 'both');
 pad_occ= padarray(occ, bfhsz*[1 1], 'symmetric', 'both');
 
 
-[H W] = size(pad_u);
+[H, ~] = size(pad_u);
 
 % Divide into several groups for memory reasons ~70,000 causes out of memory
 Indx_Row = indx_row;
@@ -97,13 +97,13 @@ N        = length(Indx_Row); % number of elements to process
 n        = 4e4;              % number of elements per batch
 nB       = ceil(N/n);
 
-for ib = 1:nB;
+for ib = 1:nB
     istart = (ib-1)*n + 1;
     iend   = min(ib*n, N);
     indx_row = Indx_Row(istart:iend);
     indx_col = Indx_Col(istart:iend);
 
-    [C R] = meshgrid(-bfhsz:bfhsz, -bfhsz:bfhsz);
+    [C, R] = meshgrid(-bfhsz:bfhsz, -bfhsz:bfhsz);
     nindx = R + C*H;
     cindx = indx_row +bfhsz  + (indx_col+bfhsz-1)*H;
 
@@ -123,7 +123,7 @@ for ib = 1:nB;
     for i = 1:size(pad_im,3)
         tmp = pad_im(:,:,i);
         tmp_w = tmp_w + (tmp(pad_indx) - repmat(tmp(cindx(:))', [(bfhsz*2+1)^2, 1])).^2;
-    end;
+    end
     tmp_w = tmp_w/size(pad_im,3);
 
     weights = weights.* exp(-tmp_w/2/sigma_i^2);
@@ -149,4 +149,4 @@ for ib = 1:nB;
     vo(indx) = v;
     uvo = cat(3, uo, vo);
 
-end;
+end
