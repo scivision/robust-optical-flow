@@ -1,4 +1,8 @@
-function img = flowToColor(flow, varargin)
+function img = flowToColor(flow, maxFlow)
+arguments
+  flow (:,:,2)
+  maxFlow (1, 1) double = 0
+end
 
 %  flowToColor(flow, maxFlow) flowToColor color codes flow field, normalize
 %  based on specified value,
@@ -36,11 +40,6 @@ function img = flowToColor(flow, varargin)
 % OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 UNKNOWN_FLOW_THRESH = 1e9;
-[~, ~, nBands] = size(flow);
-
-if nBands ~= 2
-    error('flowToColor: image must have two bands');
-end
 
 u = flow(:,:,1);
 v = flow(:,:,2);
@@ -68,11 +67,8 @@ maxrad = max(maxrad, max(rad(:)));
 
 fprintf('max flow: %.4f flow range: u = %.3f .. %.3f; v = %.3f .. %.3f\n', maxrad, minu, maxu, minv, maxv);
 
-if isempty(varargin) ==0
-    maxFlow = varargin{1};
-    if maxFlow > 0
-        maxrad = maxFlow;
-    end
+if maxFlow > 0
+  maxrad = maxFlow;
 end
 
 u = u/(maxrad+eps);

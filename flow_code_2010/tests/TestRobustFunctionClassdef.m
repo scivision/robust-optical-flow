@@ -39,6 +39,22 @@ classdef TestRobustFunctionClassdef < matlab.unittest.TestCase
       testCase.verifyEqual(generalized.param, [1e-3, 1])
       customGeneralized = robust_function('generalized_charbonnier', 0.01, 0.45);
       testCase.verifyEqual(customGeneralized.param, [0.01, 0.45])
+      stringName = robust_function("huber", 0.7);
+      testCase.verifyEqual(func2str(stringName.type), 'huber')
+      testCase.verifyEqual(stringName.param, 0.7)
+    end
+
+    function testInvalidConstructorInputs(testCase)
+      testCase.verifyError(@() robust_function('unknown'), ...
+        'robust_function:InvalidArguments')
+      testCase.verifyError(@() robust_function(42), ...
+        'robust_function:InvalidArguments')
+      testCase.verifyError(@() robust_function('huber', 1, 2), ...
+        'robust_function:InvalidArguments')
+      testCase.verifyError(@() robust_function('generalized_charbonnier', 1), ...
+        'robust_function:InvalidArguments')
+      testCase.verifyError(@() robust_function('huber', 1, 2, 3), ...
+        'MATLAB:TooManyInputs')
     end
 
     function testPenaltyEvaluation(testCase)

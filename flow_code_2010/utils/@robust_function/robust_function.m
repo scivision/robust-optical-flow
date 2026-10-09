@@ -41,11 +41,15 @@ properties (Dependent)
 end
 
 methods
-  function this = robust_function(varargin)
-    narginchk(0, 3)
+  function this = robust_function(name, param, exponent)
+    arguments
+      name = 'quadratic'
+      param = 1
+      exponent = []
+    end
 
-    if nargin == 1 && isa(varargin{1}, 'robust_function')
-      this = varargin{1};
+    if nargin == 1 && isa(name, 'robust_function')
+      this = name;
       return
     end
 
@@ -53,13 +57,7 @@ methods
       return
     end
 
-    name = varargin{1};
-    types = {'geman_mcclure', 'huber', 'lorentzian', 'quadratic', ...
-      'tukey', 'spline', 'mixture', 'gaussian', 'tdist', ...
-      'tdist_unnorm', 'charbonnier', 'generalized_charbonnier'};
-    if ~ischar(name) || ~any(strcmp(name, types))
-      error('Invalid robust function type.')
-    end
+    name = string(name);
 
     switch name
       case 'geman_mcclure'
@@ -86,17 +84,20 @@ methods
         this.type = @charbonnier;
       case 'generalized_charbonnier'
         this.type = @generalized_charbonnier;
+      otherwise
+        error('robust_function:InvalidArguments', 'Invalid robust function type.')
     end
     if nargin == 1
       if strcmp(name, 'generalized_charbonnier')
         this.param = [1e-3, 1];
       end
     elseif nargin == 2 && ~strcmp(name, 'generalized_charbonnier')
-      this.param = varargin{2};
+      this.param = param;
     elseif nargin == 3 && strcmp(name, 'generalized_charbonnier')
-      this.param = [varargin{2}, varargin{3}];
+      this.param = [param, exponent];
     else
-      error('Invalid robust function type.')
+      error('robust_function:InvalidArguments', ...
+        'Invalid robust function constructor arguments.')
     end
   end
 

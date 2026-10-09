@@ -165,6 +165,18 @@ classdef TestRemainingOpticalFlowClassdef < matlab.unittest.TestCase
       testCase.verifyTrue(any(quiverObject.UData(:) ~= 0))
     end
 
+    function testFlowToColorOptionalMaximum(testCase)
+      flow = cat(3, testCase.InitialFlow(:, :, 1) * 10, ...
+        testCase.InitialFlow(:, :, 2) * 10);
+      automaticColor = flowToColor(flow);
+      nonpositiveMaxColor = flowToColor(flow, -1);
+      scaledColor = flowToColor(flow, 10);
+
+      testCase.verifyEqual(automaticColor, nonpositiveMaxColor)
+      testCase.verifySize(scaledColor, [24 24 3])
+      testCase.verifyNotEqual(scaledColor, automaticColor)
+    end
+
     function testParameterParsingAndDisplay(testCase)
       names = {'ba_optical_flow', 'alt_ba_optical_flow', ...
         'classic_nl_optical_flow'};

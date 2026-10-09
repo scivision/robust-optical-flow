@@ -1,4 +1,4 @@
-function [mang, stdang, mepe]=flowAngErr(tu, tv, u, v, bord, varargin)
+function [mang, stdang, mepe]=flowAngErr(tu, tv, u, v, bord)
 % return the Barron et al angular error.  bord is the pixel width of the
 % border to be ingnored.
 %
