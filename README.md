@@ -18,6 +18,12 @@ The Matlab code is object-oriented and may be used from other code like:
 addpath('./flow_code_2010/')
 ```
 
+A demonstration with plots is:
+
+```matlab
+estimate_flow_demo()
+```
+
 If the SOR solver is desired, do:
 
 ```matlab

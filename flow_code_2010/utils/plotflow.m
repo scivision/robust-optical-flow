@@ -60,9 +60,8 @@ function [] = plotflow(f, kind)
     u = interp2(f(:, :, 1), X, Y);
     v = interp2(f(:, :, 2), X, Y);
 
-%     quiver(X, -Y, u, -v, 0.7);
-    quiver(X, -Y, u, -v, 1, 'k', 'LineWidth', 1);
-    axis image;
+    quiver(X, -Y, u, -v, 1, LineWidth=1)
+    axis('image')
 
    case 'rgb'
     b = f(:, :, 1);
@@ -107,8 +106,7 @@ function [] = plotflow(f, kind)
     m = max(abs(im(:)));
     imagesc(im, [-m m]);
     colormap gray(256);
-    axis image
-    axis off
+    axis('image', 'off')
     if (strcmp(kind, 'bwscale'))
       title(['[' num2str(min(im(:))) '; ' num2str(max(im(:))) ']'])
       colorbar
@@ -118,8 +116,7 @@ function [] = plotflow(f, kind)
     m = sqrt(sum(f.^2, 3));
     imagesc(m);
     colormap gray(256);
-    axis image
-    axis off
+    axis('image', 'off')
     if (strcmp(kind, 'magscale'))
       title(['[' num2str(max(m(:))) ']'])
       colorbar

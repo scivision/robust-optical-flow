@@ -41,14 +41,15 @@ function uvo = estimate_flow_interface(im1, im2, method, params)
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
 
-
-% Read in arguments
-if nargin < 3
-    method = 'classic+nl-fast';
+arguments
+  im1
+  im2
+  method (1,1) string = 'classic+nl-fast'
+  params (1,:) cell = {}
 end
 
 if (~isdeployed)
-    addpath(genpath('utils'));
+    addpath(genpath('utils'))
 end
 
 % Load default parameters

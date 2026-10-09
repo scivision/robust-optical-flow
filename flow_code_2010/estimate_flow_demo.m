@@ -1,4 +1,4 @@
-function uvo = estimate_flow_demo(method, iSeq, seqName, varargin)
+function uvo = estimate_flow_demo(method, iSeq, seqName, param)
 %ESTIMATE_FLOW_DEMO   Optical flow estimation demo program
 %
 % output UV is an M*N*2 matrix. UV(:,:,1) is the horizontal flow and
@@ -83,24 +83,25 @@ function uvo = estimate_flow_demo(method, iSeq, seqName, varargin)
 % PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
+arguments
+    method (1,1) string = 'classic+nl-fast'
+    iSeq (1,1) double = 4
+    seqName (1,1) string = 'middle-other'
+end
+arguments (Repeating)
+  param
+end
+
+% 'middle-eval'
+% 'middle-other'
 
 if (~isdeployed)
     addpath(genpath('utils'));
 end
 
-if nargin < 1
-    method = 'classic+nl-fast';
-    iSeq   = 4;
-    seqName = 'middle-other';
-    %seqName = 'middle-eval';
-elseif nargin == 1
-    iSeq   = 4;
-    seqName = 'middle-other';
-end
-
 [im1, im2, tu, tv] = read_flow_file(seqName, iSeq);
 
-uv = estimate_flow_interface(im1, im2, method, varargin);
+uv = estimate_flow_interface(im1, im2, method, param);
 
 % Display estimated flow fields
 figure; subplot(1,2,1);imshow(uint8(flowToColor(uv))); title('Middlebury color coding');

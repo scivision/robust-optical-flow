@@ -34,6 +34,9 @@ function ope = load_of_method(method)
 % PROFITS, WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
+arguments
+  method (1,1) string
+end
 
 median_filter_size = [5 5];
 

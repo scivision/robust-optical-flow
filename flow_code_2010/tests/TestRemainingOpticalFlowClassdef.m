@@ -139,6 +139,30 @@ classdef TestRemainingOpticalFlowClassdef < matlab.unittest.TestCase
         -0.202772732331991, AbsTol=1e-8)
     end
 
+    function testVectorPlotContrastsWithAxesBackground(testCase)
+      fig = figure(Visible='off');
+      closeFigure = onCleanup(@() close(fig));
+      ax = axes(fig);
+      flow = cat(3, ones(24), -ones(24));
+
+      ax.Color = [1 1 1];
+      ax.ColorOrder = [0.2 0.3 0.4; 0.6 0.7 0.8];
+      ax.ColorOrderIndex = 1;
+      plotflow(flow);
+      quiverObject = findobj(ax, Type='Quiver');
+      testCase.verifyEqual(quiverObject.Color, ax.ColorOrder(1, :))
+      testCase.verifyTrue(any(quiverObject.UData(:) ~= 0))
+      delete(quiverObject)
+
+      ax.Color = [0 0 0];
+      ax.ColorOrder = [0.8 0.7 0.6; 0.4 0.3 0.2];
+      ax.ColorOrderIndex = 1;
+      plotflow(flow);
+      quiverObject = findobj(ax, Type='Quiver');
+      testCase.verifyEqual(quiverObject.Color, ax.ColorOrder(1, :))
+      testCase.verifyTrue(any(quiverObject.UData(:) ~= 0))
+    end
+
     function testParameterParsingAndDisplay(testCase)
       names = {'ba_optical_flow', 'alt_ba_optical_flow', ...
         'classic_nl_optical_flow'};

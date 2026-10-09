@@ -36,9 +36,9 @@ function this = parse_input_parameter(this, param)
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
 
-
-if isscalar(param)
-    param = param{1};
+arguments
+  this (1,1)
+  param (1,:) cell
 end
 
 if mod(length(param), 2) ~=0
