@@ -60,7 +60,8 @@ while (i <= length(param))
             this.pyramid_spacing = param{i+1};
 
         case 'max_warping_iters'
-            this.max_iters       = param{i+1};
+            this.max_warping_iters = param{i+1};
+            this.max_iters         = param{i+1};
 
         case 'median_filter_size'
             this.median_filter_size = [param{i+1} param{i+1}];
