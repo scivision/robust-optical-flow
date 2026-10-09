@@ -51,7 +51,7 @@ sv=v(bord+1:end-bord,bord+1:end-bord);
 
 % ignore a pixel if both u and v are zero
 %ind2=find((stu(:).*stv(:)|sv(:).*su(:))~=0);
-ind2=find(abs(stu(:))>smallflow|abs(stv(:)>smallflow));
+ind2=find(abs(stu(:))>smallflow|abs(stv(:))>smallflow);
 %length(ind2)
 n=1.0./sqrt(su(ind2).^2+sv(ind2).^2+1);
 un=su(ind2).*n;

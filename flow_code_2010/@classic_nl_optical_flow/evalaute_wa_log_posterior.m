@@ -60,8 +60,6 @@ if nargin < 4
     bfhsz = 10; % half window size
 end
 
-uvo = uv;
-
 e1 = edge(uv(:,:,1), 'sobel');
 e2 = edge(uv(:,:,2), 'sobel');
 e  = e1|e2;

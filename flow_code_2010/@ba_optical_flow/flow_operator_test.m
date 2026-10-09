@@ -72,9 +72,6 @@ end
 err     = (Duv2-Duv);
 nerr    = err/max(max(abs(Duv)), max(abs(Duv2)) );
 disp('maximum absolute error and maximum absolute relative error -- Black & Anandan');
-[max(abs(err(:)))  max(abs(nerr(:)))];    % should be around or less to 1e-6
-
-
 if max(abs(err(:))) > 1e-3 || max(abs(nerr(:))) > 1e-3
     figure;             % set a breakpoint here
     tmp1 = reshape(err(1:end/2), imsz);

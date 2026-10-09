@@ -55,19 +55,9 @@ end
 
 %mfsz = [7 7]; % for test
 
-if nargin < 5
-    uvo = uv;
-else
-%     uvo(:,:,1) = medfilt2(uv(:,:,1), mfsz, 'symmetric');
-%     uvo(:,:,2) = medfilt2(uv(:,:,2), mfsz, 'symmetric');
-end
-
 if nargin < 6
     sigma_i = 5; %3.5; % intensity distance (10) 5 better than 10 and 20
 end
-
-% % % WMF first then MF
-% % uvo = uv;
 
 e1 = edge(uv(:,:,1), 'sobel');
 e2 = edge(uv(:,:,2), 'sobel');
@@ -113,10 +103,6 @@ for ib = 1:nB
     indx_row = Indx_Row(istart:iend);
     indx_col = Indx_Col(istart:iend);
 
-    neighbors_u = zeros((bfhsz*2+1)^2, length(indx_row));
-    neighbors_v = neighbors_u;
-    weights     = neighbors_u;
-
     for i = 1:length(indx_row)
 
         % crop window
@@ -148,10 +134,6 @@ for ib = 1:nB
         % Normalize
         w = w/sum(w(:));
 
-%         neighbors_u(:,i) = tmp_u(:);
-%         neighbors_v(:,i) = tmp_v(:);
-%         weights(:,i)     = w(:);
-
         E = E + sum( abs(tmp_u(:) - pad_u(rc, cc)).* w(:));
         E = E + sum( abs(tmp_v(:) - pad_v(rc, cc)).* w(:));
 
@@ -168,9 +150,6 @@ bfhsz = floor(mfsz(1)/2);
 
 pad_u  = padarray(uv(:,:,1), bfhsz*[1 1], 'symmetric', 'both');
 pad_v  = padarray(uv(:,:,2), bfhsz*[1 1], 'symmetric', 'both');
-pad_im = padarray(im, bfhsz*[1 1], 'symmetric', 'both');
-pad_occ= padarray(occ, bfhsz*[1 1], 'symmetric', 'both');
-
 % fprintf('%d\n', length(indx_row));
 
 % Divide into several groups for memory reasons ~70,000 causes out of memory
@@ -187,10 +166,6 @@ for ib = 1:nB
     indx_row = Indx_Row(istart:iend);
     indx_col = Indx_Col(istart:iend);
 
-    neighbors_u = zeros((bfhsz*2+1)^2, length(indx_row));
-    neighbors_v = neighbors_u;
-    weights     = neighbors_u;
-
     for i = 1:length(indx_row)
 
         % crop window
@@ -201,11 +176,8 @@ for ib = 1:nB
 
         rc = indx_row(i) + bfhsz; % row  center
         cc = indx_col(i) + bfhsz; % column center
-        ic = pad_im(rc, cc, :);       % intensity of the center pixel
-
         tmp_u = pad_u(r1:r2, c1:c2);
         tmp_v = pad_v(r1:r2, c1:c2);
-        tmp_i = pad_im(r1:r2, c1:c2, :);
 
         % spatial weight
         [C, R] = meshgrid(c1:c2, r1:r2);
@@ -221,10 +193,6 @@ for ib = 1:nB
 
         % Normalize
         w = w/sum(w(:));
-
-%         neighbors_u(:,i) = tmp_u(:);
-%         neighbors_v(:,i) = tmp_v(:);
-%         weights(:,i)     = w(:);
 
         E = E + sum( abs(tmp_u(:) - pad_u(rc, cc)).* w(:));
         E = E + sum( abs(tmp_v(:) - pad_v(rc, cc)).* w(:));

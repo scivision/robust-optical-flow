@@ -64,9 +64,6 @@ for i = 1:length(S)
     gv1 = gv1+conv2(v_, Si, 'full');
 end
 
-gu2     = zeros(size(uv,1), size(uv,2));
-gv2     = gu2;
-
 % Data term
 [It, Ix, Iy] = partial_deriv(this.images, uv, this.interpolation_method, this.deriv_filter, this.blend);
 

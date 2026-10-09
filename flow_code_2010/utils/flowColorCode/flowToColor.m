@@ -36,8 +36,6 @@ function img = flowToColor(flow, varargin)
 % OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 UNKNOWN_FLOW_THRESH = 1e9;
-UNKNOWN_FLOW = 1e10;            %
-
 [~, ~, nBands] = size(flow);
 
 if nBands ~= 2

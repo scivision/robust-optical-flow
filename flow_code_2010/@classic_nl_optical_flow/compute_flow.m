@@ -116,12 +116,10 @@ function uv = compute_flow(this, init, gt)
 
       if ignc == 1
           pyramid_levels = this.pyramid_levels;
-          pyramid_spacing = this.pyramid_spacing;
 
 
       else
           pyramid_levels = this.gnc_pyramid_levels;
-          pyramid_spacing = this.gnc_pyramid_spacing;
 
       end
 

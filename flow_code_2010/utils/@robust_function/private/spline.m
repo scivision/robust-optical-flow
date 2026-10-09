@@ -45,12 +45,3 @@ function y = spline(~, ~, ~)
 
 
   error('Implementation broken!');
-
-  switch (type)
-   case 0
-    y = ppval(pps{1}, x);
-   case 1
-    y = ppval(pps{2}, x);
-   case 2
-    y = ppval(pps{2}, x); % ./ x;
-  end

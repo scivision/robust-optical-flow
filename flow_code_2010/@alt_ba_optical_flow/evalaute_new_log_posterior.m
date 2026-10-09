@@ -56,19 +56,11 @@ L1 = evaluate_log_posterior(this, uv);
 
 E3 = sum((uv(:)-uvhat(:)).^2);
 
-fsz = this.median_filter_size(1);
-hsz = round(fsz/2);
-mask = zeros(fsz,fsz);
-mask(hsz, hsz) = 1;
-
 filters = {[1 -1], [1; -1], [1 0; 0 -1], [0 1; -1 0], ...
     [1 0 0; 0 0 0; 0 0 -1], [ 1 0 ; 0 0; 0 -1], [1; 0; -1], [0 1; 0 0; -1 0], ...
     [0 0 1; 0 0 0; -1 0 0], [1 0 0; 0 0 -1], [ 1 0 -1], [0 0 -1; 1 0 0]};
 
 E4 = 0;
-
-method = 'charbonnier'; %'geman_mcclure'; %
-pen = robust_function(method, 1e-3); % 6.3
 
 for iF = 1:length(filters)
 
