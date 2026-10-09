@@ -65,3 +65,5 @@ else
     mask(:, 1:h2)    = 0;
     mask(:, end-h2+1:end)   = 0;
 end
+
+end

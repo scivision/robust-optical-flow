@@ -38,7 +38,7 @@ if isempty(filename) == 1
     error('writeFlowFile: empty filename');
 end
 
-idx = findstr(filename, '.');
+idx = strfind(filename, '.');
 idx = idx(end);             % in case './xxx/xxx.flo'
 
 if isscalar(filename(idx:end))

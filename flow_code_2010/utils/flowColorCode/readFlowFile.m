@@ -38,7 +38,7 @@ if isempty(filename) == 1
     error('readFlowFile: empty filename');
 end
 
-idx = findstr(filename, '.');
+idx = strfind(filename, '.');
 idx = idx(end);
 
 if isscalar(filename(idx:end))

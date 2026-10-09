@@ -55,7 +55,7 @@ function this = robust_function(varargin)
 
 
 
-  error(nargchk(0, 3, length(varargin)));
+  narginchk(0, 3)
 
   switch (length(varargin))
    case 0

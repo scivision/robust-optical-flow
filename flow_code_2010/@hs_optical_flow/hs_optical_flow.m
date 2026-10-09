@@ -44,7 +44,7 @@ function this = hs_optical_flow(varargin)
 % ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF
 % THIS SOFTWARE.
 
-error(nargchk(0, 1, length(varargin)));
+narginchk(0, 1)
 
   switch (length(varargin))
     case 0
