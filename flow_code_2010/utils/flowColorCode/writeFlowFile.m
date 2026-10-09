@@ -1,5 +1,8 @@
 function writeFlowFile(img, filename)
-
+arguments
+  img (:,:,2)
+  filename (1,1) string {mustBeNonzeroLengthText}
+end
 % writeFlowFile writes a 2-band image IMG into flow file FILENAME
 
 %   According to the c++ source code of Daniel Scharstein
@@ -33,27 +36,13 @@ function writeFlowFile(img, filename)
 
 TAG_STRING = 'PIEH';    % use this when WRITING the file
 
-% sanity check
-if isempty(filename) == 1
-    error('writeFlowFile: empty filename');
-end
+[~, ~, s] = fileparts(filename);
 
-idx = strfind(filename, '.');
-idx = idx(end);             % in case './xxx/xxx.flo'
-
-if isscalar(filename(idx:end))
-    error('writeFlowFile: extension required in filename %s', filename);
-end
-
-if strcmp(filename(idx:end), '.flo') ~= 1
-    error('writeFlowFile: filename %s should have extension ''.flo''', filename);
+if s ~= ".flo"
+  error('writeFlowFile: filename %s should have extension ''.flo''', filename);
 end
 
 [height, width, nBands] = size(img);
-
-if nBands ~= 2
-    error('writeFlowFile: image must have two bands');
-end
 
 fid = fopen(filename, 'w');
 if (fid < 0)
@@ -75,3 +64,5 @@ tmp = tmp';
 fwrite(fid, tmp, 'float32');
 
 fclose(fid);
+
+end

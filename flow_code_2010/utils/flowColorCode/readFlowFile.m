@@ -1,5 +1,7 @@
 function img = readFlowFile(filename)
-
+arguments
+    filename (1, 1) string {mustBeNonzeroLengthText}
+end
 % readFlowFile read a flow file FILENAME into 2-band image IMG
 
 %   According to the c++ source code of Daniel Scharstein
@@ -33,19 +35,9 @@ function img = readFlowFile(filename)
 
 TAG_FLOAT = 202021.25;  % check for this when READING the file
 
-% sanity check
-if isempty(filename) == 1
-    error('readFlowFile: empty filename');
-end
+[~, ~, s] = fileparts(filename);
 
-idx = strfind(filename, '.');
-idx = idx(end);
-
-if isscalar(filename(idx:end))
-    error('readFlowFile: extension required in filename %s', filename);
-end
-
-if strcmp(filename(idx:end), '.flo') ~= 1
+if s ~= ".flo"
     error('readFlowFile: filename %s should have extension ''.flo''', filename);
 end
 
@@ -82,3 +74,5 @@ img(:,:,1) = tmp(:, (1:width)*nBands-1);
 img(:,:,2) = tmp(:, (1:width)*nBands);
 
 fclose(fid);
+
+end

@@ -50,10 +50,9 @@ img = computeColor(u/truerange, v/truerange);
 img(s2,:,:) = 0;
 img(:,s2,:) = 0;
 
-figure;
-imshow(img);
-title('test color pattern');
-pause; close;
+figure
+imshow(img)
+title('test color pattern')
 
 % test read and write flow
 F(:,:,1) = u;
@@ -79,7 +78,8 @@ img = computeColor(u/range/sqrt(2), v/range/sqrt(2));
 img(s2,:,:) = 0;
 img(:,s2,:) = 0;
 
-figure;
-imshow(img);
-title('optical flow color encoding scheme');
-pause; close;
+figure
+imshow(img)
+title('optical flow color encoding scheme')
+
+end
