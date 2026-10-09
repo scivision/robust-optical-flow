@@ -8,3 +8,5 @@ build*/
 *.jpg
 *.png
 *.gz
+/flow_code_2010/.buildtool/
+/flow_code_2010/utils/mex/sor.mex*

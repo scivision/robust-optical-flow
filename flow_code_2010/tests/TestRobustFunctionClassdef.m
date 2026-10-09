@@ -1,5 +1,4 @@
 classdef TestRobustFunctionClassdef < matlab.unittest.TestCase
-  % Run with runtests('flow_code_2010/tests').
 
   methods (TestClassSetup)
     function addFlowCodePath(testCase)

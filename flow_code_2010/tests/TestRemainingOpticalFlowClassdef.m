@@ -90,6 +90,55 @@ classdef TestRemainingOpticalFlowClassdef < matlab.unittest.TestCase
         -0.202772732341372, Abstol=1e-10)
     end
 
+    function testBlackAnandanSorSolver(testCase)
+      baModel = ba_optical_flow(testCase.Images);
+      baModel.solver = 'sor';
+      baModel.max_iters = 1;
+      baModel.max_linear = 1;
+      baModel.gnc_iters = 1;
+      baFlow = compute_flow_base(baModel, testCase.InitialFlow);
+      testCase.verifyTrue(all(isfinite(baFlow(:))))
+      testCase.verifyEqual(norm(baFlow(:)), 4.14759515576344, RelTol=1e-6)
+      testCase.verifyEqual(baFlow(12, 12, 1), ...
+        0.136930428715481, AbsTol=1e-8)
+      testCase.verifyEqual(baFlow(12, 12, 2), ...
+        -0.105994223784277, AbsTol=1e-8)
+    end
+
+    function testAlternativeBlackAnandanSorSolver(testCase)
+      altModel = alt_ba_optical_flow(testCase.Images);
+      altModel.solver = 'sor';
+      altModel.max_iters = 1;
+      altModel.max_linear = 1;
+      altModel.gnc_iters = 1;
+      altModel.median_filter_size = [3 3];
+      altFlow = compute_flow_base(altModel, testCase.InitialFlow, ...
+        zeros(size(testCase.InitialFlow)));
+      testCase.verifyTrue(all(isfinite(altFlow(:))))
+      testCase.verifyEqual(norm(altFlow(:)), 2.51059912304811, ...
+        RelTol=1e-6)
+      testCase.verifyEqual(altFlow(12, 12, 1), ...
+        0.104308261985021, AbsTol=1e-8)
+      testCase.verifyEqual(altFlow(12, 12, 2), ...
+        -0.0132696212922677, AbsTol=1e-8)
+    end
+
+    function testClassicNonlocalSorSolver(testCase)
+      classicModel = classic_nl_optical_flow(testCase.Images);
+      classicModel.solver = 'sor';
+      classicModel.max_iters = 1;
+      classicModel.max_linear = 1;
+      classicModel.gnc_iters = 1;
+      classicFlow = compute_flow_base(classicModel, testCase.InitialFlow);
+      testCase.verifyTrue(all(isfinite(classicFlow(:))))
+      testCase.verifyEqual(norm(classicFlow(:)), ...
+        8.72812640671282, RelTol=1e-6)
+      testCase.verifyEqual(classicFlow(12, 12, 1), ...
+        0.301634938125273, AbsTol=1e-8)
+      testCase.verifyEqual(classicFlow(12, 12, 2), ...
+        -0.202772732331991, AbsTol=1e-8)
+    end
+
     function testParameterParsingAndDisplay(testCase)
       names = {'ba_optical_flow', 'alt_ba_optical_flow', ...
         'classic_nl_optical_flow'};

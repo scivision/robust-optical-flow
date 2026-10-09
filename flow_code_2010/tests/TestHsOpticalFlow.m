@@ -118,5 +118,18 @@ medianFlow = compute_flow(model);
 testCase.verifyEqual(norm(medianFlow(:)), 8.649108922858565, Abstol=1e-9)
 testCase.verifyEqual(medianFlow(12, 12, 1), 0.30089887956361755, Abstol=1e-10)
 end
+
+function testSorSolver(testCase)
+model = testCase.Model;
+model.solver = 'sor';
+model.max_warping_iters = 1;
+model.max_iters = 1;
+flow = compute_flow_base(model, testCase.InitialFlow);
+
+testCase.verifyTrue(all(isfinite(flow(:))))
+testCase.verifyEqual(norm(flow(:)), 8.56443315536921, RelTol=1e-6)
+testCase.verifyEqual(flow(12, 12, 1), 0.298431089835788, Abstol=1e-8)
+testCase.verifyEqual(flow(12, 12, 2), -0.195591378387561, Abstol=1e-8)
+end
 end
 end
